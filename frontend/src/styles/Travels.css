@@ -1,0 +1,20 @@
+.travel-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    background: 
+      linear-gradient(135deg, rgba(100, 108, 255, 0.1) 0%, rgba(76, 175, 80, 0.1) 100%),
+      url('../assets/background/3.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+  }
+  

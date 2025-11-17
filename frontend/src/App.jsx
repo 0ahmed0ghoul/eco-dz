@@ -1,14 +1,19 @@
 import Navbar from './components/Navbar.jsx'
+import Intro from './sections/Intro.jsx'
+import Map from './sections/Map.jsx'
+import Travels from './sections/Travels.jsx'
+import Contact from './sections/Contact.jsx'
+
 import './styles/App.css'
 function App() {
 
   return (
     <>
       <Navbar></Navbar>
-      <section id='intro'>hello</section>
-      <section id='maps'>map</section>
-      <section id='travels'>offers</section>
-      <section id='contact'>contact up</section>
+      <section ><Intro/></section>
+      <section ><Map /></section>
+      <section ><Travels /></section>
+      <section ><Contact /></section>
       <footer></footer>
     </>
   )
