@@ -7,7 +7,7 @@ import Footer from './components/Footer.jsx'
 import './styles/App.css'
 import Login from './sections/Login.jsx'
 import Signin from './sections/Signin.jsx'
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route,  } from "react-router-dom";
 
 function App() {
   return (
