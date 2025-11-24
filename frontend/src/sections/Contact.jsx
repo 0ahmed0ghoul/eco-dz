@@ -97,8 +97,8 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 font-sans text-gray-800 relative overflow-hidden">
-      {/* Background decorative elements */}
+    <div className="min-h-screen bg-gradient-to-br  from-emerald-50 to-teal-100 mt-15 font-sans text-gray-800 relative overflow-hidden">
+      
       <div className="absolute top-10 left-10 w-32 h-32 text-emerald-200 opacity-60">
         <EcoIcons.Leaf />
       </div>
