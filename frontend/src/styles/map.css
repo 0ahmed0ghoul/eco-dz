@@ -1,20 +1,21 @@
-.map-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100vh;
-    background: 
-      linear-gradient(135deg, rgba(100, 108, 255, 0.1) 0%, rgba(76, 175, 80, 0.1) 100%),
-      url('../assets/background/3.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    padding: 40px 20px;
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-  }
- 
+.gallery-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+}
+
+.gallery-scroll img {
+  width: 160px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Hide scrollbar */
+.gallery-scroll::-webkit-scrollbar {
+  display: none;
+}

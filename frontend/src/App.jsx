@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <Navbar></Navbar>
-      <section ><Intro/></section>
+      <section className='section-container' ><Intro/></section>
       <section ><Map /></section>
       <section ><Travels /></section>
       <section ><Contact /></section>
