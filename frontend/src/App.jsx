@@ -3,8 +3,10 @@ import Intro from './sections/Intro.jsx'
 import Map from './sections/Map.jsx'
 import Travels from './sections/Travels.jsx'
 import Contact from './sections/Contact.jsx'
-
+import Footer from './components/Footer.jsx'
 import './styles/App.css'
+import Login from './sections/Login.jsx'
+import Signin from './sections/Signin.jsx'
 function App() {
 
   return (
@@ -14,7 +16,9 @@ function App() {
       <section ><Map /></section>
       <section ><Travels /></section>
       <section ><Contact /></section>
-      <footer></footer>
+      <section ><Login /></section>
+      <section ><Signin /></section>
+      <Footer></Footer>
     </>
   )
 }
