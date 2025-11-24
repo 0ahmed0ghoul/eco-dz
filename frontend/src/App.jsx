@@ -7,19 +7,37 @@ import Footer from './components/Footer.jsx'
 import './styles/App.css'
 import Login from './sections/Login.jsx'
 import Signin from './sections/Signin.jsx'
-function App() {
+import { Routes, Route,  } from "react-router-dom";
 
+function App() {
   return (
-    <>
-      <Navbar></Navbar>
-      <section className='section-container' ><Intro/></section>
-      <section ><Map /></section>
-      <section ><Travels /></section>
-      <section ><Contact /></section>
-      <section ><Login /></section>
-      <section ><Signin /></section>
-      <Footer></Footer>
-    </>
+    
+      <div className="App">
+        <Navbar />
+        
+        <Routes>
+        
+          <Route path="/" element={
+            <>
+              <section><Intro /></section>
+              <section><Map /></section>
+              <section><Travels /></section>
+            </>
+          } />
+          
+        
+          <Route path="/login" element={<Login />} />
+          
+          
+          <Route path="/signup" element={<Signin />} />
+          
+            
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+        
+        <Footer />
+      </div>
+    
   )
 }
 
