@@ -1,0 +1,84 @@
+/* Fullscreen white background */
+.logo-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* stay above content */
+  }
+  
+  /* Logo image */
+  .logo {
+    width: 100px;
+    height: auto;
+    transition: transform 0.5s ease;
+  }
+  
+  /* Move logo left when text appears */
+  .logo.move-left {
+    transform: translateX(-80px);
+  }
+  
+  /* Title text */
+  .logo-text2 {
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, #fff, #01a177);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0; /* start hidden */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  /* Fade-in for text */
+  .logo-text2.fade-in {
+    opacity: 1;
+    transform: translateX(0); /* ensures smooth entry */
+  }
+  
+  /* Accent styling */
+  .logo-accent {
+    color: #01a177;
+    -webkit-text-fill-color: #01a177;
+  }
+  
+  /* Slide-up splash (instead of fade-out) */
+  .logo-container.slide-up {
+    animation: splashSlideUp 0.8s ease forwards;
+    animation-delay: 1.5s; /* wait until logo+text animations finish */
+  }
+  
+  @keyframes splashSlideUp {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+  }
+  
+  /* Slide-up for site content */
+  .slide-up {
+    animation: siteSlideUp 0.8s ease forwards;
+  }
+  
+  @keyframes siteSlideUp {
+    from {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  

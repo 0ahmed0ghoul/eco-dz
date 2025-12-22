@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { gsap } from "gsap";
-
-// Images
+import { useNavigate } from "react-router-dom";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import Tassili from '../assets/monuments/Tassili.avif';
@@ -20,6 +19,7 @@ import sidi_fredj_coast from '../assets/monuments/Sidi Fredj Coast1.webp';
 import mezaia_cedar_forest from '../assets/monuments/Atlas_Cedar_Forest_in_Mount_Chelia.jpg';
 import chelia_mountain from '../assets/monuments/Chelia_2.jpg';
 import { monuments } from "../data/monuments";
+
 
 // Default Leaflet Marker
 const DefaultIcon = L.icon({
@@ -70,12 +70,16 @@ const createCustomIcon = (category) => {
   });
 };
 
+
+
+
 function Map() {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const markersLayer = useRef(null);
   const sectionRef = useRef(null);
   const popupRef = useRef(null);
+  const navigate = useNavigate();
 
   const [activeCategory, setActiveCategory] = useState("all");
   const [hoverMonument, setHoverMonument] = useState(null);
@@ -105,53 +109,11 @@ function Map() {
   // Enhance monuments with gallery, price, duration, season
   const enhancedMonuments = monuments.map(monument => ({
     ...monument,
-    gallery: monument.gallery || [imageMap[monument.name] || monument.image],
-    price: getPriceForMonument(monument.category),
-    duration: getDurationForMonument(monument.category),
-    bestSeason: getBestSeasonForMonument(monument.category)
+    gallery: [monument.image], // Using the main image as gallery
   }));
 
-  function getPriceForMonument(category) {
-    const prices = {
-      desert: "35,000 - 45,000 DZD",
-      mountain: "25,000 - 35,000 DZD", 
-      forest: "20,000 - 30,000 DZD",
-      coast: "15,000 - 25,000 DZD",
-      lake: "10,000 - 20,000 DZD",
-      valley: "15,000 - 25,000 DZD",
-      steppe: "10,000 - 20,000 DZD",
-      cave: "5,000 - 15,000 DZD",
-    };
-    return prices[category] || "25,000 - 40,000 DZD";
-  }
 
-  function getDurationForMonument(category) {
-    const durations = {
-      desert: "4-6 days",
-      mountain: "3-5 days",
-      forest: "2-4 days",
-      coast: "1-3 days",
-      lake: "1-2 days",
-      valley: "2-3 days",
-      steppe: "2-3 days",
-      cave: "1-2 days",
-    };
-    return durations[category] || "3-5 days";
-  }
 
-  function getBestSeasonForMonument(category) {
-    const seasons = {
-      desert: "October-April",
-      mountain: "March-November",
-      forest: "Year-round",
-      coast: "Year-round",
-      lake: "Spring-Summer",
-      valley: "Spring-Fall",
-      steppe: "October-March",
-      cave: "Year-round",
-    };
-    return seasons[category] || "Year-round";
-  }
 
   // GSAP Animations
   useEffect(() => {
@@ -183,20 +145,26 @@ function Map() {
   // INIT MAP
   useEffect(() => {
     if (mapInstance.current) return;
-
+  
+    const bounds = [
+      [19.0, -8.7],  // SW
+      [37.2, 12.0]   // NE
+    ];
+  
     mapInstance.current = L.map(mapRef.current, {
       zoom: 5,
       center: [28.0339, 1.6596],
       minZoom: 4,
+      maxBounds: bounds,  // <--- restrict to Algeria
       zoomControl: false,
     });
-
+  
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap"
     }).addTo(mapInstance.current);
-
+  
     markersLayer.current = L.layerGroup().addTo(mapInstance.current);
-
+  
     loadMarkers("all");
   }, []);
 
@@ -244,8 +212,19 @@ function Map() {
     setIsPopupVisible(false);
     loadMarkers(categoryId);
     const button = document.querySelector(`[data-category="${categoryId}"]`);
-    if (button) gsap.fromTo(button, { scale: 1 }, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 });
+    if (button) {
+      gsap.fromTo(button,
+        { scale: 1 },
+        { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 }
+      );
+    }
   };
+  
+function handleViewMore(monument) {
+  navigate(`/monument/${monument.id}`, {
+    state: { monument }
+  });
+}
 
   const handleClosePopup = () => {
     if (popupRef.current) {
@@ -277,9 +256,6 @@ function Map() {
     }
   };
 
-  const handleViewMore = () => {
-    alert(`🌄 ${selectedMonument.name}\n📍 ${selectedMonument.lat.toFixed(2)}°N, ${selectedMonument.lng.toFixed(2)}°E\n💰 ${selectedMonument.price}\n⏱️ ${selectedMonument.duration}\n🌤️ ${selectedMonument.bestSeason}\n\n${selectedMonument.description}`);
-  };
 
   return (
     <section ref={sectionRef} className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900">
@@ -312,28 +288,80 @@ function Map() {
             </div>
           )}
 
-          {/* Popup */}
-          {selectedMonument && isPopupVisible && (
-            <div ref={popupRef} className="absolute inset-4 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 p-6 z-50 pointer-events-auto">
-              <div className="flex flex-col h-full">
-                <div className="flex justify-between mb-6">
-                  <h2 className="text-3xl font-black text-gray-900">{selectedMonument.name}</h2>
-                  <button onClick={handleClosePopup} className="text-gray-400 hover:text-gray-700 transition-all duration-200 hover:scale-110">
-                    ✕
-                  </button>
-                </div>
-                <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Gallery */}
-                  <div className="space-y-4">
-                    <div className="relative h-64 bg-gray-100 rounded-2xl overflow-hidden shadow-lg">
-                      <img 
-                        src={selectedMonument.gallery[currentImageIndex]} 
-                        alt={selectedMonument.name} 
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                        onError={(e) => {
-                          e.target.src = defaultBg;
-                        }}
-                      />
+            {/* Enhanced Click Popup */}
+            {selectedMonument && isPopupVisible && (
+              <div
+                ref={popupRef}
+                className="absolute inset-4 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 p-6 z-50 pointer-events-auto"
+              >
+                <div className="flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-3">
+                        <h2 className="text-3xl font-black text-gray-900">
+                          {selectedMonument.name}
+                        </h2>
+                        <span className={`px-4 py-2 rounded-full text-sm font-bold text-white bg-gradient-to-r ${
+                          categories.find(c => c.id === selectedMonument.category)?.gradient
+                        } shadow-lg`}>
+                          {categories.find(c => c.id === selectedMonument.category)?.name}
+                        </span>
+                      </div>
+  
+                    </div>
+                    <button
+                      onClick={handleClosePopup}
+                      className="text-gray-400 hover:text-gray-700 transition-all duration-200 hover:scale-110 p-2"
+                    >
+                      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Content Grid */}
+                  <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Gallery Section */}
+                    <div className="space-y-4">
+                      <div className="relative h-64 bg-gray-100 rounded-2xl overflow-hidden shadow-lg">
+                        <img
+                          src={selectedMonument.gallery[currentImageIndex]}
+                          alt={selectedMonument.name}
+                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                        
+                        {/* Navigation Arrows - Only show if multiple images */}
+                        {selectedMonument.gallery.length > 1 && (
+                          <>
+                            <button
+                              onClick={prevImage}
+                              className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-3 shadow-xl transition-all duration-200 hover:scale-110"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                            <button
+                              onClick={nextImage}
+                              className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-3 shadow-xl transition-all duration-200 hover:scale-110"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+                          </>
+                        )}
+
+                        {/* Image Counter - Only show if multiple images */}
+                        {selectedMonument.gallery.length > 1 && (
+                          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
+                            {currentImageIndex + 1} / {selectedMonument.gallery.length}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Thumbnails - Only show if multiple images */}
                       {selectedMonument.gallery.length > 1 && (
                         <>
                           <button onClick={prevImage} className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-3 shadow-xl">◀</button>
@@ -341,26 +369,37 @@ function Map() {
                         </>
                       )}
                     </div>
-                  </div>
 
-                  {/* Description */}
-                  <div className="flex flex-col justify-between">
-                    <p className="text-gray-600 leading-relaxed text-lg">{selectedMonument.description}</p>
-                    <div className="pt-6 border-t border-gray-200">
-                      <button onClick={handleViewMore} className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300">🗺️ View Travel Details</button>
+                    {/* Description Section */}
+                    <div className="flex flex-col">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                          About This Monument
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed text-lg">
+                          {selectedMonument.description}
+                        </p>
+                      </div>
+                      
+                      <div className="pt-6 border-t border-gray-200">
+                        <button
+                           onClick={() => handleViewMore(selectedMonument)}
+                          className="view-more-btn w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl"
+                        >
+                          🗺️ View Travel Details & Booking
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Marker CSS */}
-      <style jsx>{`.custom-marker { background: transparent !important; border: none !important; }`}</style>
-    </section>
+    
   );
 }
 
