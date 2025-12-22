@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { gsap } from "gsap";
-
+import { useNavigate } from "react-router-dom";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { monuments } from "../data/monuments";
+
 
 // Default Leaflet Marker
 const DefaultIcon = L.icon({
@@ -46,13 +47,17 @@ const createCustomIcon = (category) => {
   });
 };
 
+
+
+
 function Map() {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const markersLayer = useRef(null);
   const sectionRef = useRef(null);
   const popupRef = useRef(null);
-  
+  const navigate = useNavigate();
+
   const [activeCategory, setActiveCategory] = useState("all");
   const [hoverMonument, setHoverMonument] = useState(null);
   const [selectedMonument, setSelectedMonument] = useState(null);
@@ -65,38 +70,10 @@ function Map() {
   const enhancedMonuments = monuments.map(monument => ({
     ...monument,
     gallery: [monument.image], // Using the main image as gallery
-    price: getPriceForMonument(monument.category),
-    duration: getDurationForMonument(monument.category),
-    bestSeason: getBestSeasonForMonument(monument.category)
   }));
 
-  // Helper functions for monument details
-  function getPriceForMonument(category) {
-    const prices = {
-      desert: "35,000 - 45,000 DZD",
-      mountain: "25,000 - 35,000 DZD", 
-      forest: "20,000 - 30,000 DZD"
-    };
-    return prices[category] || "25,000 - 40,000 DZD";
-  }
 
-  function getDurationForMonument(category) {
-    const durations = {
-      desert: "4-6 days",
-      mountain: "3-5 days",
-      forest: "2-4 days"
-    };
-    return durations[category] || "3-5 days";
-  }
 
-  function getBestSeasonForMonument(category) {
-    const seasons = {
-      desert: "October-April",
-      mountain: "March-November",
-      forest: "Year-round"
-    };
-    return seasons[category] || "Year-round";
-  }
 
   // GSAP Animations
   useEffect(() => {
@@ -133,20 +110,26 @@ function Map() {
   // INIT MAP
   useEffect(() => {
     if (mapInstance.current) return;
-
+  
+    const bounds = [
+      [19.0, -8.7],  // SW
+      [37.2, 12.0]   // NE
+    ];
+  
     mapInstance.current = L.map(mapRef.current, {
       zoom: 5,
       center: [28.0339, 1.6596],
       minZoom: 4,
+      maxBounds: bounds,  // <--- restrict to Algeria
       zoomControl: false,
     });
-
+  
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap"
     }).addTo(mapInstance.current);
-
+  
     markersLayer.current = L.layerGroup().addTo(mapInstance.current);
-
+  
     loadMarkers("all");
   }, []);
 
@@ -208,6 +191,12 @@ function Map() {
       );
     }
   };
+  
+function handleViewMore(monument) {
+  navigate(`/monument/${monument.id}`, {
+    state: { monument }
+  });
+}
 
   const handleClosePopup = () => {
     if (popupRef.current) {
@@ -243,18 +232,6 @@ function Map() {
     }
   };
 
-  const handleViewMore = () => {
-    // Animate button click
-    const button = document.querySelector('.view-more-btn');
-    if (button) {
-      gsap.fromTo(button,
-        { scale: 1 },
-        { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 }
-      );
-    }
-
-    alert(`🌄 ${selectedMonument.name}\n\n📍 Location: ${selectedMonument.lat.toFixed(2)}°N, ${selectedMonument.lng.toFixed(2)}°E\n💰 Price: ${selectedMonument.price}\n⏱️ Duration: ${selectedMonument.duration}\n🌤️ Best Season: ${selectedMonument.bestSeason}\n\n${selectedMonument.description}`);
-  };
 
   return (
     <section
@@ -361,11 +338,7 @@ function Map() {
                           {categories.find(c => c.id === selectedMonument.category)?.name}
                         </span>
                       </div>
-                      <div className="flex gap-6 text-sm text-gray-600">
-                        <span className="flex items-center gap-1">💰 {selectedMonument.price}</span>
-                        <span className="flex items-center gap-1">⏱️ {selectedMonument.duration}</span>
-                        <span className="flex items-center gap-1">🌤️ {selectedMonument.bestSeason}</span>
-                      </div>
+  
                     </div>
                     <button
                       onClick={handleClosePopup}
@@ -456,7 +429,7 @@ function Map() {
                       
                       <div className="pt-6 border-t border-gray-200">
                         <button
-                          onClick={handleViewMore}
+                           onClick={() => handleViewMore(selectedMonument)}
                           className="view-more-btn w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl"
                         >
                           🗺️ View Travel Details & Booking
