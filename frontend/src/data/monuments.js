@@ -210,7 +210,7 @@ export const monuments = [
       category: "steppe",
       lat: 35.45,
       lng: 4.08,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/9/90/Saharan_Gazelle.jpg",
       description: "A large steppe reserve protecting endangered gazelles and desert fauna."
     },
     {
@@ -219,7 +219,7 @@ export const monuments = [
       category: "valley",
       lat: 36.47,
       lng: 3.28,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Kabylie_landscape.jpg",
       description: "A green valley with thermal waters, dense forests, and mountain streams."
     },
     {
@@ -228,7 +228,7 @@ export const monuments = [
       category: "mountain",
       lat: 36.49,
       lng: 7.62,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Mountain_landscape_algeria.jpg",
       description: "A large forested mountain near El Tarf known for its panoramic views and wildlife."
     },
     {
@@ -237,7 +237,7 @@ export const monuments = [
       category: "cave",
       lat: 36.34,
       lng: 6.62,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Cave_stalactites.jpg",
       description: "A long chain of underground limestone caves with unique geological formations."
     },
     {
@@ -246,7 +246,7 @@ export const monuments = [
       category: "mountain",
       lat: 35.3,
       lng: 6.63,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Aures_mountains.jpg",
       description: "The highest peak in the Aurès mountains with cedar forests and stunning horizons."
     },
     {
@@ -255,7 +255,7 @@ export const monuments = [
       category: "forest",
       lat: 35.96,
       lng: 4.24,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Cedar_forest.jpg",
       description: "A cedar-rich forest region in the Tell Atlas, known for its biodiversity."
     },
     {
@@ -264,7 +264,7 @@ export const monuments = [
       category: "coast",
       lat: 36.74,
       lng: 2.83,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Mediterranean_coast.jpg",
       description: "Beautiful coastline mixing history and Mediterranean ecology."
     },
     {
@@ -273,7 +273,7 @@ export const monuments = [
       category: "lake",
       lat: 36.85,
       lng: 8.38,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/8/8f/Lake_wetland.jpg",
       description: "A freshwater lake in El Kala Park, home to migratory birds and wetland species."
     },
     {
@@ -282,7 +282,7 @@ export const monuments = [
       category: "lake",
       lat: 36.43,
       lng: 6.33,
-      image: "...",
+      image: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Dam_reservoir.jpg",
       description: "The largest dam reservoir in Algeria, surrounded by forests and hills."
     }
   ];
