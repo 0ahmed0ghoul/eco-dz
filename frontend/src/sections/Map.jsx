@@ -11,7 +11,7 @@ import tahat from '../assets/monuments/tahat.jfif';
 import chrea from '../assets/monuments/chrea.jpg';
 import zahlane_caves from '../assets/monuments/Zahlane Caves (Djebel Taya).jpg';
 import beni_salah_mountain from '../assets/monuments/Beni Salah Mountain.jpg';
-import hammam_melouane_valley from '../assets/monuments/Hammam_Meskhoutine_vue_générale_1.webp';
+
 import mergueb_nature_reserve from '../assets/monuments/r.webp';
 import beni_haroun_dam_lake from '../assets/monuments/bni_haroun.jpg';
 import oubeira_lake from '../assets/monuments/Lac_Oubeira,_Parc_National_d_El-Kala_El-Tarf.jpg';
@@ -97,7 +97,6 @@ function Map() {
     'Chréa National Park': chrea,
     'Zahlane Caves (Djebel Taya)': zahlane_caves,
     'Beni Salah Mountain': beni_salah_mountain,
-    'Hammam Melouane Valley': hammam_melouane_valley,
     'Mergueb Nature Reserve': mergueb_nature_reserve,
     'Beni Haroun Dam & Lake': beni_haroun_dam_lake,
     'Lake Oubeira': oubeira_lake,
@@ -397,8 +396,7 @@ function handleViewMore(monument) {
             )}
           </div>
         </div>
-      </div>
-
+      </section>
     
   );
 }
