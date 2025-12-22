@@ -29,11 +29,11 @@ export default function MonumentDetails() {
   // If no data passed (user opens page manually)
   if (!state || !state.monument) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-10 text-center">
+      <div className="min-h-screen bg-linear-to-b from-gray-50 to-white p-10 text-center">
         <h1 className="text-3xl font-bold text-gray-800">No Monument Selected</h1>
         <button
           onClick={() => navigate(-1)}
-          className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all shadow-md"
+          className="mt-4 px-6 py-3 bg-linear-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all shadow-md"
         >
           Go Back
         </button>
@@ -96,10 +96,10 @@ export default function MonumentDetails() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       {/* Hero Section */}
       <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-10" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/60 to-transparent z-10" />
         <img
           src={monument.image}
           alt={monument.name}
@@ -193,7 +193,7 @@ export default function MonumentDetails() {
                   <button
                     key={index}
                     onClick={() => setCurrentGalleryIndex(index)}
-                    className={`flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden border-2 ${currentGalleryIndex === index ? 'border-blue-500' : 'border-transparent'}`}
+                    className={`shrink-0 w-24 h-24 rounded-lg overflow-hidden border-2 ${currentGalleryIndex === index ? 'border-blue-500' : 'border-transparent'}`}
                   >
                     <img
                       src={img}
@@ -271,7 +271,7 @@ export default function MonumentDetails() {
           {/* Right Column - Booking & Info */}
           <div className="space-y-8">
             {/* Booking Card */}
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white">
+            <div className="bg-linear-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white">
               <h2 className="text-2xl font-bold mb-6">Plan Your Visit</h2>
               
               <div className="space-y-4 mb-6">
