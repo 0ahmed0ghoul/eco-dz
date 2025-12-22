@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import '../styles/Navbar.css';
 import logo from '../assets/logos/logo.png';
 import user from '../assets/icons/user.png';
-
+import { Link } from 'react-router-dom';
 function Navbar() {
   const [isSignedIn] = useState(true); // Placeholder for user authentication status
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+
 
   // Handle scroll effect
   useEffect(() => {
@@ -56,13 +57,15 @@ function Navbar() {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
       <div className="nav-container">
         {/* Logo Section */}
-        <div className="logo-section" onClick={handleLogoClick} style={{cursor: 'pointer'}}>
+        <Link to={"/"} ><div className="logo-section" onClick={handleLogoClick} style={{cursor: 'pointer'}}>
           <img src={logo} alt="EcoDz Logo" className="logo-img" />
           <h2 className="logo-text">
             <span className="logo-accent">E</span>co
             <span className="logo-accent">D</span>z
           </h2>
         </div>
+        </Link>
+        
 
         {/* Desktop Navigation */}
         <nav className="nav-links">
@@ -80,13 +83,10 @@ function Navbar() {
             <span className="nav-icon">✈️</span>
             Travels
           </a>
-          <a 
-            className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}
-            onClick={() => scrollToSection('contact')}
-          >
+         <Link to="/contact" className='nav-link'>
             <span className="nav-icon">📞</span>
             Contact
-          </a>
+         </Link>
         </nav>
 
         {/* User Section */}

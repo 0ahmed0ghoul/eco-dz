@@ -1,6 +1,24 @@
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
 
+@layer utilities {
+  @keyframes bounce-custom {
+    0%, 100% {
+      transform: translateY(0);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translateY(10px);
+      opacity: 0.6;
+    }
+  }
+
+  .animate-bounce-custom {
+    animation: bounce-custom 1.4s infinite ease-in-out;
+  }
+}
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -34,6 +52,7 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
 
 button {
   border-radius: 8px;
