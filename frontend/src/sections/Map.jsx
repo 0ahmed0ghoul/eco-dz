@@ -5,19 +5,6 @@ import { gsap } from "gsap";
 import { useNavigate } from "react-router-dom";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
-import Tassili from '../assets/monuments/Tassili.avif';
-import Alhaggar from '../assets/monuments/Alhaggar.jpg';
-import tahat from '../assets/monuments/tahat.jfif';
-import chrea from '../assets/monuments/chrea.jpg';
-import zahlane_caves from '../assets/monuments/Zahlane Caves (Djebel Taya).jpg';
-import beni_salah_mountain from '../assets/monuments/Beni Salah Mountain.jpg';
-
-import mergueb_nature_reserve from '../assets/monuments/r.webp';
-import beni_haroun_dam_lake from '../assets/monuments/bni_haroun.jpg';
-import oubeira_lake from '../assets/monuments/Lac_Oubeira,_Parc_National_d_El-Kala_El-Tarf.jpg';
-import sidi_fredj_coast from '../assets/monuments/Sidi Fredj Coast1.webp';
-import mezaia_cedar_forest from '../assets/monuments/Atlas_Cedar_Forest_in_Mount_Chelia.jpg';
-import chelia_mountain from '../assets/monuments/Chelia_2.jpg';
 import { monuments } from "../data/monuments";
 
 
@@ -36,11 +23,6 @@ const categories = [
   { id: "desert", name: "Desert", color: "bg-amber-500", gradient: "from-amber-500 to-orange-500" },
   { id: "mountain", name: "Mountains", color: "bg-green-500", gradient: "from-green-500 to-emerald-600" },
   { id: "forest", name: "Forests", color: "bg-emerald-500", gradient: "from-emerald-500 to-green-600" },
-  { id: "coast", name: "Coasts", color: "bg-blue-400", gradient: "from-blue-400 to-cyan-500" },
-  { id: "lake", name: "Lakes", color: "bg-sky-400", gradient: "from-sky-400 to-blue-500" },
-  { id: "valley", name: "Valleys", color: "bg-emerald-400", gradient: "from-emerald-400 to-green-500" },
-  { id: "steppe", name: "Steppe", color: "bg-yellow-400", gradient: "from-yellow-400 to-amber-500" },
-  { id: "cave", name: "Caves", color: "bg-gray-600", gradient: "from-gray-600 to-gray-700" },
 ];
 
 // Custom marker icons
@@ -49,11 +31,6 @@ const createCustomIcon = (category) => {
     desert: '#f59e0b',
     mountain: '#10b981',
     forest: '#047857',
-    coast: '#3b82f6',
-    lake: '#0ea5e9',
-    valley: '#059669',
-    steppe: '#eab308',
-    cave: '#4b5563',
     all: '#3b82f6'
   };
 
@@ -89,23 +66,7 @@ function Map() {
 
   const defaultBg = "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=2000&q=80";
 
-  // Create a map of image imports for easy lookup
-  const imageMap = {
-    'Tassili n\'Ajjer National Park': Tassili,
-    'Hoggar Mountains (Ahaggar)': Alhaggar,
-    'Mount Tahat': tahat,
-    'Chréa National Park': chrea,
-    'Zahlane Caves (Djebel Taya)': zahlane_caves,
-    'Beni Salah Mountain': beni_salah_mountain,
-    'Mergueb Nature Reserve': mergueb_nature_reserve,
-    'Beni Haroun Dam & Lake': beni_haroun_dam_lake,
-    'Lake Oubeira': oubeira_lake,
-    'Sidi Fredj Coast': sidi_fredj_coast,
-    'Mezaïa Cedar Forest': mezaia_cedar_forest,
-    'Chelia Mountain': chelia_mountain
-  };
-
-  // Enhance monuments with gallery, price, duration, season
+  // Enhanced monuments data with galleries and additional info
   const enhancedMonuments = monuments.map(monument => ({
     ...monument,
     gallery: [monument.image], // Using the main image as gallery
@@ -117,19 +78,24 @@ function Map() {
   // GSAP Animations
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Section entrance
       gsap.fromTo(sectionRef.current,
         { opacity: 0, y: 50 },
         { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
       );
 
+      // Category buttons animation
       gsap.fromTo(".category-btn",
         { opacity: 0, x: -20 },
         { opacity: 1, x: 0, duration: 0.6, stagger: 0.1, delay: 0.3 }
       );
+
     }, sectionRef);
+
     return () => ctx.revert();
   }, []);
 
+  // Popup animations
   useEffect(() => {
     if (popupRef.current && selectedMonument) {
       if (isPopupVisible) {
@@ -167,6 +133,7 @@ function Map() {
     loadMarkers("all");
   }, []);
 
+  // LOAD MARKERS BY CATEGORY
   const loadMarkers = (category) => {
     markersLayer.current.clearLayers();
 
@@ -182,7 +149,9 @@ function Map() {
       let hoverTimeout;
 
       marker.on("mouseover", () => {
-        hoverTimeout = setTimeout(() => setHoverMonument(monument), 200);
+        hoverTimeout = setTimeout(() => {
+          setHoverMonument(monument);
+        }, 200);
       });
 
       marker.on("mouseout", () => {
@@ -194,6 +163,8 @@ function Map() {
         setSelectedMonument(monument);
         setCurrentImageIndex(0);
         setIsPopupVisible(true);
+        
+        // Marker click animation
         const markerElement = marker.getElement();
         if (markerElement) {
           gsap.fromTo(markerElement,
@@ -210,6 +181,8 @@ function Map() {
     setSelectedMonument(null);
     setIsPopupVisible(false);
     loadMarkers(categoryId);
+
+    // Animate category button
     const button = document.querySelector(`[data-category="${categoryId}"]`);
     if (button) {
       gsap.fromTo(button,
@@ -239,53 +212,111 @@ function handleViewMore(monument) {
       });
     } else {
       setSelectedMonument(null);
-          setIsPopupVisible(false);
+      setIsPopupVisible(false);
     }
   };
 
   const nextImage = () => {
     if (selectedMonument.gallery.length > 1) {
-      setCurrentImageIndex(prev => prev === selectedMonument.gallery.length - 1 ? 0 : prev + 1);
+      setCurrentImageIndex(prev => 
+        prev === selectedMonument.gallery.length - 1 ? 0 : prev + 1
+      );
     }
   };
 
   const prevImage = () => {
     if (selectedMonument.gallery.length > 1) {
-      setCurrentImageIndex(prev => prev === 0 ? selectedMonument.gallery.length - 1 : prev - 1);
+      setCurrentImageIndex(prev => 
+        prev === 0 ? selectedMonument.gallery.length - 1 : prev - 1
+      );
     }
   };
 
 
   return (
-    <section ref={sectionRef} className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900">
-      {/* Background */}
-      <div className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-out" style={{ backgroundImage: `url(${selectedMonument?.image || defaultBg})`, filter: selectedMonument ? 'brightness(0.4)' : 'brightness(0.7)' }}></div>
+    <section
+      ref={sectionRef}
+      id="maps"
+      className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900"
+    >
+      {/* Animated Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-transparent to-emerald-400/20 animate-pulse"></div>
+      
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-out"
+        style={{ 
+          backgroundImage: `url(${selectedMonument?.image || defaultBg})`,
+          filter: selectedMonument ? 'brightness(0.4)' : 'brightness(0.7)'
+        }}
+      ></div>
 
-      {/* Main Container */}
-      <div className="relative z-20 h-full w-full max-w-7xl mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
-        {/* Sidebar */}
-        <div className="lg:w-72 bg-white/10 backdrop-blur-2xl rounded-3xl p-6 shadow-2xl border border-white/20">
-          <h3 className="text-2xl font-bold text-white mb-6">Categories</h3>
-          <div className="space-y-3">
-            {categories.map(cat => (
-              <button key={cat.id} data-category={cat.id} onClick={() => handleCategoryClick(cat.id)}
-                className={`category-btn w-full text-left px-5 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl ${activeCategory === cat.id ? `bg-gradient-to-r ${cat.gradient} text-white shadow-2xl scale-105 border border-white/30` : "bg-white/10 text-white/90 hover:bg-white/20 border border-white/10"} backdrop-blur-sm`}>
-                <span>{cat.name}</span>
-              </button>
-            ))}
-          </div>
+      {/* Animated Grid Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]"></div>
+
+      <div className="relative z-20 h-full w-full max-w-7xl mx-auto px-4 py-6">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-5xl md:text-6xl font-black text-white mb-4 drop-shadow-2xl bg-gradient-to-r from-white via-blue-100 to-emerald-100 bg-clip-text text-transparent">
+            Algeria's Natural Treasures
+          </h1>
+          <p className="text-xl text-blue-100/90 font-light drop-shadow-lg">
+            Discover breathtaking ecological monuments across Algeria
+          </p>
         </div>
 
-        {/* Map */}
-        <div className="flex-1 relative">
-          <div ref={mapRef} className="w-full h-full rounded-3xl shadow-2xl border border-white/20 backdrop-blur-sm overflow-hidden"></div>
+        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-180px)]">
+          {/* Sidebar */}
+          <div className="lg:w-72 bg-white/10 backdrop-blur-2xl rounded-3xl p-6 shadow-2xl border border-white/20">
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+              Categories
+            </h3>
 
-          {/* Hover Tooltip */}
-          {hoverMonument && (
-            <div className="absolute left-1/2 -translate-x-1/2 top-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-3 rounded-2xl shadow-2xl font-semibold z-50 pointer-events-none backdrop-blur-sm border border-white/20">
-              {hoverMonument.name}
+            <div className="space-y-3">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  data-category={cat.id}
+                  onClick={() => handleCategoryClick(cat.id)}
+                  className={`category-btn w-full text-left px-5 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl ${
+                    activeCategory === cat.id
+                      ? `bg-gradient-to-r ${cat.gradient} text-white shadow-2xl scale-105 border border-white/30`
+                      : "bg-white/10 text-white/90 hover:bg-white/20 border border-white/10"
+                  } backdrop-blur-sm`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{cat.name}</span>
+                    {activeCategory === cat.id && (
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    )}
+                  </div>
+                </button>
+              ))}
             </div>
-          )}
+          </div>
+
+          {/* Map Container */}
+          <div className="flex-1 relative">
+            <div
+              ref={mapRef}
+              className="w-full h-full rounded-3xl shadow-2xl border border-white/20 backdrop-blur-sm overflow-hidden"
+            ></div>
+
+            {/* Hover Tooltip */}
+            {hoverMonument && (
+              <div className="absolute left-1/2 -translate-x-1/2 top-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-3 rounded-2xl shadow-2xl font-semibold z-50 pointer-events-none backdrop-blur-sm border border-white/20 animate-in fade-in-0 zoom-in-95">
+                <div className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${
+                    hoverMonument.category === 'desert' ? 'bg-amber-300' :
+                    hoverMonument.category === 'mountain' ? 'bg-green-300' :
+                    'bg-emerald-300'
+                  }`}></div>
+                  {hoverMonument.name}
+                </div>
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gradient-to-r from-blue-600 to-purple-600 rotate-45"></div>
+              </div>
+            )}
 
             {/* Enhanced Click Popup */}
             {selectedMonument && isPopupVisible && (
@@ -362,10 +393,25 @@ function handleViewMore(monument) {
 
                       {/* Thumbnails - Only show if multiple images */}
                       {selectedMonument.gallery.length > 1 && (
-                        <>
-                          <button onClick={prevImage} className="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-3 shadow-xl">◀</button>
-                          <button onClick={nextImage} className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-3 shadow-xl">▶</button>
-                        </>
+                        <div className="flex gap-3 overflow-x-auto pb-2">
+                          {selectedMonument.gallery.map((img, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentImageIndex(index)}
+                              className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-3 transition-all duration-300 ${
+                                index === currentImageIndex 
+                                  ? 'border-blue-500 ring-2 ring-blue-200 shadow-lg scale-110' 
+                                  : 'border-transparent hover:border-gray-300 hover:scale-105'
+                              }`}
+                            >
+                              <img
+                                src={img}
+                                alt={`${selectedMonument.name} ${index + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </button>
+                          ))}
+                        </div>
                       )}
                     </div>
 
@@ -396,8 +442,16 @@ function handleViewMore(monument) {
             )}
           </div>
         </div>
-      </section>
-    
+      </div>
+
+      {/* Custom CSS for Leaflet markers */}
+      <style jsx>{`
+        .custom-marker {
+          background: transparent !important;
+          border: none !important;
+        }
+      `}</style>
+    </section>
   );
 }
 
