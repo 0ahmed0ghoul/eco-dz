@@ -1,6 +1,6 @@
 /* Navbar.css */
 .navbar {
-    position: fixed;
+    position:absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -10,7 +10,7 @@
     background-color: rgba(77, 75, 67, 0.9);
     padding: 0 35px;
     height: 80px;
-    z-index: 1000;
+    z-index: 999;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
   }
