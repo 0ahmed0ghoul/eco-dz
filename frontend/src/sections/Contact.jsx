@@ -10,6 +10,7 @@ const Contact = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedBenefits, setSelectedBenefits] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -33,10 +34,11 @@ const Contact = () => {
     };
     
     // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
     console.log('Form submitted:', finalFormData);
     setIsSubmitting(false);
+    setIsSubmitted(true);
     
     // Reset form and selections
     setFormData({
@@ -47,8 +49,8 @@ const Contact = () => {
     });
     setSelectedBenefits([]);
     
-    // Show success message
-    alert('Thank you for your message! We\'ll get back to you soon.');
+    // Auto-hide success message after 5 seconds
+    setTimeout(() => setIsSubmitted(false), 5000);
   };
 
   const toggleBenefit = (benefit) => {
@@ -67,24 +69,29 @@ const Contact = () => {
       </svg>
     ),
     Email: () => (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
     Phone: () => (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
       </svg>
     ),
     Location: () => (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
     Check: () => (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    ),
+    Send: () => (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
       </svg>
     )
   };
@@ -93,221 +100,310 @@ const Contact = () => {
     "Sustainable travel experiences",
     "Local community support", 
     "Eco-friendly accommodations",
-    "Authentic Algerian culture"
+    "Authentic Algerian culture",
+    "Nature conservation tours",
+    "Carbon offset programs"
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br  from-emerald-50 to-teal-100 mt-15 font-sans text-gray-800 relative overflow-hidden">
-      
-      <div className="absolute top-10 left-10 w-32 h-32 text-emerald-200 opacity-60">
-        <EcoIcons.Leaf />
-      </div>
-      <div className="absolute bottom-20 right-16 w-24 h-24 text-teal-200 opacity-50">
-        <EcoIcons.Leaf />
-      </div>
-      <div className="absolute top-1/3 right-1/4 w-16 h-16 text-emerald-200 opacity-40">
-        <EcoIcons.Leaf />
-      </div>
-
-      <header className="relative bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center py-8 px-4 shadow-lg">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold mb-3">Contact EcoDz</h1>
-          <p className="text-lg opacity-90">Your gateway to eco-friendly travel in beautiful Algeria</p>
-        </div>
-      </header>
-
-      <main className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Contact Form Section */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-emerald-100">
-            <div className="flex items-center mb-6">
-              <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
-                <EcoIcons.Leaf />
-              </div>
-              <h2 className="text-2xl font-bold text-emerald-800">Send Us a Message</h2>
+    <section id="contact" className="relative min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-white py-16 px-4 overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute animate-float"
+            style={{
+              left: `${(i * 15) % 100}%`,
+              top: `${(i * 20) % 100}%`,
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${15 + i * 2}s`
+            }}
+          >
+            <div className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-200/30">
+              <EcoIcons.Leaf />
             </div>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200"
-                    placeholder="Your full name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                <input
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200"
-                  placeholder="What is this regarding?"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                <textarea
-                  name="message"
-                  rows="6"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200 resize-none"
-                  placeholder="Tell us about your eco-travel interests or questions..."
-                ></textarea>
-              </div>
-
-              {/* Selected Benefits Preview */}
-              {selectedBenefits.length > 0 && (
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
-                  <p className="text-sm font-medium text-emerald-800 mb-2">
-                    Selected interests ({selectedBenefits.length}):
-                  </p>
-                  <ul className="text-sm text-emerald-700 space-y-1">
-                    {selectedBenefits.map((benefit, index) => (
-                      <li key={index} className="flex items-center">
-                        <div className="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center mr-2">
-                          <EcoIcons.Check />
-                        </div>
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-emerald-700 hover:to-teal-700 transition duration-300 transform hover:scale-[1.02] shadow-lg ${
-                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Sending...
-                  </span>
-                ) : (
-                  'Send Message'
-                )}
-              </button>
-            </form>
           </div>
+        ))}
+      </div>
 
-          {/* Contact Information Section */}
-          <div className="space-y-8">
-            {/* Contact Info Card */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 border border-emerald-100">
-              <h3 className="text-xl font-bold text-emerald-800 mb-6">Get In Touch</h3>
+      {/* Success Message */}
+      {isSubmitted && (
+        <div className="fixed top-20 right-4 sm:right-8 z-50 animate-slideIn">
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
+            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <EcoIcons.Check />
+            </div>
+            <div>
+              <p className="font-semibold">Message Sent Successfully!</p>
+              <p className="text-sm opacity-90">We'll get back to you within 24 hours.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center">
+              <EcoIcons.Leaf />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+              Contact EcoDz
+            </h1>
+          </div>
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+            Get in touch to start your sustainable Algerian adventure. We're here to help!
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Contact Information */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Info Cards */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-emerald-100/50 hover:shadow-2xl transition-all duration-300">
+              <h3 className="text-2xl font-bold text-emerald-800 mb-6">Contact Information</h3>
               
               <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                    <EcoIcons.Email />
+                {[
+                  {
+                    icon: <EcoIcons.Email />,
+                    title: "Email Address",
+                    detail: "contact@ecodz.dz",
+                    description: "Response within 24 hours"
+                  },
+                  {
+                    icon: <EcoIcons.Phone />,
+                    title: "Phone Number",
+                    detail: "+213 770 123 456",
+                    description: "Mon-Fri, 8am-6pm (GMT+1)"
+                  },
+                  {
+                    icon: <EcoIcons.Location />,
+                    title: "Our Location",
+                    detail: "Algiers, Algeria",
+                    description: "Heart of Algerian eco-tourism"
+                  }
+                ].map((item, index) => (
+                  <div key={index} className="group flex items-start gap-4 p-4 rounded-xl hover:bg-emerald-50/50 transition-all duration-300">
+                    <div className="w-14 h-14 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div className="text-emerald-600">
+                        {item.icon}
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-800 group-hover:text-emerald-700 transition-colors duration-300">
+                        {item.title}
+                      </h4>
+                      <p className="text-gray-600 mt-1 text-lg">{item.detail}</p>
+                      <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Email Us</h4>
-                    <p className="text-gray-600 mt-1">contact@ecodz.dz</p>
-                    <p className="text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
-                  </div>
-                </div>
+                ))}
+              </div>
+            </div>
 
-                <div className="flex items-start">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                    <EcoIcons.Phone />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Call Us</h4>
-                    <p className="text-gray-600 mt-1">+213 770 123 456</p>
-                    <p className="text-sm text-gray-500 mt-1">Mon-Fri from 8am to 6pm</p>
-                  </div>
+            {/* Benefits Selection */}
+            <div className="bg-gradient-to-br from-emerald-500 via-teal-500 to-green-600 rounded-2xl shadow-2xl p-8 text-white">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                  <EcoIcons.Leaf />
                 </div>
+                <h3 className="text-2xl font-bold">Your Interests</h3>
+              </div>
+              
+              <p className="text-emerald-100 mb-6">Select what interests you about EcoDz:</p>
+              
+              <div className="space-y-3">
+                {benefitItems.map((benefit, index) => (
+                  <label
+                    key={index}
+                    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-300 ${
+                      selectedBenefits.includes(benefit)
+                        ? 'bg-white/20 border-2 border-white/30'
+                        : 'hover:bg-white/10'
+                    }`}
+                  >
+                    <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-300 ${
+                      selectedBenefits.includes(benefit)
+                        ? 'bg-white border-white'
+                        : 'border-white/50 bg-transparent'
+                    }`}>
+                      {selectedBenefits.includes(benefit) && (
+                        <EcoIcons.Check />
+                      )}
+                    </div>
+                    <span className="flex-1">{benefit}</span>
+                    <input
+                      type="checkbox"
+                      checked={selectedBenefits.includes(benefit)}
+                      onChange={() => toggleBenefit(benefit)}
+                      className="hidden"
+                    />
+                  </label>
+                ))}
+              </div>
 
-                <div className="flex items-start">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mr-4 flex-shrink-0">
-                    <EcoIcons.Location />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">Visit Us</h4>
-                    <p className="text-gray-600 mt-1">Algiers, Algeria</p>
-                    <p className="text-sm text-gray-500 mt-1">The heart of Algerian eco-tourism</p>
-                  </div>
+              {/* Selection Counter */}
+              <div className="mt-8 pt-6 border-t border-white/20">
+                <div className="flex items-center justify-between">
+                  <span className="text-emerald-100">
+                    {selectedBenefits.length} interest{selectedBenefits.length !== 1 ? 's' : ''} selected
+                  </span>
+                  {selectedBenefits.length > 0 && (
+                    <button
+                      onClick={() => setSelectedBenefits([])}
+                      className="text-sm px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors duration-300"
+                    >
+                      Clear all
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
-{/* Why Choose EcoDz Card with checkboxes */}
-<div className="bg-gradient-to-br from-emerald-400 via-teal-500 to-green-600 rounded-2xl shadow-2xl p-8 text-white">
-  <h3 className="text-2xl font-bold mb-4">Why Choose EcoDz?</h3>
-  <p className="text-green-100 text-sm mb-4">Select your interests to include in your message:</p>
+          </div>
 
-  <ul className="space-y-4">
-    {benefitItems.map((benefit, index) => (
-      <li key={index} className="flex items-center">
-        <input
-          type="checkbox"
-          id={`benefit-${index}`}
-          checked={selectedBenefits.includes(benefit)}
-          onChange={() => toggleBenefit(benefit)}
-          className="accent-green-500 w-5 h-5 mr-3 rounded focus:ring-2 focus:ring-white"
-        />
-        <label
-          htmlFor={`benefit-${index}`}
-          className={`cursor-pointer select-none transition-all duration-200 ${
-            selectedBenefits.includes(benefit)
-              ? 'font-semibold text-white'
-              : 'text-green-100 hover:text-white'
-          }`}
-        >
-          {benefit}
-        </label>
-      </li>
-    ))}
-  </ul>
+          {/* Contact Form */}
+          <div className="lg:col-span-2">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-emerald-100/50 hover:shadow-2xl transition-all duration-300">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h2 className="text-3xl font-bold text-emerald-800">Send us a message</h2>
+                  <p className="text-gray-600 mt-2">We'd love to hear from you</p>
+                </div>
+                <div className="hidden md:block w-16 h-16 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full flex items-center justify-center">
+                  <EcoIcons.Send />
+                </div>
+              </div>
 
-  {/* Selection Summary */}
-  {selectedBenefits.length > 0 && (
-    <div className="mt-6 p-4 bg-white bg-opacity-20 rounded-xl border border-white/30">
-      <p className="text-base text-black font-medium">
-        ✅ <strong>{selectedBenefits.length}</strong> interest{selectedBenefits.length !== 1 ? 's' : ''} selected
-      </p>
-    </div>
-  )}
-</div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full border border-gray-300 rounded-xl px-5 py-3.5 focus:outline-none focus:ring-3 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400"
+                      placeholder="John Doe"
+                    />
+                  </div>
 
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full border border-gray-300 rounded-xl px-5 py-3.5 focus:outline-none focus:ring-3 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="w-full border border-gray-300 rounded-xl px-5 py-3.5 focus:outline-none focus:ring-3 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400"
+                    placeholder="How can we help you?"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Your Message *
+                  </label>
+                  <textarea
+                    name="message"
+                    rows="6"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    className="w-full border border-gray-300 rounded-xl px-5 py-3.5 focus:outline-none focus:ring-3 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all duration-300 placeholder-gray-400 resize-none"
+                    placeholder="Tell us about your eco-travel dreams..."
+                  ></textarea>
+                </div>
+
+                {/* Benefits Preview */}
+                {selectedBenefits.length > 0 && (
+                  <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center">
+                        <EcoIcons.Check />
+                      </div>
+                      <p className="font-medium text-emerald-800">
+                        Your selected interests ({selectedBenefits.length})
+                      </p>
+                    </div>
+                    <ul className="grid sm:grid-cols-2 gap-2">
+                      {selectedBenefits.map((benefit, index) => (
+                        <li key={index} className="text-sm text-emerald-700 bg-white/50 px-3 py-2 rounded-lg">
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`group w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold py-4 px-8 rounded-xl 
+                    hover:from-emerald-700 hover:to-teal-700 transition-all duration-300 transform hover:scale-[1.02] 
+                    shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none
+                    flex items-center justify-center gap-3`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending your message...
+                    </>
+                  ) : (
+                    <>
+                      <EcoIcons.Send />
+                      Send Message
+                      <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </main>
+      </div>
 
-    
-    </div>
+      {/* Custom animations */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        .animate-float { animation: float infinite ease-in-out; }
+        .animate-slideIn { animation: slideIn 0.5s ease-out; }
+      `}</style>
+    </section>
   );
 };
 
