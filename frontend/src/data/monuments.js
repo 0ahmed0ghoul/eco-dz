@@ -1,7 +1,7 @@
-import Tassili from '../assets/monuments/Tassili.avif'
-import Alhaggar from '../assets/monuments/Alhaggar.jpg'
-import tahat from '../assets/monuments/tahat.jfif'
-import chrea from '../assets/monuments/chrea.jpg'
+import Tassili from '../assets/destinations/Tassili.avif'
+import Alhaggar from '../assets/destinations/Alhaggar.jpg'
+import tahat from '../assets/destinations/tahat.jfif'
+import chrea from '../assets/destinations/chrea.jpg'
 
 
 export const monuments = [

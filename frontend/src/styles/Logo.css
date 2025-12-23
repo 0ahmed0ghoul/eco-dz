@@ -66,19 +66,3 @@
     }
   }
   
-  /* Slide-up for site content */
-  .slide-up {
-    animation: siteSlideUp 0.8s ease forwards;
-  }
-  
-  @keyframes siteSlideUp {
-    from {
-      transform: translateY(100px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  

@@ -1,68 +1,198 @@
+import { useState } from 'react';
+import { Check, Globe, ChevronDown } from 'lucide-react';
+
 const Footer = () => {
+  const [isHelpful, setIsHelpful] = useState(null);
+  const [selectedRegion, setSelectedRegion] = useState('Global');
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (email) {
+      setSubscribed(true);
+      setEmail('');
+      setTimeout(() => setSubscribed(false), 3000);
+    }
+  };
+
+  const regions = ['Global', 'North America', 'Europe', 'Australia', 'Asia'];
+
   return (
-    <footer className="bg-gradient-to-br from-green-800 to-emerald-700 text-white pt-12 pb-6 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
-        {/* EcoDz Info */}
-        <div className="md:col-span-2">
-          <div className="flex items-center mb-4">
-            <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center mr-3">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.29c-.01-.02-.02-.03-.03-.05C8.67 16.11 10.5 13 17 8z"/>
-              </svg>
+    <footer className="bg-gray-50 text-gray-700">
+      {/* Was this page helpful? section */}
+      <div className="border-t border-b border-gray-200 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h3 className="text-base font-medium text-gray-900 mb-1">Was this page helpful?</h3>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setIsHelpful(true)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isHelpful === true 
+                      ? 'bg-green-100 text-green-700 border border-green-300' 
+                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => setIsHelpful(false)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isHelpful === false 
+                      ? 'bg-red-100 text-red-700 border border-red-300' 
+                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  No
+                </button>
+              </div>
             </div>
-            <h2 className="text-2xl font-bold">EcoDz</h2>
+            
+            {/* Region selector */}
+            <div className="w-full sm:w-auto">
+              <h3 className="text-sm font-medium text-gray-900 mb-2">Change region</h3>
+              <div className="relative">
+                <select
+                  value={selectedRegion}
+                  onChange={(e) => setSelectedRegion(e.target.value)}
+                  className="w-full sm:w-48 appearance-none bg-white border border-gray-300 rounded-md pl-10 pr-8 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {regions.map(region => (
+                    <option key={region} value={region}>{region}</option>
+                  ))}
+                </select>
+                <Globe className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                <ChevronDown className="absolute right-3 top-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                Get the goods! Travel deals, new trips, inspiration and more.
+              </p>
+            </div>
           </div>
-          <p className="text-green-100 mb-4">
-            Your gateway to sustainable travel in Algeria. Discover nature, culture, and community through eco-friendly experiences.
-          </p>
-          <div className="space-y-2 text-green-200">
-            <div className="flex items-center">
-              <svg className="w-4 h-4 mr-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              <span>+213 770 123 456</span>
-            </div>
-            <div className="flex items-center">
-              <svg className="w-4 h-4 mr-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <span>contact@ecodz.dz</span>
-            </div>
-            <div className="flex items-center">
-              <svg className="w-4 h-4 mr-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>Algiers, Algeria</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-base font-semibold mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-green-100">
-            <li><a href="/" className="hover:text-white">Home</a></li>
-            <li><a href="/about" className="hover:text-white">About</a></li>
-            <li><a href="/contact" className="hover:text-white">Contact</a></li>
-            <li><a href="/destinations" className="hover:text-white">Destinations</a></li>
-          </ul>
-        </div>
-
-        {/* Support */}
-        <div>
-          <h3 className="text-base font-semibold mb-3">Support</h3>
-          <ul className="space-y-2 text-green-100">
-            <li><a href="/privacy" className="hover:text-white">Privacy Policy</a></li>
-            <li><a href="/terms" className="hover:text-white">Terms of Service</a></li>
-            <li><a href="/help" className="hover:text-white">Help Center</a></li>
-          </ul>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="mt-10 border-t border-green-600 pt-4 text-center text-green-300 text-xs">
-        &copy; {new Date().getFullYear()} EcoDz — All rights reserved.
+      {/* Subscribe section */}
+      <div className="border-b border-gray-200 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Subscribe to emails</h3>
+            <form onSubmit={handleSubscribe} className="flex gap-2">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email address"
+                className="flex-grow px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                required
+              />
+              <button
+                type="submit"
+                className="px-6 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
+              >
+                Subscribe
+              </button>
+            </form>
+            {subscribed && (
+              <p className="text-green-600 text-sm mt-2 flex items-center">
+                <Check className="h-4 w-4 mr-1" /> Subscribed successfully!
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Main footer links */}
+      <div className="py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+            {/* Booking Column */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Booking</h4>
+              <ul className="space-y-3">
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">My Booking</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Submit trip feedback</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Safe Travels Hub</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Travel Alerts</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Flexible bookings</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Booking conditions</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Agent login</a></li>
+              </ul>
+            </div>
+
+            {/* Company Column */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Company</h4>
+              <ul className="space-y-3">
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">About us</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">The Good Times</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Intrepid DMC</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Careers</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Privacy policy</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">You're privacy choices</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Intrepidtravel.com accessibility statement</a></li>
+              </ul>
+            </div>
+
+            {/* Contact Column */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Contact</h4>
+              <ul className="space-y-3">
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Get in touch</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Live chat</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">FAQ</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Reviews</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Newsroom</a></li>
+              </ul>
+            </div>
+
+            {/* Purpose Column */}
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Purpose</h4>
+              <ul className="space-y-3">
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">B Corp</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">The Intrepid Foundation</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">People</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Planet</a></li>
+                <li><a href="#" className="text-gray-600 hover:text-gray-900">Wildlife</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Certified section */}
+      <div className="bg-gray-100 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-gray-600 text-sm">
+              <p className="font-medium text-gray-900">Certified</p>
+              <p className="mt-1">B Corporation and Climate Action Leader</p>
+            </div>
+            
+            {/* Placeholder for certification logos */}
+            <div className="flex items-center space-x-4">
+              <div className="w-24 h-10 bg-gray-300 rounded flex items-center justify-center text-gray-500 text-sm">
+                Logo 1
+              </div>
+              <div className="w-24 h-10 bg-gray-300 rounded flex items-center justify-center text-gray-500 text-sm">
+                Logo 2
+              </div>
+              <div className="w-24 h-10 bg-gray-300 rounded flex items-center justify-center text-gray-500 text-sm">
+                Logo 3
+              </div>
+            </div>
+          </div>
+          
+          {/* Bottom copyright */}
+          <div className="mt-6 pt-4 border-t border-gray-300">
+            <p className="text-xs text-gray-500">
+              © {new Date().getFullYear()} Intrepid Travel. All rights reserved.
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
   );
