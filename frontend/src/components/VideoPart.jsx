@@ -59,7 +59,7 @@ export default function VideoWithFeatures() {
   ];
 
   return (
-    <section className="py-16 px-4 md:px-8">
+    <section className="py-16 px-4 md:px-8 z-10">
       <div className="max-w-7xl mx-auto border-b pb-12 border-gray-200">
         {/* Header */}
         <div className="text-center mb-12">

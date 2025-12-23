@@ -56,7 +56,7 @@ export default function IntrepidExperienceGallery() {
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   return (
-    <section className="py-12 px-4 md:px-8 ">
+    <section className="py-12 px-4 md:px-8 z-10">
       <div className="max-w-7xl mx-auto border-b pb-12 border-gray-200">
         {/* Header with Tabs */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">

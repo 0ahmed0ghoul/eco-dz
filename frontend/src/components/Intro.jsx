@@ -7,20 +7,16 @@ function Intro() {
   return (
     <section
       id="intro"
-
       aria-label="Introduction to EcoDz"
     >
-      {/* Dark overlay */}
-
-
+        <div className="absolute inset-0 bg-black/50"></div>
 
       {/* Content Container */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center min-h-[80vh] px-4">
-
-        <div className="relative mt-10 max-w-4xl mx-auto">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center min-h-[60vh] sm:min-h-[50vh] px-4 pt-16 md:pt-0 mt-5 sm:mt-0">
+      <div className="relative mt-10 max-w-4xl mx-auto">
           {/* Logo */}
-          <div className="absolute -top-14 left-1/2 transform -translate-x-1/2 z-20">
-            <img
+          <div className="absolute -top-24 sm:-top-24 md:-top-15 left-1/2 -translate-x-1/2 z-20">
+          <img
               src={logo}
               alt="EcoDz - Sustainable Travel in Algeria"
               className="w-32 h-32 object-contain rounded-full shadow-2xl border-4 border-white/20"

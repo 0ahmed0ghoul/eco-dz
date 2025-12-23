@@ -10,7 +10,7 @@ import backgroundImage from "../assets/background/2.jpg";
 const Hero = () => {
   return (
     <section
-      className=" hero relative flex flex-col justify-center min-h-screen px-5 overflow-hidden
+      className=" hero relative  flex flex-col justify-center min-h-screen px-5 overflow-hidden
         bg-linear-to-br from-blue-100/10 via-emerald-100/10 to-teal-100/10
         bg-center bg-no-repeat bg-cover bg-fixed"
       style={{ backgroundImage: `url(${backgroundImage})` }}

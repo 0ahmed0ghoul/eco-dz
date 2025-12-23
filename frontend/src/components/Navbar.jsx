@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { FiSearch, FiUser, FiHeart, FiMail, FiX, FiChevronRight } from "react-icons/fi";
+import { FiSearch, FiUser, FiHeart, FiMail, FiX, FiChevronRight, FiMenu } from "react-icons/fi";
 import logo from "../assets/logos/logo.png";
 
 function Navbar() {
   const [isSignedIn] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mobileMenuLevel, setMobileMenuLevel] = useState("main");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarLevel, setSidebarLevel] = useState("main");
   const [selectedMainLink, setSelectedMainLink] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -50,8 +50,8 @@ function Navbar() {
   useEffect(() => {
     const handleEscKey = (e) => {
       if (e.key === "Escape") {
-        setIsMobileMenuOpen(false);
-        setMobileMenuLevel("main");
+        setIsSidebarOpen(false);
+        setSidebarLevel("main");
       }
     };
     document.addEventListener("keydown", handleEscKey);
@@ -62,10 +62,10 @@ function Navbar() {
     setRecentSearches((prev) => prev.filter((search) => search !== item));
   };
 
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
     setTimeout(() => {
-      setMobileMenuLevel("main");
+      setSidebarLevel("main");
       setSelectedMainLink(null);
       setSelectedCategory(null);
     }, 300);
@@ -79,7 +79,7 @@ function Navbar() {
         }`}
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
-          {/* Logo + Links */}
+          {/* Logo + Desktop Links */}
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-3 cursor-pointer group">
               <img 
@@ -90,6 +90,7 @@ function Navbar() {
               <h2 className="text-2xl lg:text-3xl font-bold text-emerald-600">EcoDz</h2>
             </div>
 
+            {/* Desktop navigation links - always visible */}
             <div className="hidden lg:flex items-center gap-6">
               {navLinks.map((link) => (
                 <button
@@ -104,7 +105,7 @@ function Navbar() {
             </div>
           </div>
 
-          {/* Search + Icons + Mobile */}
+          {/* Desktop: Search + Icons */}
           <div className="flex items-center gap-4">
             <div className="relative hidden sm:flex flex-col items-start search-container">
               <div className="relative">
@@ -175,194 +176,194 @@ function Navbar() {
               </button>
             </div>
 
-            {/* Mobile menu button */}
+            {/* Sidebar toggle button - visible on all screen sizes */}
             <button
-              className="lg:hidden flex flex-col justify-center items-center w-10 h-10 group"
-              onClick={() => setIsMobileMenuOpen(true)}
+              className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 transition-colors group"
+              onClick={() => setIsSidebarOpen(true)}
+              aria-label="Open menu"
             >
-              <span className="block w-6 h-0.5 bg-gray-800 rounded transition-transform duration-300 group-hover:scale-x-110" />
-              <span className="block w-6 h-0.5 bg-gray-800 my-1.5 rounded transition-transform duration-300 group-hover:scale-x-110" />
-              <span className="block w-6 h-0.5 bg-gray-800 rounded transition-transform duration-300 group-hover:scale-x-110" />
+              <FiMenu className="w-6 h-6 text-gray-700 group-hover:text-emerald-600 transition-colors" />
             </button>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile Sidebar - Fixed 340px width from right */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden fixed inset-0 z-50">
-            {/* Backdrop overlay */}
-            <div 
-              className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300"
-              onClick={closeMobileMenu}
-            />
-            
-            {/* Sidebar container */}
-            <div className="absolute top-0 right-0 w-[340px] h-full bg-white shadow-xl">
-              {/* Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                <div className="flex items-center gap-3">
-                  <img src={logo} alt="EcoDz Logo" className="h-8" />
-                  <h2 className="text-xl font-bold text-emerald-600">EcoDz</h2>
+      {/* Sidebar - Fixed 340px width from right (available on all screen sizes) */}
+      {isSidebarOpen && (
+        <div className="fixed inset-0 z-[100]">
+          {/* Backdrop overlay */}
+          <div 
+            className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300"
+            onClick={closeSidebar}
+          />
+          
+          {/* Sidebar container - Fixed 340px width from right */}
+          <div className="absolute top-0 right-0 w-[340px] h-full bg-white shadow-xl">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <img src={logo} alt="EcoDz Logo" className="h-8" />
+                <h2 className="text-xl font-bold text-emerald-600">EcoDz</h2>
+              </div>
+              <button
+                onClick={closeSidebar}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label="Close menu"
+              >
+                <FiX className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+
+            {/* Search bar */}
+            <div className="px-6 py-4 border-b border-gray-100">
+              <div className="relative">
+                <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search destinations..."
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-full 
+                           focus:outline-none focus:ring-2 focus:ring-emerald-500 
+                           text-gray-800 placeholder-gray-400 bg-white"
+                />
+              </div>
+            </div>
+
+            {/* Sidebar menu content */}
+            <div className="relative h-[calc(100vh-132px)] overflow-hidden">
+              {/* Main menu */}
+              <div
+                className={`absolute top-0 left-0 w-full h-full transition-all duration-300 ${
+                  sidebarLevel === "main" 
+                    ? "translate-x-0 opacity-100" 
+                    : sidebarLevel === "category" 
+                    ? "-translate-x-full opacity-0" 
+                    : "-translate-x-full opacity-0"
+                }`}
+              >
+                <div className="py-2 px-6">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                    Navigation Menu
+                  </h3>
+                  <div className="space-y-1">
+                    {Object.keys(menuData).map((link) => (
+                      <button
+                        key={link}
+                        className="w-full flex items-center justify-between p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors group"
+                        onClick={() => {
+                          setSelectedMainLink(link);
+                          setSidebarLevel("category");
+                        }}
+                      >
+                        <span>{link}</span>
+                        <FiChevronRight className="w-5 h-5 text-gray-400 group-hover:text-emerald-600 transition-colors" />
+                      </button>
+                    ))}
+                    <button className="w-full p-3 text-gray-800 font-medium hover:bg-gray-50 hover:text-emerald-600 rounded-lg transition-colors text-left">
+                      Map
+                    </button>
+                  </div>
                 </div>
-                <button
-                  onClick={closeMobileMenu}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                >
-                  <FiX className="w-5 h-5 text-gray-600" />
-                </button>
               </div>
 
-              {/* Search bar */}
-              <div className="px-6 py-4 border-b border-gray-100">
-                <div className="relative">
-                  <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search destinations..."
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-full 
-                             focus:outline-none focus:ring-2 focus:ring-emerald-500 
-                             text-gray-800 placeholder-gray-400 bg-white"
-                  />
-                </div>
-              </div>
-
-              {/* Menu content */}
-              <div className="relative h-[calc(100vh-132px)] overflow-hidden">
-                {/* Main menu */}
-                <div
-                  className={`absolute top-0 left-0 w-full h-full transition-all duration-300 ${
-                    mobileMenuLevel === "main" 
-                      ? "translate-x-0 opacity-100" 
-                      : mobileMenuLevel === "category" 
-                      ? "-translate-x-full opacity-0" 
-                      : "-translate-x-full opacity-0"
-                  }`}
-                >
-                  <div className="py-2 px-6">
-                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-                      Navigation
-                    </h3>
-                    <div className="space-y-1">
-                      {Object.keys(menuData).map((link) => (
+              {/* Category menu */}
+              <div
+                className={`absolute top-0 left-0 w-full h-full transition-all duration-300 ${
+                  sidebarLevel === "category" 
+                    ? "translate-x-0 opacity-100" 
+                    : sidebarLevel === "main"
+                    ? "translate-x-full opacity-0"
+                    : "-translate-x-full opacity-0"
+                }`}
+              >
+                <div className="py-2 px-6">
+                  <button
+                    className="flex items-center gap-2 p-3 text-gray-600 hover:text-gray-800 transition-colors"
+                    onClick={() => setSidebarLevel("main")}
+                  >
+                    <FiChevronRight className="w-5 h-5 rotate-180" />
+                    <span>Back to Menu</span>
+                  </button>
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 mt-2">
+                    {selectedMainLink}
+                  </h3>
+                  <div className="space-y-1">
+                    {selectedMainLink &&
+                      Object.keys(menuData[selectedMainLink]).map((category) => (
                         <button
-                          key={link}
+                          key={category}
                           className="w-full flex items-center justify-between p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors group"
                           onClick={() => {
-                            setSelectedMainLink(link);
-                            setMobileMenuLevel("category");
+                            setSelectedCategory(category);
+                            setSidebarLevel("item");
                           }}
                         >
-                          <span>{link}</span>
+                          <span>{category}</span>
                           <FiChevronRight className="w-5 h-5 text-gray-400 group-hover:text-emerald-600 transition-colors" />
                         </button>
                       ))}
-                      <button className="w-full p-3 text-gray-800 font-medium hover:bg-gray-50 hover:text-emerald-600 rounded-lg transition-colors text-left">
-                        Map
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Category menu */}
-                <div
-                  className={`absolute top-0 left-0 w-full h-full transition-all duration-300 ${
-                    mobileMenuLevel === "category" 
-                      ? "translate-x-0 opacity-100" 
-                      : mobileMenuLevel === "main"
-                      ? "translate-x-full opacity-0"
-                      : "-translate-x-full opacity-0"
-                  }`}
-                >
-                  <div className="py-2 px-6">
-                    <button
-                      className="flex items-center gap-2 p-3 text-gray-600 hover:text-gray-800 transition-colors"
-                      onClick={() => setMobileMenuLevel("main")}
-                    >
-                      <FiChevronRight className="w-5 h-5 rotate-180" />
-                      <span>Back</span>
-                    </button>
-                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 mt-2">
-                      {selectedMainLink}
-                    </h3>
-                    <div className="space-y-1">
-                      {selectedMainLink &&
-                        Object.keys(menuData[selectedMainLink]).map((category) => (
-                          <button
-                            key={category}
-                            className="w-full flex items-center justify-between p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors group"
-                            onClick={() => {
-                              setSelectedCategory(category);
-                              setMobileMenuLevel("item");
-                            }}
-                          >
-                            <span>{category}</span>
-                            <FiChevronRight className="w-5 h-5 text-gray-400 group-hover:text-emerald-600 transition-colors" />
-                          </button>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Item menu */}
-                <div
-                  className={`absolute top-0 left-0 w-full h-full transition-all duration-300 ${
-                    mobileMenuLevel === "item" 
-                      ? "translate-x-0 opacity-100" 
-                      : "translate-x-full opacity-0"
-                  }`}
-                >
-                  <div className="py-2 px-6">
-                    <button
-                      className="flex items-center gap-2 p-3 text-gray-600 hover:text-gray-800 transition-colors"
-                      onClick={() => setMobileMenuLevel("category")}
-                    >
-                      <FiChevronRight className="w-5 h-5 rotate-180" />
-                      <span>Back to {selectedMainLink}</span>
-                    </button>
-                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 mt-2">
-                      {selectedCategory}
-                    </h3>
-                    <div className="space-y-1">
-                      {selectedMainLink &&
-                        selectedCategory &&
-                        menuData[selectedMainLink][selectedCategory].map((item) => (
-                          <button
-                            key={item}
-                            className="w-full p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors text-left"
-                          >
-                            {item}
-                          </button>
-                        ))}
-                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Footer */}
-              <div className="absolute bottom-0 left-0 right-0 border-t border-gray-100 p-4 bg-white">
-                <div className="flex items-center justify-between px-2">
-                  <div className="flex gap-2">
-                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                      <FiHeart className="w-5 h-5 text-gray-700" />
-                    </button>
-                    {isSignedIn && (
-                      <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                        <FiUser className="w-5 h-5 text-gray-700" />
-                      </button>
-                    )}
-                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                      <FiMail className="w-5 h-5 text-gray-700" />
-                    </button>
-                  </div>
-                  <button className="text-sm text-emerald-600 font-medium hover:text-emerald-700 transition-colors">
-                    Sign Out
+              {/* Item menu */}
+              <div
+                className={`absolute top-0 left-0 w-full h-full transition-all duration-300 ${
+                  sidebarLevel === "item" 
+                    ? "translate-x-0 opacity-100" 
+                    : "translate-x-full opacity-0"
+                }`}
+              >
+                <div className="py-2 px-6">
+                  <button
+                    className="flex items-center gap-2 p-3 text-gray-600 hover:text-gray-800 transition-colors"
+                    onClick={() => setSidebarLevel("category")}
+                  >
+                    <FiChevronRight className="w-5 h-5 rotate-180" />
+                    <span>Back to {selectedMainLink}</span>
                   </button>
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 mt-2">
+                    {selectedCategory}
+                  </h3>
+                  <div className="space-y-1">
+                    {selectedMainLink &&
+                      selectedCategory &&
+                      menuData[selectedMainLink][selectedCategory].map((item) => (
+                        <button
+                          key={item}
+                          className="w-full p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors text-left"
+                        >
+                          {item}
+                        </button>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* Footer */}
+            <div className="absolute bottom-0 left-0 right-0 border-t border-gray-100 p-4 bg-white">
+              <div className="flex items-center justify-between px-2">
+                <div className="flex gap-2">
+                  <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                    <FiHeart className="w-5 h-5 text-gray-700" />
+                  </button>
+                  {isSignedIn && (
+                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                      <FiUser className="w-5 h-5 text-gray-700" />
+                    </button>
+                  )}
+                  <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                    <FiMail className="w-5 h-5 text-gray-700" />
+                  </button>
+                </div>
+                <button className="text-sm text-emerald-600 font-medium hover:text-emerald-700 transition-colors">
+                  {isSignedIn ? "Sign Out" : "Sign In"}
+                </button>
+              </div>
+            </div>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
 
       {/* Spacer */}
       <div className="h-16 lg:h-16" />
