@@ -2,6 +2,7 @@ import express from "express";
 import {getAllPlaces,ratePlace,commentPlace,favoritePlace} from "../controllers/place.controller.js";
 import {ratePlaceValidator,commentPlaceValidator} from "../validators/place.validator.js";
 import { auth } from "../middleware/auth.middleware.js";
+import { validate } from "../middleware/validate.middleware.js";
 
 const router = express.Router();
 

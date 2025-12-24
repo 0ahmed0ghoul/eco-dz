@@ -9,9 +9,10 @@ import tripRoutes from "./routes/trip.routes.js";
 import userRoutes from "./routes/user.routes.js";
 
 dotenv.config();
-app.use(helmet());
 
 const app = express();
+
+app.use(helmet());
 
 /* =======================
    GLOBAL MIDDLEWARE

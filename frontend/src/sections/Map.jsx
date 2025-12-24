@@ -19,25 +19,10 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 // Categories
 const categories = [
-  { id: "all", name: "All Monuments",total: 50 , color: "bg-blue-500", gradient: "from-blue-500 to-blue-600" },
-  { id: "desert", name: "Desert",total: 25 , color: "bg-amber-500", gradient: "from-amber-500 to-orange-500" },
-  { id: "mountain", name: "Mountains",total: 15 , color: "bg-green-500", gradient: "from-green-500 to-emerald-600" },
-  { id: "forest", name: "Forests",total: 10 , color: "bg-emerald-500", gradient: "from-emerald-500 to-green-600" },
-];
-const provinces = [
-  {name :"Adrar", num: 2},
-  {name :"Chlef", num: 3},
-  {name :"Laghouat", num: 2},
-  {name :"Oum El Bouaghi", num: 1},
-  {name :"Batna", num: 4},
-  {name :"Béjaïa", num: 3},
-  {name :"Biskra", num: 2},
-  {name :"Béchar", num: 2},
-  {name :"Blida", num: 3},
-  {name :"Bouira", num: 2},
-  {name :"Tamanrasset", num: 4},
-  {name :"Tébessa", num: 1},
-  
+  { id: "all", name: "All Monuments", color: "bg-blue-500", gradient: "from-blue-500 to-blue-600" },
+  { id: "desert", name: "Desert", color: "bg-amber-500", gradient: "from-amber-500 to-orange-500" },
+  { id: "mountain", name: "Mountains", color: "bg-green-500", gradient: "from-green-500 to-emerald-600" },
+  { id: "forest", name: "Forests", color: "bg-emerald-500", gradient: "from-emerald-500 to-green-600" },
 ];
 
 // Custom marker icons
@@ -79,6 +64,7 @@ function Map() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
+  const defaultBg = "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=2000&q=80";
 
   // Enhanced monuments data with galleries and additional info
   const enhancedMonuments = monuments.map(monument => ({
@@ -251,18 +237,22 @@ function handleViewMore(monument) {
     <section
       ref={sectionRef}
       id="maps"
-      className="relative h-screen w-full overflow-hidden "
+      className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900"
     >
       {/* Animated Background Gradient */}
-      <div className="absolute inset-0  animate-pulse"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-transparent to-emerald-400/20 animate-pulse"></div>
       
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-out"
+        style={{ 
+          backgroundImage: `url(${selectedMonument?.image || defaultBg})`,
+          filter: selectedMonument ? 'brightness(0.4)' : 'brightness(0.7)'
+        }}
       ></div>
 
       {/* Animated Grid Overlay */}
-      <div className="absolute inset-0 "></div>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[50px_50px] mask-[radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]"></div>
 
       <div className="relative z-20 h-full w-full max-w-7xl mx-auto px-4 py-6">
         {/* Header */}
@@ -296,7 +286,7 @@ function handleViewMore(monument) {
                   } backdrop-blur-sm`}
                 >
                   <div className="flex items-center justify-between">
-                    <span>{cat.name} ({cat.total})</span> 
+                    <span>{cat.name}</span>
                     {activeCategory === cat.id && (
                       <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                     )}
@@ -450,36 +440,6 @@ function handleViewMore(monument) {
                 </div>
               </div>
             )}
-          </div>
-
-                    {/* Sidebar */}
-            <div className="lg:w-72 bg-white/10 backdrop-blur-2xl rounded-3xl p-6 shadow-2xl border border-white/20 overflow-scroll">
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-              Categories
-            </h3>
-
-            <div className="space-y-3">
-              {provinces.map((prov) => (
-                <button
-                  key={prov.id}
-                  data-category={prov.id}
-                  onClick={() => handleCategoryClick(prov.id)}
-                  className={`category-btn w-full text-left px-5 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl ${
-                    activeCategory === prov.id
-                      ? `bg-gradient-to-r ${prov.gradient} text-white shadow-2xl scale-105 border border-white/30`
-                      : "bg-white/10 text-white/90 hover:bg-white/20 border border-white/10"
-                  } backdrop-blur-sm`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span>{prov.name} </span>  <span>{prov.num} </span>
-                    {activeCategory === prov.id && (
-                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    )}
-                  </div>
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       </div>

@@ -1,12 +1,6 @@
-import { db } from "../db.js";
+import { trips } from "../data/trips.js";
 
 export const getAllTrips = async (req, res) => {
-  const [trips] = await db.query(
-    `SELECT t.*, p.name AS place_name
-     FROM trips t
-     JOIN places p ON p.id = t.place_id`
-  );
-
   res.json(trips);
 };
 
@@ -22,33 +16,37 @@ export const createTrip = async (req, res) => {
     max_people
   } = req.body;
 
-  await db.query(
-    `INSERT INTO trips
-     (organizer_id, place_id, title, description, start_date, end_date, duration, price, max_people)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [
-      req.user.id,
-      place_id,
-      title,
-      description,
-      start_date,
-      end_date,
-      duration,
-      price,
-      max_people
-    ]
-  );
+  const newTrip = {
+    id: trips.length + 1,
+    place_id,
+    title,
+    description,
+    start_date,
+    end_date,
+    duration,
+    price,
+    max_people,
+    current_participants: 0,
+    organizer_id: req.user.id,
+    organizer_name: req.user.name,
+    activities: [],
+    difficulty: "Moderate",
+    included: ["Guide", "Meals", "Transportation"]
+  };
 
-  res.status(201).json({ message: "Trip created" });
+  trips.push(newTrip);
+
+  res.status(201).json({ message: "Trip created", trip: newTrip });
 };
 
 export const sendTripMessage = async (req, res) => {
   const { message } = req.body;
+  const tripId = req.params.id;
 
-  await db.query(
-    "INSERT INTO trip_messages (user_id, trip_id, message) VALUES (?, ?, ?)",
-    [req.user.id, req.params.id, message]
-  );
+  const trip = trips.find(t => t.id === parseInt(tripId));
+  if (!trip) {
+    return res.status(404).json({ message: "Trip not found" });
+  }
 
-  res.json({ message: "Message sent" });
+  res.json({ message: "Message sent to organizer", tripId });
 };
