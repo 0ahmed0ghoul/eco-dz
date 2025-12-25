@@ -4,10 +4,10 @@ import Login from "./sections/Login.jsx";
 import Signin from "./sections/Signin.jsx";
 import Contact from "./pages/Contact.jsx";
 import Travels from "./pages/Travels.jsx";
-import Navbar from "./components/Navbar.jsx";
+import Destinations from "./pages/Destinations.jsx";
+import MonumentDetails from "./sections/MonumentDetails.jsx";
 import Footer from "./components/Footer.jsx";
-import Destination from "./components/Destination.jsx";
-import Trip from "./components/Trip.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
   return (
