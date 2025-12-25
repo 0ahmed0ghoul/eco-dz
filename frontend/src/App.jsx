@@ -19,7 +19,7 @@ function App() {
       <Route path="/signin" element={<Signin />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/travels" element={<Travels />} />
-      <Route path="/place/0" element={<Destination />} />
+      <Route path="/places/:slug" element={<Destination />} />
       <Route path="/trip/0" element={<Trip />} />
     </Routes>
     <Footer />

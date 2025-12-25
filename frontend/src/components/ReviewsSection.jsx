@@ -1,46 +1,5 @@
 import React from "react";
 
-const totalReviews = 4511;
-const overallRating = 4.9;
-
-const breakdown = [
-  { stars: 5, count: 4047 },
-  { stars: 4, count: 381 },
-  { stars: 3, count: 51 },
-  { stars: 2, count: 19 },
-  { stars: 1, count: 13 },
-];
-
-const reviews = [
-  {
-    reviewer: "Tionna",
-    traveled: "November 2025",
-    tourName: "ESSENTIAL SOUTHERN THAILAND",
-    review:
-      "Yo is awesome! Communication was phenomenal. Yo went out of his way to make sure I was able to eat all foods while having an allergy. He is extremely knowledgeable with a deep respect for his job and country. Yo is a stand up guy with integrity. He takes care of his group and makes sure everything is taken care of.",
-  },
-  {
-    reviewer: "Shay",
-    traveled: "November 2025",
-    tourName: "ESSENTIAL SOUTHERN THAILAND",
-    review:
-      "Yo was a great tour guide! I appreciate his patience and knowledge of the area. He made my trip an amazing experience.",
-  },
-  {
-    reviewer: "Karen",
-    traveled: "November 2025",
-    tourName: "ESSENTIAL SOUTHERN THAILAND",
-    review:
-      "This tour does a great job of cramming a LOT of stuff in 7 short days!! Beware you will be doing a LOT of traveling, and have quite a few gas station meals as you travel across the country. Some of our accommodations were more basic than I would have liked, and we had issues with a few lodgings.",
-  },
-  {
-    reviewer: "—",
-    traveled: "—",
-    tourName: "ESSENTIAL JAPAN",
-    review: "Review content not visible in the screenshot.",
-  },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -113,7 +72,9 @@ const ReviewCard = ({ item }) => (
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <h3 className="text-sm font-semibold text-gray-900">{item.tourName}</h3>
           <span className="text-xs text-gray-500">•</span>
-          <span className="text-xs text-gray-600">Traveled {item.traveled}</span>
+          <span className="text-xs text-gray-600">
+            Traveled {item.traveled || "—"}
+          </span>
         </div>
         <p className="mt-2 text-sm text-gray-800">{item.review}</p>
       </div>
@@ -121,13 +82,17 @@ const ReviewCard = ({ item }) => (
   </article>
 );
 
-export default function ReviewsSection() {
+export default function ReviewsSection({ reviewsData }) {
+  if (!reviewsData) return null;
+
+  const { totalReviews, overallRating, breakdown, reviews } = reviewsData;
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-8">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Customer reviews</h2>
         <p className="mt-1 text-sm text-gray-600">
-          Real feedback from travelers across our tours.
+          Real feedback from travelers across our tours and trips.
         </p>
       </div>
 
@@ -143,12 +108,7 @@ export default function ReviewsSection() {
 
             <div className="mt-4 space-y-2">
               {breakdown.map((b) => (
-                <RatingBar
-                  key={b.stars}
-                  stars={b.stars}
-                  count={b.count}
-                  total={totalReviews}
-                />
+                <RatingBar key={b.stars} stars={b.stars} count={b.count} total={totalReviews} />
               ))}
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { db } from "../db.js";
+import pool from "../db.js";
 
 export const getFavorites = async (req, res) => {
   const [favorites] = await db.query(

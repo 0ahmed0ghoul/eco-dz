@@ -1,26 +1,25 @@
 import React from "react";
 
-const trips = [
-  { title: "Morocco Uncovered", days: 9, price: 2048 },
-  { title: "Classic Morocco", days: 8, price: 1471 },
-  { title: "Premium Morocco in Depth", days: 15, price: 4328 },
-  { title: "Best of Morocco", days: 10, price: 1386 },
-  { title: "Okavango Experience", days: 10, price: 2536 },
-  { title: "Morocco Highlights", days: 8, price: 1008 },
-  { title: "Explore Southern Africa", days: 10, price: 2085 },
-  { title: "North Morocco Adventure", days: 8, price: 928 },
-  { title: "South Africa Family Safari with Teenagers", days: 12, price: 3218 },
-  { title: "Gorillas & Game Parks", days: 16, price: 4340 },
-  { title: "East Africa Highlights", days: 10, price: 2475 },
-];
+const PlaceTrips = ({ place }) => {
+  if (!place || !place.trips || place.trips.length === 0) {
+    return (
+      <section className="bg-white text-gray-800 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Trips</h2>
+          <p className="text-gray-600">No trips available for this destination.</p>
+        </div>
+      </section>
+    );
+  }
 
-const PlaceTrips = () => {
   return (
     <section className="bg-white text-gray-800 py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Our Africa trips</h2>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Our {place.name} trips
+          </h2>
           <button className="px-4 py-2 text-sm font-medium bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200">
             Refine search
           </button>
@@ -28,7 +27,7 @@ const PlaceTrips = () => {
 
         {/* Trip grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {trips.map((trip, i) => (
+          {place.trips.map((trip, i) => (
             <div
               key={i}
               className="border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col"

@@ -1,4 +1,4 @@
-import { db } from "../db.js";
+import pool from "../db.js";
 
 export const isOrganizer = async (req, res, next) => {
   const [roles] = await db.query(
