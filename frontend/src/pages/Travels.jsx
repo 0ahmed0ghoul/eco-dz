@@ -54,21 +54,21 @@ export default function Travels() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
-      {/* HEADER */}
-      <header className="bg-gradient-to-r from-emerald-700 to-emerald-800 text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold">Discover Algeria's Wonders</h1>
-              <p className="text-emerald-100 mt-2">
-                <span className="font-semibold text-white">{filtered.length}</span> amazing trips available
-                {activeRegion !== "all" && (
-                  <span> in <span className="font-semibold text-white capitalize">{activeRegion}</span> region</span>
-                )}
-              </p>
-            </div>
-            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-2">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-gray-100">
+
+      <div className="max-w-7xl mx-auto px-4 py-8 -mt-4">
+        {/* SEARCH */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-8 border border-gray-100">
+          <div className="relative max-w-3xl mx-auto flex justify-between ">
+            <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-emerald-600" size={22} />
+            <input
+              type="text"
+              placeholder="Search destinations, activities, or keywords..."
+              className="w-full pl-14 pr-5 py-4 text-lg text-black border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+                        <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl p-2">
               <button
                 onClick={() => setViewMode("grid")}
                 className={`p-3 rounded-lg transition-all ${viewMode === "grid" ? "bg-white text-emerald-800" : "text-emerald-100 hover:bg-white/20"}`}
@@ -83,22 +83,7 @@ export default function Travels() {
               </button>
             </div>
           </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 py-8 -mt-4">
-        {/* SEARCH */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 mb-8 border border-gray-100">
-          <div className="relative max-w-3xl mx-auto">
-            <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-emerald-600" size={22} />
-            <input
-              type="text"
-              placeholder="Search destinations, activities, or keywords..."
-              className="w-full pl-14 pr-5 py-4 text-lg text-black border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
+          
         </div>
 
         {/* REGIONS */}

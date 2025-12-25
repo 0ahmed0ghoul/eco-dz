@@ -250,7 +250,8 @@ function handleViewMore(monument) {
   return (
     <section
       ref={sectionRef}
-      id="maps"
+      
+      id="map-section"
       className="relative h-screen w-full overflow-hidden "
     >
       {/* Animated Background Gradient */}

@@ -21,18 +21,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-emerald-50 to-teal-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md border border-emerald-100">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.29c-.01-.02-.02-.03-.03-.05C8.67 16.11 10.5 13 17 8z"/>
-            </svg>
-          </div>
-          <h2 className="text-3xl font-bold text-emerald-800 mb-2">Welcome Back</h2>
-          <p className="text-gray-600">Sign in to your EcoDz account</p>
-        </div>
+
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Username/Email Field */}
@@ -86,7 +77,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-emerald-700 hover:to-teal-700 transition duration-300 transform hover:scale-[1.02] shadow-lg ${
+            className={`w-full bg-linear-to-r from-emerald-600 to-teal-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-emerald-700 hover:to-teal-700 transition duration-300 transform hover:scale-[1.02] shadow-lg ${
               isLoading ? 'opacity-70 cursor-not-allowed' : ''
             }`}
           >

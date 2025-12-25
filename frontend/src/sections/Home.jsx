@@ -13,11 +13,10 @@ export default function Home() {
       {!logoDone && <Logo onComplete={() => setLogoDone(true)} />}
       {logoDone && (
         <div className="site-content">
-          <Navbar />
           <section className="section-container ">
             <Hero />
           </section>
-          <Footer />
+          
         </div>
       )}
     </>

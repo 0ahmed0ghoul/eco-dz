@@ -23,7 +23,7 @@ export default function SearchBar() {
       </div>
 
       {/* Date Range */}
-      <div className="flex gap-2 w-full md:w-1/3">
+      <div className="flex gap-2 w-full md:w-1/2 ">
         <input
           type="date"
           value={startDate}

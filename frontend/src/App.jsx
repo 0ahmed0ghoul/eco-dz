@@ -2,10 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./sections/Home.jsx";
 import Login from "./sections/Login.jsx";
 import Signin from "./sections/Signin.jsx";
-import MonumentDetails from "./sections/MonumentDetails.jsx";
 import Contact from "./pages/Contact.jsx";
 import Travels from "./pages/Travels.jsx";
 import Destinations from "./pages/Destinations.jsx";
+import MonumentDetails from "./sections/MonumentDetails.jsx";
 import Footer from "./components/Footer.jsx";
 import Navbar from "./components/Navbar.jsx";
 
