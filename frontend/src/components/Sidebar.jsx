@@ -44,8 +44,8 @@ function Sidebar({
     setSidebarLevel("item");
   };
 
-  const handleItemClick = (item) => {
-    const slug = generateSlug(item);
+  const handleItemClick = (slug) => {
+    if (!slug) return;
     goToPlace(slug);
     closeSidebar();
     setActiveNavLink(null);
@@ -198,15 +198,22 @@ function Sidebar({
               <div className="space-y-1">
                 {selectedMainLink &&
                   selectedCategory &&
-                  menuData[selectedMainLink][selectedCategory].map((item) => (
-                    <button
-                      key={item}
-                      className="w-full p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors text-left"
-                      onClick={() => handleItemClick(item)}
-                    >
-                      {item}
-                    </button>
-                  ))}
+                  menuData[selectedMainLink][selectedCategory].map(
+                    (item, index) => {
+                      const title = Object.keys(item)[0];
+                      const slug = item[title];
+
+                      return (
+                        <button
+                          key={slug || index} // ✅ UNIQUE
+                          className="w-full p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors text-left"
+                          onClick={() => handleItemClick(slug)}
+                        >
+                          {title}
+                        </button>
+                      );
+                    }
+                  )}
               </div>
             </div>
           </div>

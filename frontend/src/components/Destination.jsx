@@ -8,22 +8,26 @@ import ReviewsSection from "./ReviewsSection";
 import axios from "axios";
 
 const Destination = () => {
-  const { slug } = useParams();
+  const { category, slug } = useParams(); // get category & slug
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`/api/places/${slug}`)
-      .then(res => {
-        setPlace(res.data);
-      })
-      .catch(err => {
+
+    // Encode category & slug in case they have spaces
+    const encodedCategory = encodeURIComponent(category);
+    const encodedSlug = encodeURIComponent(slug);
+
+    axios
+      .get(`/api/places/${encodedCategory}/${encodedSlug}`)
+      .then((res) => setPlace(res.data))
+      .catch((err) => {
         console.error(err);
         setPlace(null);
       })
       .finally(() => setLoading(false));
-  }, [slug]);
+  }, [category, slug]);
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
 
@@ -41,7 +45,7 @@ const Destination = () => {
       <TravelDeals place={place} />
       <PlaceTrips place={place} />
       <PlaceHighlights place={place} />
-      <ReviewsSection reviewsData={place} />
+      <ReviewsSection reviewsData={place.reviewsData} />
     </section>
   );
 };

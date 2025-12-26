@@ -461,9 +461,9 @@ function handleViewMore(monument) {
             </h3>
 
             <div className="space-y-3">
-              {provinces.map((prov) => (
+              {provinces.map((prov,index) => (
                 <button
-                  key={prov.id}
+                  key={index}
                   data-category={prov.id}
                   onClick={() => handleCategoryClick(prov.id)}
                   className={`category-btn w-full text-left px-5 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl ${
@@ -486,7 +486,7 @@ function handleViewMore(monument) {
       </div>
 
       {/* Custom CSS for Leaflet markers */}
-      <style jsx>{`
+      <style>{`
         .custom-marker {
           background: transparent !important;
           border: none !important;

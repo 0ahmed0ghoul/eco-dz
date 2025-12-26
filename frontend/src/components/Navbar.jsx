@@ -21,10 +21,12 @@ function Navbar() {
     "Kabylia Region",
   ]);
   const [activeNavLink, setActiveNavLink] = useState(null);
-  const [selectedCategoryInMegaMenu, setSelectedCategoryInMegaMenu] =
-    useState(null);
 
-  // ✅ BACKEND STATE (already existed, now actually used)
+  // ✅ NEW: separate state for MegaMenu category key and slug
+  const [selectedCategoryKey, setSelectedCategoryKey] = useState(null);
+  const [selectedCategorySlug, setSelectedCategorySlug] = useState(null);
+
+  // ✅ BACKEND STATE
   const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
@@ -43,33 +45,27 @@ function Navbar() {
   /* =========================
      NAVIGATION (BACKEND SAFE)
   ========================= */
-
   const goToCategory = (category) => {
     navigate(`/places/${category}`);
     closeSidebar();
   };
 
-  const goToPlace = (placeName) => {
-    const slug = generateSlug(placeName);
-    if (!selectedCategoryInMegaMenu) return; // ensures category is selected
-    navigate(`/places/${selectedCategoryInMegaMenu}/${slug}`);
-    setActiveNavLink(null);
-    setSelectedCategoryInMegaMenu(null);
+  const goToPlace = (categorySlug, placeSlug) => {
+    navigate(`/places/${categorySlug}/${placeSlug}`);
     closeSidebar();
   };
-  
 
   const goToAllDestinations = () => {
     navigate("/places");
     setActiveNavLink(null);
-    setSelectedCategoryInMegaMenu(null);
+    setSelectedCategoryKey(null);
+    setSelectedCategorySlug(null);
     closeSidebar();
   };
 
   /* =========================
-     SCROLL / UI LOGIC (UNCHANGED)
+     SCROLL / UI LOGIC
   ========================= */
-
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
@@ -86,7 +82,8 @@ function Navbar() {
         !e.target.closest(".nav-link-button")
       ) {
         setActiveNavLink(null);
-        setSelectedCategoryInMegaMenu(null);
+        setSelectedCategoryKey(null);
+        setSelectedCategorySlug(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -99,7 +96,8 @@ function Navbar() {
         setIsSidebarOpen(false);
         setSidebarLevel("main");
         setActiveNavLink(null);
-        setSelectedCategoryInMegaMenu(null);
+        setSelectedCategoryKey(null);
+        setSelectedCategorySlug(null);
       }
     };
     document.addEventListener("keydown", handleEscKey);
@@ -125,10 +123,12 @@ function Navbar() {
 
       if (activeNavLink === link) {
         setActiveNavLink(null);
-        setSelectedCategoryInMegaMenu(null);
+        setSelectedCategoryKey(null);
+        setSelectedCategorySlug(null);
       } else {
         setActiveNavLink(link);
-        setSelectedCategoryInMegaMenu(null);
+        setSelectedCategoryKey(null);
+        setSelectedCategorySlug(null);
       }
     } else {
       if (link === "Map") scrollToMap();
@@ -177,9 +177,7 @@ function Navbar() {
                 <button
                   key={link}
                   ref={(el) => (navLinksRef.current[link] = el)}
-                  className="nav-link-button relative h-16 flex items-center px-4 font-medium
-text-gray-800 hover:text-emerald-600 transition-colors cursor-pointer
-whitespace-nowrap"
+                  className="nav-link-button relative h-16 flex items-center px-4 font-medium text-gray-800 hover:text-emerald-600 transition-colors cursor-pointer whitespace-nowrap"
                   onClick={() => handleNavLinkClick(link)}
                 >
                   {link}
@@ -288,8 +286,10 @@ whitespace-nowrap"
         <MegaMenu
           activeNavLink={activeNavLink}
           menuData={menuData}
-          selectedCategoryInMegaMenu={selectedCategoryInMegaMenu}
-          setSelectedCategoryInMegaMenu={setSelectedCategoryInMegaMenu}
+          selectedCategoryKey={selectedCategoryKey}
+          selectedCategorySlug={selectedCategorySlug}
+          setSelectedCategoryKey={setSelectedCategoryKey}
+          setSelectedCategorySlug={setSelectedCategorySlug}
           setActiveNavLink={setActiveNavLink}
           navLinksRef={navLinksRef}
           goToPlace={goToPlace}
