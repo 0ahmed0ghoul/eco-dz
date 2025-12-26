@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FiSearch, FiUser, FiHeart, FiMail, FiX, FiMenu } from "react-icons/fi";
-import logo from "../assets/logos/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useLocation } from "react-router-dom";
 import { navLinks, menuData, popularSearches } from "../data/menuData";
 import MegaMenu from "./MegaMenu";
 import Sidebar from "./Sidebar";
@@ -14,6 +13,8 @@ function Navbar() {
   const [sidebarLevel, setSidebarLevel] = useState("main");
   const [selectedMainLink, setSelectedMainLink] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const location = useLocation(); // ✅ Get current route
+  const isHomePage = location.pathname === "/"; // ✅ Check if home page
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [recentSearches, setRecentSearches] = useState([
     "Tassili n'Ajjer",
@@ -26,21 +27,8 @@ function Navbar() {
   const [selectedCategoryKey, setSelectedCategoryKey] = useState(null);
   const [selectedCategorySlug, setSelectedCategorySlug] = useState(null);
 
-  // ✅ BACKEND STATE
-  const [categories, setCategories] = useState([]);
-
   const navigate = useNavigate();
   const navLinksRef = useRef({});
-
-  /* =========================
-     BACKEND: FETCH CATEGORIES
-  ========================= */
-  useEffect(() => {
-    fetch("http://localhost:5000/api/places")
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) => console.error("Failed to load categories", err));
-  }, []);
 
   /* =========================
      NAVIGATION (BACKEND SAFE)
@@ -136,7 +124,7 @@ function Navbar() {
   };
 
   const scrollToMap = () => {
-    const mapSection = document.getElementById("map-section");
+    const mapSection = document.getElementById("maps");
     if (!mapSection) return;
     const navbarHeight = 64;
     window.scrollTo({
@@ -162,7 +150,7 @@ function Navbar() {
               onClick={() => (window.location.href = "/")}
             >
               <img
-                src={logo}
+                src="/assets/logos/logo.png"
                 alt="EcoDz Logo"
                 className="h-10 lg:h-12 transition-transform group-hover:scale-105 duration-300"
               />
@@ -173,16 +161,21 @@ function Navbar() {
 
             {/* Desktop Links */}
             <div className="hidden lg:flex items-center gap-6 relative">
-              {navLinks.map((link) => (
-                <button
-                  key={link}
-                  ref={(el) => (navLinksRef.current[link] = el)}
-                  className="nav-link-button relative h-16 flex items-center px-4 font-medium text-gray-800 hover:text-emerald-600 transition-colors cursor-pointer whitespace-nowrap"
-                  onClick={() => handleNavLinkClick(link)}
-                >
-                  {link}
-                </button>
-              ))}
+            {navLinks.map((link) => {
+                // ✅ Only show "Map" if on home page
+                if (link === "Map" && !isHomePage) return null;
+
+                return (
+                  <button
+                    key={link}
+                    ref={(el) => (navLinksRef.current[link] = el)}
+                    className="nav-link-button relative h-16 flex items-center px-4 font-medium text-gray-800 hover:text-emerald-600 transition-colors cursor-pointer whitespace-nowrap"
+                    onClick={() => handleNavLinkClick(link)}
+                  >
+                    {link}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

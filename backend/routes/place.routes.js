@@ -8,7 +8,7 @@ import {
 const router = express.Router();
 
 // 1️⃣ Get all categories
-router.get("/", getCategories);
+router.get("/categories", getCategories);
 
 // 2️⃣ Get all places by category
 router.get("/:category", getPlacesByCategory);

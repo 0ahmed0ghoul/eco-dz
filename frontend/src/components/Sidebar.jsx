@@ -8,7 +8,7 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logos/logo.png";
+import logo from "/assets/logos/logo.png";
 import { navLinks, menuData } from "../data/menuData";
 import { generateSlug } from "../utils/generateSlug";
 
@@ -80,7 +80,8 @@ function Sidebar({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="EcoDz Logo" className="h-8" />
+            <img src='/assets/logos/logo.png'
+             alt="EcoDz Logo" className="h-8" />
             <h2 className="text-xl font-bold text-emerald-600">EcoDz</h2>
           </div>
           <button

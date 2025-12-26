@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
+import path from "path";
+import { fileURLToPath } from "url"; // ✅ you must import this
 
 import authRoutes from "./routes/auth.routes.js";
 import placeRoutes from "./routes/place.routes.js";
@@ -12,6 +14,10 @@ dotenv.config();
 
 const app = express();
 
+// Recreate __dirname in ES module scope
+ const __filename = fileURLToPath(import.meta.url); 
+ const __dirname = path.dirname(__filename);
+ app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use(helmet());
 
 /* =======================

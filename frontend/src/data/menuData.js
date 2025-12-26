@@ -1,14 +1,13 @@
 export const navLinks = [
-  "Destinations",
+  "Places",
   "Ways to Travel",
-  "Themes",
-  "Deals & Offers",
-  "Eco-Initiatives",
+  "Deals",
   "Map",
+  "Quizzes"
 ];
 
 export const menuData = {
-  Destinations: {
+  Places: {
     "Deserts": [
       {"Tassili n'Ajjer National Park": "tassili-najjer"},
       {"Sahara Desert": "sahara-desert"},
@@ -44,13 +43,19 @@ export const menuData = {
       {"Tafna River": "tafna-river"},
       {"Mouilah River": "mouilah-river"},
     ],
-    
     "All Destinations": [],
   },
-  "Ways to Travel": {},
-  Themes: {},
-  "Deals & Offers": {},
-  "Eco-Initiatives": {},
+  "Ways to Travel": {
+    ["Eco-Friendly Tours"]: {},
+    ["Sustainable Accommodations"]: {},
+    ["Green Transportation Options"]: {},
+  },
+  Deals: {
+    ["Last Minute Deals"]: {},
+    ["Family Packages"]: {},
+    ["Adventure Tours"]: {},
+  },
+
 };
 
 export const popularSearches = [

@@ -5,7 +5,7 @@ import Experiences from "../components/Experiences.jsx";
 import OurPurpose from "../components/OurPurpose.jsx";
 import VideoPart from "../components/VideoPart.jsx";
 import Map from "../components/Map.jsx";
-import backgroundImage from "../assets/background/2.jpg";
+import backgroundImage from "/assets/background/2.jpg";
 
 const Hero = () => {
   return (
