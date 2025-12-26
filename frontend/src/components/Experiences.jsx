@@ -1,9 +1,4 @@
 import { useState } from 'react';
-import alhaggar from "../assets/destinations/alhaggar.jpg";
-import Atlas from "../assets/destinations/Atlas_Cedar_Forest_in_Mount_Chelia.jpg";
-import Beni_Salah from "../assets/destinations/Beni Salah Mountain.jpg";
-import bni_haroun from "../assets/destinations/bni_haroun.jpg";
-import chrea from "../assets/destinations/chrea.jpg";
 
 const tabs = ['Only Intrepid experiences', 'New trips', 'Popular trips'];
 
@@ -16,21 +11,21 @@ const experiences = [
     originalPrice: '$995',
     discount: 'Save $99',
     tag: 'Bestseller',
-    image: alhaggar,
+    image: '/assets/destinations/alhaggar.jpg',
   },
   {
     title: 'Springtime in the Maasai Mara',
     duration: '16 days',
     destination: 'Gorillas & Game Parks',
     price: '$4,530',
-    image: Atlas,
+    image: '/assets/destinations/Atlas_Cedar_Forest_in_Mount_Chelia.jpg',
   },
   {
     title: 'Sail Naxos with Nikos',
     duration: '10 days',
     destination: 'Greece Sailing Adventure: Cyclades Islands',
     price: '$2,692',
-    image: Beni_Salah,
+    image: '/assets/destinations/Beni Salah Mountain.jpg',
   },
   {
     title: 'Sweet treats, Hanoi streets',
@@ -39,7 +34,7 @@ const experiences = [
     price: '$1,113',
     originalPrice: '$1,590',
     discount: 'Save $477',
-    image: bni_haroun,
+    image: '/assets/destinations/bni_haroun.jpg',
   },
   {
     title: 'Tortuguero trails with Pedro',
@@ -48,7 +43,7 @@ const experiences = [
     price: '$1,999',
     originalPrice: '$2,660',
     discount: 'Save $661',
-    image: chrea,
+    image: '/assets/destinations/chrea.jpg',
   },
 ];
 
@@ -64,8 +59,8 @@ export default function IntrepidExperienceGallery() {
             Only Intrepid experiences
           </h2>
           
-          {/* Tabs - Exactly like Intrepid */}
-          <div className="flex space-x-1  p-1 rounded-lg inline-flex">
+          {/* Tabs */}
+          <div className="flex space-x-1 p-1 rounded-lg inline-flex">
             {tabs.map((tab) => (
               <button
                 key={tab}
@@ -80,14 +75,14 @@ export default function IntrepidExperienceGallery() {
           </div>
         </div>
 
-        {/* Cards Grid - 5 columns on desktop */}
+        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-10 bg-gradient-to-b from-white/10 to-transparent backdrop-blur-sm">
           {experiences.map((exp, idx) => (
             <div
               key={idx}
               className="group rounded-lg overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300"
             >
-              {/* Image Container */}
+              {/* Image */}
               <div className="relative h-48 overflow-hidden bg-gray-100">
                 <img
                   src={exp.image}
@@ -95,7 +90,6 @@ export default function IntrepidExperienceGallery() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 
-                {/* Tag Badge - top left */}
                 {exp.tag && (
                   <div className="absolute top-3 left-3">
                     <span className="px-2 py-1 bg-white text-gray-900 text-xs font-semibold rounded-sm">
@@ -104,7 +98,6 @@ export default function IntrepidExperienceGallery() {
                   </div>
                 )}
                 
-                {/* Save Badge - bottom left */}
                 {exp.discount && (
                   <div className="absolute bottom-3 left-3">
                     <span className="px-2 py-1 bg-emerald-600 text-white text-xs font-semibold rounded-sm">
@@ -114,9 +107,8 @@ export default function IntrepidExperienceGallery() {
                 )}
               </div>
 
-              {/* Content - Exactly like Intrepid */}
+              {/* Content */}
               <div className="p-4">
-                {/* Duration and Title in one line */}
                 <div className="flex items-start justify-between mb-2">
                   <div>
                     <span className="text-sm text-white font-medium">
@@ -128,12 +120,10 @@ export default function IntrepidExperienceGallery() {
                   </div>
                 </div>
 
-                {/* Destination */}
                 <p className="text-sm text-gray-300 mb-4 line-clamp-2">
                   {exp.destination}
                 </p>
 
-                {/* Price Section - Exactly like Intrepid */}
                 <div className="border-t border-gray-100 pt-3">
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-300">From</span>
@@ -153,7 +143,6 @@ export default function IntrepidExperienceGallery() {
                     )}
                   </div>
                   
-                  {/* Trip type indicator */}
                   <div className="mt-2">
                     <span className="inline-flex items-center gap-1 text-xs text-gray-300">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,7 +157,7 @@ export default function IntrepidExperienceGallery() {
           ))}
         </div>
 
-        {/* CTA Button - Center aligned */}
+        {/* CTA */}
         <div className="text-center">
           <button className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors duration-300">
             Explore experiences
@@ -177,7 +166,6 @@ export default function IntrepidExperienceGallery() {
             </svg>
           </button>
           
-          {/* Trust indicators - like Intrepid */}
           <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm text-gray-300">
             <div className="flex items-center gap-2">
               <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,11 +179,11 @@ export default function IntrepidExperienceGallery() {
               </svg>
               <span>Flexible booking</span>
             </div>
-            <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
               <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
               </svg>
-              <span>C02 Offset Flights</span>
+              <span>CO₂ Offset Flights</span>
             </div>
           </div>
         </div>

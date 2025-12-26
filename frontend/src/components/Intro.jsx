@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../assets/images/main-logo.png';
+import logo from '/assets/images/main-logo.png';
 import MainSearchBar from "./MainSearchBar.jsx";
 
 function Intro() {
@@ -20,6 +20,7 @@ function Intro() {
               src={logo}
               alt="EcoDz - Sustainable Travel in Algeria"
               className="w-32 h-32 object-contain rounded-full shadow-2xl border-4 border-white/20"
+              loading="lazy"
             />
           </div>
           {/* Text Content */}

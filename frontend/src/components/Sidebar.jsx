@@ -8,7 +8,7 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logos/logo.png";
+import logo from "/assets/logos/logo.png";
 import { navLinks, menuData } from "../data/menuData";
 import { generateSlug } from "../utils/generateSlug";
 
@@ -44,8 +44,8 @@ function Sidebar({
     setSidebarLevel("item");
   };
 
-  const handleItemClick = (item) => {
-    const slug = generateSlug(item);
+  const handleItemClick = (slug) => {
+    if (!slug) return;
     goToPlace(slug);
     closeSidebar();
     setActiveNavLink(null);
@@ -80,7 +80,8 @@ function Sidebar({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="EcoDz Logo" className="h-8" />
+            <img src='/assets/logos/logo.png'
+             alt="EcoDz Logo" className="h-8" />
             <h2 className="text-xl font-bold text-emerald-600">EcoDz</h2>
           </div>
           <button
@@ -198,15 +199,22 @@ function Sidebar({
               <div className="space-y-1">
                 {selectedMainLink &&
                   selectedCategory &&
-                  menuData[selectedMainLink][selectedCategory].map((item) => (
-                    <button
-                      key={item}
-                      className="w-full p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors text-left"
-                      onClick={() => handleItemClick(item)}
-                    >
-                      {item}
-                    </button>
-                  ))}
+                  menuData[selectedMainLink][selectedCategory].map(
+                    (item, index) => {
+                      const title = Object.keys(item)[0];
+                      const slug = item[title];
+
+                      return (
+                        <button
+                          key={slug || index} // ✅ UNIQUE
+                          className="w-full p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors text-left"
+                          onClick={() => handleItemClick(slug)}
+                        >
+                          {title}
+                        </button>
+                      );
+                    }
+                  )}
               </div>
             </div>
           </div>

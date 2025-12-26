@@ -1,6 +1,5 @@
 import React from "react";
 import { Star, Plus } from "lucide-react";
-import Alhaggar from "../../assets/destinations/alhaggar.jpg";
 
 
 const TripOverview = () => {
@@ -10,7 +9,7 @@ const TripOverview = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="aspect-16/7 overflow-hidden rounded-lg shadow-sm">
           <img
-            src={Alhaggar}
+            src={'/destinations/alhaggar.jpg'}
             alt="Elephants walking through African savannah"
             className="w-full h-full object-cover"
           />

@@ -1,13 +1,48 @@
 import pool from "../db.js";
 
-// 1️⃣ Get categories
+/**
+ * 1️⃣ Get categories
+ * Returns:
+ * - category
+ * - total places
+ * - images[] (gallery)
+ */
 export const getCategories = async (req, res) => {
   try {
-    const [categories] = await pool.query(
-      "SELECT category, COUNT(*) AS total FROM places GROUP BY category"
-    );
+    // Get only what we need
+    const [rows] = await pool.query(`
+      SELECT category, image
+      FROM places
+      WHERE image IS NOT NULL
+    `);
+
+    const categoriesMap = {};
+
+    rows.forEach((row) => {
+      if (!categoriesMap[row.category]) {
+        categoriesMap[row.category] = {
+          category: row.category,
+          total: 0,
+          images: [],
+        };
+      }
+
+      categoriesMap[row.category].total += 1;
+
+      // Push image (limit later)
+      categoriesMap[row.category].images.push(row.image);
+    });
+
+    // Convert object → array + limit images per category
+    const categories = Object.values(categoriesMap).map((cat) => ({
+      category: cat.category,
+      total: cat.total,
+      images: cat.images.slice(0, 4), // 👈 limit gallery images
+    }));
+
     res.json(categories);
   } catch (err) {
+    console.error("getCategories error:", err);
     res.status(500).json({ message: "Server error" });
   }
 };

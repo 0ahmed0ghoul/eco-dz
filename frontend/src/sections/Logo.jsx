@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import logoImage from "../assets/logos/logo.png";
 import "../styles/Logo.css";
 
 const Logo = ({ onComplete }) => {
@@ -28,7 +27,7 @@ const Logo = ({ onComplete }) => {
 
         {/* Logo image */}
         <image
-          href={logoImage}
+          href={'/assets/logos/logo.png'}
           x="150"
           y="70"
           width="100"

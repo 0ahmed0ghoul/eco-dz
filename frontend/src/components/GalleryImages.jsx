@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
-import alhaggar from "../assets/destinations/alhaggar.jpg";
-import Atlas from "../assets/destinations/Atlas_Cedar_Forest_in_Mount_Chelia.jpg";
-import Beni_Salah from "../assets/destinations/Beni Salah Mountain.jpg";
-import bni_haroun from "../assets/destinations/bni_haroun.jpg";
-import chrea from "../assets/destinations/chrea.jpg";
 
 const galleryImages = [
-  alhaggar,
-    Atlas,
-    Beni_Salah,
-    bni_haroun,
-    chrea,
+  "/assets/destinations/alhaggar.jpg",
+  "/assets/destinations/Atlas_Cedar_Forest_in_Mount_Chelia.jpg",
+  "/assets/destinations/Beni Salah Mountain.jpg",
+  "/assets/destinations/bni_haroun.jpg",
+  "/assets/destinations/chrea.jpg",
 ];
 
 const stats = [
@@ -127,14 +122,14 @@ export default function GalleryWithStats() {
           {/* Controls */}
           <button
             onClick={prev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-black/50 rounded-full flex items-center justify-center"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-black/50 rounded-full flex items-center justify-center text-white text-2xl"
           >
             ‹
           </button>
 
           <button
             onClick={next}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-black/50 rounded-full flex items-center justify-center"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-black/50 rounded-full flex items-center justify-center text-white text-2xl"
           >
             ›
           </button>
@@ -147,9 +142,7 @@ export default function GalleryWithStats() {
               key={i}
               onClick={() => setCurrentSlide(i)}
               className={`h-3 rounded-full transition-all duration-300 ${
-                i === currentSlide
-                  ? "w-8 bg-yellow-400"
-                  : "w-3 bg-white/40"
+                i === currentSlide ? "w-8 bg-yellow-400" : "w-3 bg-white/40"
               }`}
             />
           ))}
@@ -170,7 +163,6 @@ export default function GalleryWithStats() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 const PlaceOverview = ({ place }) => {
   if (!place) return null; // in case place is not loaded yet
 
@@ -29,7 +30,7 @@ const PlaceOverview = ({ place }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="aspect-16/7 overflow-hidden rounded-lg shadow-sm">
           <img
-            src={place.images?.[0]} // first image of the place
+            src={`../assets/destinations/${place.image}`}
             alt={place.name}
             className="w-full h-full object-cover"
           />
