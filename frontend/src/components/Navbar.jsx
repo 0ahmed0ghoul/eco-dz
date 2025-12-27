@@ -4,10 +4,9 @@ import { useNavigate ,useLocation } from "react-router-dom";
 import { navLinks, menuData, popularSearches } from "../data/menuData";
 import MegaMenu from "./MegaMenu";
 import Sidebar from "./Sidebar";
-import { generateSlug } from "../utils/generateSlug";
 
 function Navbar() {
-  const [isSignedIn] = useState(true);
+  const [isSignedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarLevel, setSidebarLevel] = useState("main");
@@ -16,11 +15,7 @@ function Navbar() {
   const location = useLocation(); // ✅ Get current route
   const isHomePage = location.pathname === "/"; // ✅ Check if home page
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [recentSearches, setRecentSearches] = useState([
-    "Tassili n'Ajjer",
-    "Hoggar Mountains",
-    "Kabylia Region",
-  ]);
+  const [recentSearches, setRecentSearches] = useState(["Tassili n'Ajjer","Hoggar Mountains","Kabylia Region",]);
   const [activeNavLink, setActiveNavLink] = useState(null);
 
   // ✅ NEW: separate state for MegaMenu category key and slug
@@ -249,18 +244,26 @@ function Navbar() {
             </div>
 
             <div className="hidden lg:flex items-center gap-2">
-              <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group">
+              <button 
+              onClick={isSignedIn ? () => navigate('/favorite-list') : () => navigate('/login')}
+              className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group">
                 <FiHeart className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
                 <span className="absolute -top-0.5 -right-0.5 bg-emerald-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
                   3
                 </span>
               </button>
-              {isSignedIn && (
-                <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group">
+              
+                <button 
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+                onClick={isSignedIn ? () => navigate('/profile') : () => navigate('/login')}
+                >
                   <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
                 </button>
-              )}
-              <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group">
+            
+              <button 
+              className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+              onClick={() => navigate('/contact')}
+              >
                 <FiMail className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
               </button>
             </div>

@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 const PlaceOverview = ({ place }) => {
-  if (!place) return null; // in case place is not loaded yet
+  if (!place) return null;
 
   return (
     <section className="bg-white text-gray-800">
@@ -17,8 +16,11 @@ const PlaceOverview = ({ place }) => {
           </li>
           <li>/</li>
           <li>
-            <Link to="/places" className="hover:text-gray-700">
-              Destinations
+            <Link
+              to={`/places/${place.category}`}
+              className="hover:text-gray-700 capitalize"
+            >
+              {place.category}
             </Link>
           </li>
           <li>/</li>
@@ -28,9 +30,9 @@ const PlaceOverview = ({ place }) => {
 
       {/* Hero image */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="aspect-16/7 overflow-hidden rounded-lg shadow-sm">
+        <div className="relative w-full h-[420px] overflow-hidden rounded-xl shadow-sm">
           <img
-            src={`../assets/destinations/${place.image}`}
+            src={place.image}   // ✅ USE API PATH DIRECTLY
             alt={place.name}
             className="w-full h-full object-cover"
           />
@@ -39,9 +41,15 @@ const PlaceOverview = ({ place }) => {
 
       {/* Overview content */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">{place.name}</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          {place.name}
+        </h1>
         <p className="text-lg leading-relaxed text-gray-700">
           {place.description}
+        </p>
+
+        <p className="mt-4 text-sm text-gray-500">
+          📍 {place.destination || "Location not specified"} 
         </p>
       </div>
     </section>

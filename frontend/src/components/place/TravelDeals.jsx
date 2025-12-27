@@ -5,8 +5,12 @@ const TravelDeals = ({ place }) => {
     return (
       <section className="bg-white text-gray-800 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Travel Deals</h2>
-          <p className="text-gray-600">No deals available for this destination.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Travel Deals
+          </h2>
+          <p className="text-gray-600">
+            No deals available for this destination.
+          </p>
         </div>
       </section>
     );
@@ -20,49 +24,57 @@ const TravelDeals = ({ place }) => {
           Top {place.name} travel deals
         </h2>
 
-        {/* Deals table */}
+        {/* Deals list */}
         <div className="space-y-6">
-          {place.deals.map((deal, i) => (
+          {place.deals.map((deal) => (
             <div
-              key={i}
-              className="grid grid-cols-1 sm:grid-cols-5 gap-4 items-center border border-gray-200 rounded-lg p-4 shadow-sm"
+              key={deal.id}
+              className="grid grid-cols-1 sm:grid-cols-5 gap-4 items-center
+                         border border-gray-200 rounded-lg p-4 shadow-sm"
             >
+              {/* Date */}
               <div className="text-sm text-gray-600">
-                <span className="font-medium text-gray-900 block">Departing</span>
-                {deal.date}
+                <span className="font-medium text-gray-900 block">
+                  Departing
+                </span>
+                {new Date(deal.start_date).toLocaleDateString()}
               </div>
 
+              {/* Trip */}
               <div className="sm:col-span-2">
-                <h3 className="text-base font-semibold text-gray-900">{deal.trip}</h3>
+                <h3 className="text-base font-semibold text-gray-900">
+                  {deal.trip_name}
+                </h3>
                 <p className="text-sm text-gray-600">{deal.route}</p>
               </div>
 
+              {/* Days */}
               <div className="text-sm text-gray-600">
                 <span className="font-medium text-gray-900 block">Days</span>
                 {deal.days}
               </div>
 
+              {/* Prices */}
               <div className="text-right">
                 <p className="text-sm text-gray-500 line-through">
-                  USD ${deal.price.original.toLocaleString()}
+                  USD ${Number(deal.price_original).toLocaleString()}
                 </p>
                 <p className="text-lg font-semibold text-green-700">
-                  USD ${deal.price.discounted.toLocaleString()}
+                  USD ${Number(deal.price_discounted).toLocaleString()}
                 </p>
-                <a
-                  href="#"
-                  className="text-sm text-blue-600 hover:underline mt-1 inline-block"
-                >
+
+                <button className="text-sm text-blue-600 hover:underline mt-1 inline-block">
                   View trip
-                </a>
+                </button>
               </div>
             </div>
           ))}
         </div>
 
-        {/* View more button */}
+        {/* View more */}
         <div className="mt-8 text-center">
-          <button className="px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors">
+          <button className="px-6 py-2 bg-blue-600 text-white text-sm
+                             font-medium rounded-md hover:bg-blue-700 transition-colors">
             View more trips
           </button>
         </div>

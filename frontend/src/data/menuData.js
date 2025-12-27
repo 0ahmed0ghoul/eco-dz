@@ -8,37 +8,39 @@ export const navLinks = [
 
 export const menuData = {
   Places: {
-    "Deserts": [
-      {"Tassili n'Ajjer National Park": "tassili-najjer"},
+    "Desert": [
+      {"Tassili n'Ajjer National Park": "tassili-n-ajjer-national-park"},
       {"Sahara Desert": "sahara-desert"},
       {"Grand Erg Oriental": "grand-erg-oriental"},
     ],
-    "Parks": [
+    "Park": [
       {"Chréa National Park" : "chrea-national-park"},
-      {"El Kala National Park": "el-kala-national-park"},
+      {"Chelia National Park": "paysage-parc-national-chelia"},
+
+
     ],
-    "Lakes": [
+    "Lake": [
       {"Gouraya National Park": "gouraya-national-park"},
       {"Cape Carbon": "cape-carbon"},
       {"Lake Oubeira": "lake-oubeira"},
-      {"Beni Haroun Dam & Lake": "beni-haroun-dam-lake"},
+      {"Beni Haroun Dam and Lake": "beni-haroun-dam-lake"},
     ],
-    "Caves": [
+    "Cave": [
       {"Béni Add Caves (Aïn Fezza)": "beni-add-caves-ain-fezza"},
       {"Zahlane Caves": "zahlane-caves"},
     ],
-    "Mountains": [
-      {"Hoggar Mountains (Ahaggar)": "hoggar-mountains"},
+    "Mountain": [
+      {"Hoggar Mountains Ahaggar": "hoggar-mountains-ahaggar"},
       {"Mount Tahat": "mount-tahat"},
       {"Mount Chenoua": "mount-chenoua"},
       {"Djurjura Range": "djurjura-range"},
     ],
-    "Forests": [
+    "Forest": [
       {"Cedar Forest of Gouraya": "cedar-forest-of-gouraya"},
       {"Cedar Forest of Beni Snous": "cedar-forest-of-beni-snous"},
       {"Cedar Forest of Tikjda": "cedar-forest-of-tikjda"},
     ],
-    "Rivers": [
+    "River": [
       {"Cheliff River": "cheliff-river"},
       {"Tafna River": "tafna-river"},
       {"Mouilah River": "mouilah-river"},

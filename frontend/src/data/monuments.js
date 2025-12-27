@@ -1,17 +1,3 @@
-import Tassili from '/assets/destinations/Tassili.avif'
-import Alhaggar from '/assets/destinations/Alhaggar.jpg'
-import tahat from '/assets/destinations/tahat.jfif'
-import chrea from '/assets/destinations/chrea.jpg'
-import Chelia from '/assets/destinations/Chelia_2.jpg'
-import BeniSalah from '/assets/destinations/Beni Salah Mountain.jpg'
-import Zahlane from '/assets/destinations/Zahlane Caves (Djebel Taya).jpg'
-import LacOubeira from '/assets/destinations/Lac_Oubeira,_Parc_National_d_El-Kala_El-Tarf.jpg'
-import SidiFredj from '/assets/destinations/Sidi Fredj Coast1.webp'
-import BniHaroun from '/assets/destinations/bni_haroun.jpg'
-import AtlasCedar from '/assets/destinations/Atlas_Cedar_Forest_in_Mount_Chelia.jpg'
-import HammamMeskhoutine from '/assets/destinations/Hammam_Meskhoutine_vue_générale_1.webp'
-import PaysageChelia from '/assets/destinations/Paysage_dans_le_parc_national_de_chelia_1.jpg'
-
 export const monuments = [
   {
     id: 0,
@@ -20,7 +6,7 @@ export const monuments = [
     destination: "Khenchela – Algeria",
     lat: 35.43,
     lng: 7.15,
-    image: Chelia,
+    image: "/assets/destinations/Chelia_2.jpg",
     description: "Highest peak in the Aurès Mountains, popular for hiking and panoramic views.",
     physicalRating: 5,
   },
@@ -29,7 +15,9 @@ export const monuments = [
     name: "Tassili n'Ajjer National Park",
     category: "desert",
     destination: "Illizi – Algeria",
-    image: Tassili,
+    lat: 25.3,
+    lng: 8.2,
+    image: "/assets/destinations/Tassili.avif",
     description: "UNESCO World Heritage site famous for prehistoric rock art and sandstone formations.",
     physicalRating: 4,
   },
@@ -40,10 +28,9 @@ export const monuments = [
     destination: "Tamanrasset – Algeria",
     lat: 23.29,
     lng: 5.53,
-    image: Alhaggar,
+    image: "/assets/destinations/Alhaggar.jpg",
     description: "Volcanic desert mountains with dramatic landscapes and Tuareg culture.",
     physicalRating: 4,
-
   },
   {
     id: 3,
@@ -52,7 +39,7 @@ export const monuments = [
     destination: "Hoggar – Algeria",
     lat: 23.29,
     lng: 5.53,
-    image: tahat,
+    image: "/assets/destinations/tahat.jfif",
     description: "The highest peak in Algeria, ideal for experienced climbers.",
     physicalRating: 5,
   },
@@ -63,7 +50,7 @@ export const monuments = [
     destination: "Blida – Algeria",
     lat: 36.42,
     lng: 2.88,
-    image: chrea,
+    image: "/assets/destinations/chrea.jpg",
     description: "Mountain park known for cedar forests and Barbary macaques.",
     physicalRating: 2,
   },
@@ -72,12 +59,12 @@ export const monuments = [
     name: "Beni Haroun Dam",
     category: "lake",
     destination: "Mila – Algeria",
-    image: BniHaroun,
+    lat: 36.43,
+    lng: 6.33,
+    image: "/assets/destinations/bni_haroun.jpg",
     description: "Largest dam reservoir in Algeria.",
     physicalRating: 1,
-
   },
-
   {
     id: 9,
     name: "Zahlane Caves",
@@ -85,7 +72,7 @@ export const monuments = [
     destination: "Setif – Algeria",
     lat: 36.19,
     lng: 5.41,
-    image: Zahlane,
+    image: "/assets/destinations/Zahlane Caves (Djebel Taya).jpg",
     description: "Natural caves offering a calm underground experience.",
     physicalRating: 2,
   },
@@ -96,73 +83,62 @@ export const monuments = [
     destination: "El Tarf – Algeria",
     lat: 36.9,
     lng: 8.3,
-    image: LacOubeira,
+    image: "/assets/destinations/Lac_Oubeira,_Parc_National_d_El-Kala_El-Tarf.jpg",
     description: "Scenic lake in El Kala National Park, great for birdwatching.",
-    physicalRating: 1,},
-    {
+    physicalRating: 1,
+  },
+  {
     id: 11,
     name: "Sidi Fredj Coast",
     category: "beach",
     destination: "Algiers – Algeria",
     lat: 36.75,
     lng: 2.83,
-    image: SidiFredj,
+    image: "/assets/destinations/Sidi Fredj Coast1.webp",
     description: "Popular beach destination near Algiers with clear waters.",
-    },
-    {
+  },
+  {
     id: 12,
     name: "Atlas Cedar Forest in Mount Chelia",
     category: "forest",
     destination: "Khenchela – Algeria",
     lat: 35.43,
     lng: 7.15,
-    image: AtlasCedar,
+    image: "/assets/destinations/Atlas_Cedar_Forest_in_Mount_Chelia.jpg",
     description: "Dense cedar forest offering hiking trails and nature walks.",
     physicalRating: 2,
-
-    },
-    {
+  },
+  {
     id: 13,
     name: "Hammam Meskhoutine",
     category: "waterfall",
     destination: "Guelma – Algeria",
     lat: 36.46,
     lng: 7.43,
-    image: HammamMeskhoutine,
+    image: "/assets/destinations/Hammam_Meskhoutine_vue_générale_1.webp",
     description: "Famous hot springs and waterfalls with therapeutic properties.",
     physicalRating: 1,
-    },
-    {
+  },
+  {
     id: 14,
     name: "Paysage dans le parc national de Chelia",
     category: "park",
     destination: "Khenchela – Algeria",
     lat: 35.43,
     lng: 7.15,
-    image: PaysageChelia,
+    image: "/assets/destinations/Paysage_dans_le_parc_national_de_chelia_1.jpg",
     description: "Beautiful landscapes within Chelia National Park, ideal for nature lovers.",
     physicalRating: 2,
-    },
-    {
+  },
+  {
     id: 15,
     name: "Beni Salah Mountain",
     category: "mountain",
     destination: "Oum El Bouaghi – Algeria",
     lat: 35.87,
     lng: 7.11,
-    image: BeniSalah,
+    image: "/assets/destinations/Beni Salah Mountain.jpg",
     description: "Scenic mountain known for its unique rock formations and hiking trails.",
     physicalRating: 4,
-    },
-    {
-    id: 16,
-    name: "Beni Salah Mountain",
-    category: "mountain",
-    destination: "Oum El Bouaghi – Algeria",
-    lat: 35.87,
-    lng: 7.11,
-    image: BeniSalah,
-    description: "Scenic mountain known for its unique rock formations and hiking trails.",
-    physicalRating: 4,
-    }
-]
+  },
+];
