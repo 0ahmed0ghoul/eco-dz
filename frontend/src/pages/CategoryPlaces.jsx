@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import { generateSlug } from "../utils/generateSlug";
 export default function CategoryPlaces() {
   const { category } = useParams();
   const [places, setPlaces] = useState([]);
@@ -36,7 +36,7 @@ export default function CategoryPlaces() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 py-16">
-              {/* Breadcrumb */}
+      {/* Breadcrumb */}
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500">
         <ol className="flex items-center space-x-2">
           <li>
@@ -85,13 +85,28 @@ export default function CategoryPlaces() {
               {/* CONTENT */}
               <div className="relative z-10 p-6 h-full flex flex-col justify-between text-white">
                 <div>
-                  <MapPin size={28} className="mb-4 opacity-90 drop-shadow-lg" />
-                  <h2 className="text-2xl font-bold drop-shadow-lg">{place.name}</h2>
-                  <p className="text-white/90 mt-2 text-sm">{place.description}</p>
+                  <MapPin
+                    size={28}
+                    className="mb-4 opacity-90 drop-shadow-lg"
+                  />
+                  <h2 className="text-2xl font-bold drop-shadow-lg">
+                    {place.name}
+                  </h2>
+                  <p className="text-white/90 mt-2 text-sm">
+                    {place.description}
+                  </p>
                   <p className="mt-1 text-yellow-300 font-semibold">
                     Rating: {place.avg_rating || "Not rated yet"}
                   </p>
                 </div>
+                {/* VIEW PLACE BUTTON */}
+                <Link
+                  to={`/places/${category}/${place.slug}`}
+                  className="mt-4 inline-block text-center bg-white text-gray-900 font-semibold py-2 rounded-xl
+               hover:bg-gray-100 transition-all duration-300"
+                >
+                  View place
+                </Link>
               </div>
             </div>
           ))}

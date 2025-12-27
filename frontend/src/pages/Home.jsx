@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import Logo from "../sections/Logo.jsx";
 import "../styles/Logo.css";
-import Hero from "../pages/Hero.jsx";
+import Hero from "./Hero.jsx";
 
 export default function Home() {
   const [logoDone, setLogoDone] = useState(false);

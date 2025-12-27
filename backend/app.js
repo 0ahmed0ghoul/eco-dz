@@ -42,6 +42,7 @@ app.use("/api/places", placeRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/user", userRoutes);
 
+
 /* =======================
    TEST ROUTE
 ======================= */

@@ -1,11 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  FiChevronRight,
-  FiMapPin,
-  FiGlobe,
-  FiChevronDown,
-} from "react-icons/fi";
-import { generateSlug } from "../utils/generateSlug";
+import React, {useState} from "react";
+import {FiChevronRight,FiGlobe,} from "react-icons/fi";
 
 function MegaMenu({
   activeNavLink,
@@ -20,15 +14,13 @@ function MegaMenu({
 
   const handleMegaMenuCategoryClick = (category) => {
     setSelectedCategoryKey(category);
-    setSelectedCategorySlug(generateSlug(category)); // best practice
+    setSelectedCategorySlug(category); 
   };
   
 
-  const handleMegaMenuItemClick = ({ title, slug }) => {
+  const handleMegaMenuItemClick = ({  slug }) => {
     if (!selectedCategorySlug || !slug) return;
-
     goToPlace(selectedCategorySlug, slug);
-
     setActiveNavLink(null);
     setSelectedCategoryKey(null);
     setSelectedCategorySlug(null);
@@ -109,8 +101,10 @@ function MegaMenu({
                   {menuData[activeNavLink][selectedCategoryKey]?.map(
                     (item, index) => {
                       const title = Object.keys(item)[0];
+
                       const slug = item[title];
 
+                      console.log(title, slug);
                       return (
                         <button
                           key={slug || index}
