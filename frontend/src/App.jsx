@@ -4,8 +4,9 @@ import Login from "./sections/Login.jsx";
 import Signin from "./sections/Signin.jsx";
 import Contact from "./pages/Contact.jsx";
 import CategoryPlaces from "./pages/CategoryPlaces.jsx";
-
-import Travels from "./components/Places.jsx";
+import Destinations from "./pages/Destinations.jsx";
+import WaysToTravel from "./pages/WaysToTravel.jsx";
+import Quiz from "./pages/Quiz.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import Destination from "./components/Destination.jsx";
@@ -21,12 +22,13 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/contact" element={<Contact />} />
-      {/* <Route path="/travels" element={<Travels />} /> */}
+      <Route path="/travels" element={<WaysToTravel />} />
+      <Route path="/destinations" element={<Destinations />} />
       <Route path="/places" element={<Places />} />
       <Route path="/places/:category" element={<CategoryPlaces />} />
       <Route path="/places/:category/:slug" element={<Destination />} />
-
-
+      <Route path="/trip/:id" element={<Trip />} />
+      <Route path="/quiz" element={<Quiz />} />
     </Routes>
     <Footer />
     </>

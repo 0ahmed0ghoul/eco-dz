@@ -46,16 +46,41 @@ export const menuData = {
     "All Destinations": [],
   },
   "Ways to Travel": {
-    ["Eco-Friendly Tours"]: {},
-    ["Sustainable Accommodations"]: {},
-    ["Green Transportation Options"]: {},
+    "Eco-Friendly Tours": [
+      {"Desert Safari": "desert-safari"},
+      {"Mountain Hiking": "mountain-hiking"},
+      {"Eco-Lodge Stays": "eco-lodge-stays"},
+    ],
+    "Sustainable Accommodations": [
+      {"Green Hotels": "green-hotels"},
+      {"Eco-Camps": "eco-camps"},
+      {"Traditional Riads": "traditional-riads"},
+    ],
+    "Green Transportation Options": [
+      {"Electric Car Rentals": "electric-car-rentals"},
+      {"Camel Trekking": "camel-trekking"},
+      {"Bicycle Tours": "bicycle-tours"},
+    ],
+    "All Destinations": [],
   },
   Deals: {
-    ["Last Minute Deals"]: {},
-    ["Family Packages"]: {},
-    ["Adventure Tours"]: {},
+    "Last Minute Deals": [
+      {"Weekend Getaways": "weekend-getaways"},
+      {"Flash Sales": "flash-sales"},
+      {"Early Bird Specials": "early-bird-specials"},
+    ],
+    "Family Packages": [
+      {"Family Desert Tours": "family-desert-tours"},
+      {"Multi-Day Family Trips": "multi-day-family-trips"},
+      {"All-Inclusive Packages": "all-inclusive-packages"},
+    ],
+    "Adventure Tours": [
+      {"Rock Climbing": "rock-climbing"},
+      {"Extreme Hiking": "extreme-hiking"},
+      {"Wildlife Tours": "wildlife-tours"},
+    ],
+    "All Destinations": [],
   },
-
 };
 
 export const popularSearches = [

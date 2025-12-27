@@ -40,7 +40,15 @@ app.use(cors({
 app.use("/api/auth", authRoutes);
 app.use("/api/places", placeRoutes);
 app.use("/api/trips", tripRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api/eco-tours", require("./routes/ecoTours.routes"));
+app.use("/api/accommodations", require("./routes/accommodations.routes"));
+app.use("/api/green-transport", require("./routes/transport.routes"));
+app.use("/api/deals/last-minute", require("./routes/lastMinute.routes"));
+app.use("/api/deals/family", require("./routes/familyPackages.routes"));
+app.use("/api/deals/adventure", require("./routes/adventureTours.routes"));
+app.use("/api/deals/destinations", require("./routes/dealDestinations.routes"));
+app.use("/api/monuments", require("./routes/monuments.routes"));
+
 
 /* =======================
    TEST ROUTE

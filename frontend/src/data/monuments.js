@@ -3,13 +3,13 @@ import Alhaggar from '/assets/destinations/Alhaggar.jpg'
 import tahat from '/assets/destinations/tahat.jfif'
 import chrea from '/assets/destinations/chrea.jpg'
 import Chelia from '/assets/destinations/Chelia_2.jpg'
-import BeniSalah from '/assets/destinations/Beni Salah Mountain.jpg'
-import Zahlane from '/assets/destinations/Zahlane Caves (Djebel Taya).jpg'
+import BeniSalah from '/assets/destinations/Beni_Salah_Mountain.jpg'
+import Zahlane from '/assets/destinations/Zahlane_Caves.jpg'
 import LacOubeira from '/assets/destinations/Lac_Oubeira,_Parc_National_d_El-Kala_El-Tarf.jpg'
-import SidiFredj from '/assets/destinations/Sidi Fredj Coast1.webp'
+import SidiFredj from '/assets/destinations/Alhaggar.jpg' // placeholder
 import BniHaroun from '/assets/destinations/bni_haroun.jpg'
-import AtlasCedar from '/assets/destinations/Atlas_Cedar_Forest_in_Mount_Chelia.jpg'
-import HammamMeskhoutine from '/assets/destinations/Hammam_Meskhoutine_vue_générale_1.webp'
+import AtlasCedar from '/assets/destinations/Atlas_Cedar_Forest.jpg'
+import HammamMeskhoutine from '/assets/destinations/Alhaggar.jpg' // placeholder
 import PaysageChelia from '/assets/destinations/Paysage_dans_le_parc_national_de_chelia_1.jpg'
 
 export const monuments = [
@@ -29,6 +29,8 @@ export const monuments = [
     name: "Tassili n'Ajjer National Park",
     category: "desert",
     destination: "Illizi – Algeria",
+    lat: 25.59,
+    lng: 9.41,
     image: Tassili,
     description: "UNESCO World Heritage site famous for prehistoric rock art and sandstone formations.",
     physicalRating: 4,
@@ -72,6 +74,8 @@ export const monuments = [
     name: "Beni Haroun Dam",
     category: "lake",
     destination: "Mila – Algeria",
+    lat: 36.47,
+    lng: 6.40,
     image: BniHaroun,
     description: "Largest dam reservoir in Algeria.",
     physicalRating: 1,
