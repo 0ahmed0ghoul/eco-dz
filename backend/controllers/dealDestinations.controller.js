@@ -1,6 +1,10 @@
-import pool from "../db.js";
+import { getDealDestinations } from "../data/fileHelpers.js";
 
-exports.getAll = async (req, res) => {
-  const [rows] = await pool.query("SELECT * FROM deal_destinations");
-  res.json(rows);
+export const getAll = async (req, res) => {
+  try {
+    const deals = await getDealDestinations();
+    res.json(deals);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching deal destinations", error: error.message });
+  }
 };

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {FiChevronRight,FiGlobe,} from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 function MegaMenu({
   activeNavLink,
@@ -9,6 +10,7 @@ function MegaMenu({
   goToPlace,
   goToAllDestinations,
 }) {
+  const navigate = useNavigate();
   const [selectedCategoryKey, setSelectedCategoryKey] = useState(null);
   const [selectedCategorySlug, setSelectedCategorySlug] = useState(null);
 
@@ -21,9 +23,21 @@ function MegaMenu({
   };
   
 
-  const handleMegaMenuItemClick = ({  slug }) => {
-    if (!selectedCategorySlug || !slug) return;
-    goToPlace(selectedCategorySlug, slug);
+  const handleMegaMenuItemClick = ({ title, slug }) => {
+    if (!selectedCategoryKey) return;
+    
+    // Handle different types of navigation based on the activeNavLink
+    if (activeNavLink === "Places") {
+      // Use place routing for actual geographic locations
+      goToPlace(selectedCategorySlug, slug);
+    } else if (activeNavLink === "Ways to Travel") {
+      // Route directly to the ways-to-travel paths
+      navigate(`/places/${slug}/undefined`);
+    } else if (activeNavLink === "Deals") {
+      // Route to the deals paths
+      navigate(`/places/${slug}/undefined`);
+    }
+    
     setActiveNavLink(null);
     setSelectedCategoryKey(null);
     setSelectedCategorySlug(null);

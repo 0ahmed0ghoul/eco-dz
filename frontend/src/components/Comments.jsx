@@ -12,6 +12,8 @@ export default function Comments({ destinationId, destinationType = "place" }) {
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyText, setReplyText] = useState("");
   const [submittingReply, setSubmittingReply] = useState(false);
+  const [guestName, setGuestName] = useState("");
+  const [guestEmail, setGuestEmail] = useState("");
 
   // Fetch comments when component mounts
   useEffect(() => {
@@ -45,24 +47,39 @@ export default function Comments({ destinationId, destinationType = "place" }) {
     const token = localStorage.getItem("authToken");
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     
-    if (!token || !user.id) {
-      alert("Please login to comment");
+    // Get user info - either from login or guest fields
+    const userName = user.name || guestName || "Guest";
+    const userEmail = user.email || guestEmail || "guest@example.com";
+    const userId = user.id || `guest_${Date.now()}`;
+
+    // Validate guest fields if not logged in
+    if (!token && (!guestName.trim() || !guestEmail.trim())) {
+      alert("Please enter your name and email to comment as a guest");
       return;
     }
 
     try {
       setSubmitting(true);
+      const headers = {
+        "Content-Type": "application/json"
+      };
+      
+      // Only add auth header if user is logged in
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
       const response = await fetch("http://localhost:5000/api/comments", {
         method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
+        headers,
         body: JSON.stringify({
           type: destinationType,
           destination_id: destinationId,
           rating,
           comment_text: newComment,
+          user_name: userName,
+          user_email: userEmail,
+          user_id: userId,
         }),
       });
 
@@ -71,8 +88,14 @@ export default function Comments({ destinationId, destinationType = "place" }) {
         setComments([newCommentData, ...comments]);
         setNewComment("");
         setRating(5);
+        if (!token) {
+          setGuestName("");
+          setGuestEmail("");
+        }
       } else if (response.status === 401) {
         alert("Session expired. Please login again");
+      } else {
+        alert("Failed to post comment");
       }
     } catch (error) {
       console.error("Error submitting comment:", error);
@@ -235,6 +258,29 @@ export default function Comments({ destinationId, destinationType = "place" }) {
 
       {/* Comment Form */}
       <form onSubmit={handleSubmitComment} className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg">
+        {/* Guest Fields - Show only if not logged in */}
+        {!localStorage.getItem("authToken") && (
+          <div className="mb-4 space-y-3">
+            <p className="text-sm text-gray-600 font-semibold">Comment as a Guest</p>
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="text"
+                placeholder="Your name"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              />
+              <input
+                type="email"
+                placeholder="Your email"
+                value={guestEmail}
+                onChange={(e) => setGuestEmail(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+          </div>
+        )}
+        
         <div className="mb-4">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Your Rating

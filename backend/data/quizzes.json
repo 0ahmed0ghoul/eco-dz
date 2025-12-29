@@ -1,0 +1,833 @@
+[
+  {
+    "id": 1,
+    "title": "Algerian Deserts & Culture",
+    "description": "Test your knowledge about Algeria's famous deserts and cultural heritage",
+    "category": "geography",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the highest peak in Algeria?",
+        "options": ["Mount Chelia", "Mount Tahat", "Hoggar Peak", "Atlas Peak"],
+        "correct_answer": "Mount Tahat",
+        "explanation": "Mount Tahat is the highest peak in Algeria at 3,003 meters"
+      },
+      {
+        "id": 2,
+        "question": "Which national park is known for prehistoric rock art?",
+        "options": ["Chréa", "Tassili n'Ajjer", "El Kala", "Gouraya"],
+        "correct_answer": "Tassili n'Ajjer",
+        "explanation": "Tassili n'Ajjer is a UNESCO World Heritage site famous for its prehistoric rock paintings"
+      },
+      {
+        "id": 3,
+        "question": "What is the capital of Algeria?",
+        "options": ["Oran", "Constantine", "Algiers", "Annaba"],
+        "correct_answer": "Algiers",
+        "explanation": "Algiers is the capital and largest city of Algeria, located on the Mediterranean coast"
+      },
+      {
+        "id": 4,
+        "question": "Which desert dominates most of Algeria's territory?",
+        "options": ["Kalahari", "Sahara", "Atacama", "Gobi"],
+        "correct_answer": "Sahara",
+        "explanation": "The Sahara Desert covers about 80% of Algeria's territory"
+      },
+      {
+        "id": 5,
+        "question": "What is the main language spoken in Algeria besides Arabic?",
+        "options": ["English", "French", "German", "Spanish"],
+        "correct_answer": "French",
+        "explanation": "French is widely spoken in Algeria due to its colonial history"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Eco-Tourism & Sustainability",
+    "description": "Learn about sustainable tourism practices and eco-friendly travel",
+    "category": "sustainability",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the primary goal of eco-tourism?",
+        "options": ["Maximum profit", "Conservation & local community benefit", "Cheap vacations", "Luxury experiences"],
+        "correct_answer": "Conservation & local community benefit",
+        "explanation": "Eco-tourism aims to conserve nature while supporting local communities"
+      },
+      {
+        "id": 2,
+        "question": "Which transportation is most eco-friendly for tours?",
+        "options": ["Gas-powered buses", "Electric vehicles", "Individual cars", "Motorcycles"],
+        "correct_answer": "Electric vehicles",
+        "explanation": "Electric vehicles produce zero emissions and are the most eco-friendly option"
+      },
+      {
+        "id": 3,
+        "question": "What percentage of global emissions come from tourism?",
+        "options": ["2%", "5%", "8%", "15%"],
+        "correct_answer": "8%",
+        "explanation": "Tourism accounts for approximately 8% of global greenhouse gas emissions"
+      },
+      {
+        "id": 4,
+        "question": "Which certification indicates a hotel is eco-friendly?",
+        "options": ["Gold Star", "Green Key", "Premium Plus", "Eco Badge"],
+        "correct_answer": "Green Key",
+        "explanation": "Green Key is an international certification for environmentally responsible accommodations"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Algerian Wildlife & Nature",
+    "description": "Discover Algeria's diverse wildlife and natural ecosystems",
+    "category": "wildlife",
+    "difficulty": "Easy",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the national animal of Algeria?",
+        "options": ["Fennec Fox", "Desert Camel", "Barbary Macaque", "Dorcas Gazelle"],
+        "correct_answer": "Fennec Fox",
+        "explanation": "The Fennec Fox is the national animal of Algeria"
+      },
+      {
+        "id": 2,
+        "question": "Which endangered primate lives in the Atlas Mountains?",
+        "options": ["Chimpanzee", "Barbary Macaque", "Baboon", "Lemur"],
+        "correct_answer": "Barbary Macaque",
+        "explanation": "The Barbary Macaque is the only wild monkey species in North Africa and is critically endangered"
+      },
+      {
+        "id": 3,
+        "question": "What is the largest carnivore in the Sahara?",
+        "options": ["Lion", "Leopard", "Hyena", "Jackal"],
+        "correct_answer": "Hyena",
+        "explanation": "The spotted hyena is the largest carnivore roaming the Sahara Desert"
+      },
+      {
+        "id": 4,
+        "question": "Which bird is a symbol of the Algerian wetlands?",
+        "options": ["Ostrich", "Flamingo", "Eagle", "Heron"],
+        "correct_answer": "Flamingo",
+        "explanation": "Greater flamingos are commonly found in Algeria's coastal wetlands and salt lakes"
+      },
+      {
+        "id": 5,
+        "question": "What desert plant is used for food and shade in oases?",
+        "options": ["Acacia", "Date Palm", "Tamarisk", "Cactus"],
+        "correct_answer": "Date Palm",
+        "explanation": "Date palms are essential to oasis ecosystems, providing food and shelter"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Desert Plants & Adaptation",
+    "description": "Learn about how plants survive in the harsh Sahara desert",
+    "category": "wildlife",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Which plant is common in the Sahara and survives with minimal water?",
+        "options": ["Date Palm", "Oak Tree", "Pine Tree", "Maple Tree"],
+        "correct_answer": "Date Palm",
+        "explanation": "Date palms have deep roots and minimal water requirements, perfect for desert life"
+      },
+      {
+        "id": 2,
+        "question": "What adaptation do desert plants use to reduce water loss?",
+        "options": ["Thick, waxy leaves", "Large leaves", "Bright colors", "Soft bark"],
+        "correct_answer": "Thick, waxy leaves",
+        "explanation": "Thick, waxy leaves reduce evaporation and help plants conserve water"
+      },
+      {
+        "id": 3,
+        "question": "How deep do date palm roots typically grow?",
+        "options": ["1 meter", "5 meters", "10 meters", "20+ meters"],
+        "correct_answer": "20+ meters",
+        "explanation": "Date palm roots can extend 20+ meters deep to reach underground water sources"
+      },
+      {
+        "id": 4,
+        "question": "What is the primary function of a desert plant's spines?",
+        "options": ["Attract insects", "Store water", "Reduce water loss", "Increase sunlight absorption"],
+        "correct_answer": "Reduce water loss",
+        "explanation": "Spines reduce surface area and protect plants from losing water to evaporation"
+      },
+      {
+        "id": 5,
+        "question": "Which desert plant stores water in its leaves?",
+        "options": ["Acacia", "Succulent", "Tamarisk", "Grasses"],
+        "correct_answer": "Succulent",
+        "explanation": "Succulent plants like aloe store water in their thick, fleshy leaves"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Saharan Nomadic Cultures",
+    "description": "Explore the rich traditions of Sahara's nomadic peoples",
+    "category": "culture",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the traditional Tuareg indigo garment called?",
+        "options": ["Tagelmust", "Boubou", "Gandura", "Burnous"],
+        "correct_answer": "Tagelmust",
+        "explanation": "The tagelmust is a traditional indigo-dyed garment worn by Tuareg men for protection in the desert"
+      },
+      {
+        "id": 2,
+        "question": "Which nomadic group is known as the 'Blue People of the Sahara'?",
+        "options": ["Berbers", "Tuaregs", "Arabs", "Fulani"],
+        "correct_answer": "Tuaregs",
+        "explanation": "Tuaregs are called the Blue People due to their indigo-dyed clothing"
+      },
+      {
+        "id": 3,
+        "question": "What is the primary livestock raised by Saharan nomads?",
+        "options": ["Cattle", "Goats", "Camels", "Sheep"],
+        "correct_answer": "Camels",
+        "explanation": "Camels are essential to Saharan nomadic life, providing transportation and resources"
+      },
+      {
+        "id": 4,
+        "question": "What traditional musical instrument is used in Tuareg culture?",
+        "options": ["Oud", "Ney", "Amenzouh", "Darbuka"],
+        "correct_answer": "Amenzouh",
+        "explanation": "The amenzouh is a traditional three-stringed Tuareg instrument"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Climate & Weather in Algeria",
+    "description": "Test your knowledge about Algeria's diverse climate zones",
+    "category": "geography",
+    "difficulty": "Easy",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the driest region of Algeria?",
+        "options": ["Coastal region", "Sahara Desert", "Atlas Mountains", "Tellian Atlas"],
+        "correct_answer": "Sahara Desert",
+        "explanation": "The Sahara Desert is the driest region, receiving minimal rainfall"
+      },
+      {
+        "id": 2,
+        "question": "Which Mediterranean climate zone is found in northern Algeria?",
+        "options": ["Arid", "Temperate", "Tropical", "Polar"],
+        "correct_answer": "Temperate",
+        "explanation": "Northern Algeria has a Mediterranean climate with mild, wet winters and hot, dry summers"
+      },
+      {
+        "id": 3,
+        "question": "What is the average annual rainfall in the Sahara?",
+        "options": ["100-200mm", "50mm or less", "500mm", "1000mm"],
+        "correct_answer": "50mm or less",
+        "explanation": "The Sahara receives less than 50mm of rain annually, making it extremely dry"
+      },
+      {
+        "id": 4,
+        "question": "Which mountain range has a cooler, alpine climate?",
+        "options": ["Saharan Atlas", "Atlas Mountains", "Coastal Mountains", "Plateaus"],
+        "correct_answer": "Atlas Mountains",
+        "explanation": "The Atlas Mountains have an alpine climate with snow in winter at high elevations"
+      },
+      {
+        "id": 5,
+        "question": "What causes the hot, dry wind called the Sirocco?",
+        "options": ["Ocean currents", "Tropical air masses from the south", "Cold fronts", "Humidity"],
+        "correct_answer": "Tropical air masses from the south",
+        "explanation": "The Sirocco is a hot, dry desert wind caused by tropical air masses moving northward"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Conservation Efforts in Algeria",
+    "description": "Learn about protecting Algeria's natural heritage",
+    "category": "sustainability",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "How many national parks does Algeria have?",
+        "options": ["3", "5", "10", "15"],
+        "correct_answer": "10",
+        "explanation": "Algeria has 10 national parks protecting diverse ecosystems from deserts to forests"
+      },
+      {
+        "id": 2,
+        "question": "What is the main threat to Barbary macaques in Algeria?",
+        "options": ["Poaching", "Habitat loss", "Disease", "Climate change"],
+        "correct_answer": "Habitat loss",
+        "explanation": "Deforestation and habitat destruction are the primary threats to this endangered species"
+      },
+      {
+        "id": 3,
+        "question": "Which national park is a UNESCO World Heritage site?",
+        "options": ["Chréa", "Tassili n'Ajjer", "Beni Haroun", "All of the above"],
+        "correct_answer": "All of the above",
+        "explanation": "Multiple Algerian parks are UNESCO World Heritage sites"
+      },
+      {
+        "id": 4,
+        "question": "What international organization helps protect endangered species in Algeria?",
+        "options": ["UN", "IUCN", "WHO", "WTO"],
+        "correct_answer": "IUCN",
+        "explanation": "The International Union for Conservation of Nature works to protect global biodiversity"
+      },
+      {
+        "id": 5,
+        "question": "What is the goal of establishing wildlife reserves in the Sahara?",
+        "options": ["Tourism only", "Species protection", "Hunting grounds", "Agriculture"],
+        "correct_answer": "Species protection",
+        "explanation": "Wildlife reserves protect endangered species and maintain ecological balance"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Mountain Ecosystems",
+    "description": "Discover the unique ecosystems of Algeria's mountains",
+    "category": "wildlife",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What type of forest covers Mount Chelia?",
+        "options": ["Cedar Forest", "Pine Forest", "Oak Forest", "Tropical Forest"],
+        "correct_answer": "Cedar Forest",
+        "explanation": "Mount Chelia is covered in Atlas cedar forests, one of the rarest forests in the world"
+      },
+      {
+        "id": 2,
+        "question": "Which animal is the symbol of the Atlas Mountains?",
+        "options": ["Barbary Macaque", "Barbary Sheep", "Barbary Lion", "Desert Fox"],
+        "correct_answer": "Barbary Macaque",
+        "explanation": "The Barbary Macaque is native to the Atlas Mountains and is critically endangered"
+      },
+      {
+        "id": 3,
+        "question": "At what elevation does the snow line typically occur in the Atlas?",
+        "options": ["1500m", "2500m", "3000m", "3500m"],
+        "correct_answer": "3000m",
+        "explanation": "Snow typically occurs above 3000 meters elevation in the Atlas Mountains"
+      },
+      {
+        "id": 4,
+        "question": "What is the altitude of Mount Chelia?",
+        "options": ["2384 meters", "2650 meters", "3003 meters", "2811 meters"],
+        "correct_answer": "2384 meters",
+        "explanation": "Mount Chelia reaches 2384 meters and is known for its cedar forests"
+      },
+      {
+        "id": 5,
+        "question": "Which bird species is endemic to the Atlas Mountains?",
+        "options": ["Golden Eagle", "Atlas Flycatcher", "Raven", "Sparrow"],
+        "correct_answer": "Atlas Flycatcher",
+        "explanation": "The Atlas Flycatcher is found only in the Atlas Mountains region"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Water Resources & Lakes",
+    "description": "Explore Algeria's precious water ecosystems",
+    "category": "geography",
+    "difficulty": "Easy",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the largest man-made lake in Algeria?",
+        "options": ["Lac Oubeira", "Beni Haroun Dam", "Taksebt Dam", "Draa El Kaïd"],
+        "correct_answer": "Beni Haroun Dam",
+        "explanation": "Beni Haroun is the largest reservoir created by damming the Rummel River"
+      },
+      {
+        "id": 2,
+        "question": "Which lake is a major birdwatching destination?",
+        "options": ["Salt Lake", "Lac Oubeira", "Mountain Lake", "Desert Oasis"],
+        "correct_answer": "Lac Oubeira",
+        "explanation": "Lac Oubeira in El Kala is a ramsar wetland site famous for bird watching"
+      },
+      {
+        "id": 3,
+        "question": "What type of water is found in Lac Oubeira?",
+        "options": ["Saltwater", "Freshwater", "Brackish", "Mineral water"],
+        "correct_answer": "Freshwater",
+        "explanation": "Lac Oubeira is a freshwater lake and wetland ecosystem"
+      },
+      {
+        "id": 4,
+        "question": "How many ramsar wetland sites does Algeria have?",
+        "options": ["2", "5", "8", "12"],
+        "correct_answer": "8",
+        "explanation": "Algeria has 8 internationally recognized wetland sites"
+      },
+      {
+        "id": 5,
+        "question": "Which river is the longest in Algeria?",
+        "options": ["Draa", "Rummel", "Niger", "Saoura"],
+        "correct_answer": "Draa",
+        "explanation": "The Draa River is the longest river in Algeria"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Sustainable Accommodation Practices",
+    "description": "Learn about eco-friendly lodging options in tourism",
+    "category": "sustainability",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is a key feature of eco-lodges?",
+        "options": ["Luxury amenities", "Minimal environmental impact", "Large size", "Urban location"],
+        "correct_answer": "Minimal environmental impact",
+        "explanation": "Eco-lodges are designed to have minimal impact on the environment while providing comfort"
+      },
+      {
+        "id": 2,
+        "question": "Which renewable energy source is commonly used in desert eco-lodges?",
+        "options": ["Wind power", "Solar power", "Hydroelectric", "Geothermal"],
+        "correct_answer": "Solar power",
+        "explanation": "Solar energy is abundant in the desert and is ideal for powering eco-lodges"
+      },
+      {
+        "id": 3,
+        "question": "What should eco-lodges do with waste water?",
+        "options": ["Dump it", "Treat and recycle it", "Ignore it", "Sell it"],
+        "correct_answer": "Treat and recycle it",
+        "explanation": "Responsible eco-lodges treat wastewater and recycle it for irrigation or other uses"
+      },
+      {
+        "id": 4,
+        "question": "Which local material is often used in eco-lodge construction?",
+        "options": ["Plastic", "Concrete", "Adobe or rammed earth", "Steel"],
+        "correct_answer": "Adobe or rammed earth",
+        "explanation": "Traditional materials like adobe reduce environmental impact and support local communities"
+      },
+      {
+        "id": 5,
+        "question": "What certification does an eco-lodge need to be officially recognized?",
+        "options": ["Star rating", "Green certification", "Government approval", "Tourist board pass"],
+        "correct_answer": "Green certification",
+        "explanation": "Various green certifications verify that accommodations meet sustainability standards"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Biodiversity of the Atlas Mountains",
+    "description": "Discover the unique species found in the Atlas range",
+    "category": "wildlife",
+    "difficulty": "Hard",
+    "questions": [
+      {
+        "id": 1,
+        "question": "How many endemic plant species are found in the Atlas Mountains?",
+        "options": ["100", "500", "1000", "2000"],
+        "correct_answer": "1000",
+        "explanation": "The Atlas Mountains are home to approximately 1,000 endemic plant species"
+      },
+      {
+        "id": 2,
+        "question": "What is the smallest wild cat species in North Africa?",
+        "options": ["Caracal", "Serval", "Flat-headed Cat", "Sand Cat"],
+        "correct_answer": "Sand Cat",
+        "explanation": "The Sand Cat is one of the smallest wild cats found in desert regions of North Africa"
+      },
+      {
+        "id": 3,
+        "question": "Which insect is used in traditional Saharan medicine?",
+        "options": ["Scorpion", "Beetle", "Locust", "Ant"],
+        "correct_answer": "Scorpion",
+        "explanation": "Scorpions have been used in traditional medicine for centuries in North Africa"
+      },
+      {
+        "id": 4,
+        "question": "What percentage of Alpine plants in the Atlas are endemic?",
+        "options": ["20%", "40%", "60%", "80%"],
+        "correct_answer": "80%",
+        "explanation": "About 80% of plants found at high elevations in the Atlas are endemic species"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Rock Art & Petroglyphs",
+    "description": "Explore prehistoric art and ancient civilizations in Algeria",
+    "category": "culture",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "How old are some of the rock paintings at Tassili n'Ajjer?",
+        "options": ["2,000 years", "5,000 years", "8,000-10,000 years", "15,000 years"],
+        "correct_answer": "8,000-10,000 years",
+        "explanation": "Some rock paintings at Tassili n'Ajjer date back 8,000-10,000 years, depicting ancient herds"
+      },
+      {
+        "id": 2,
+        "question": "What animals are commonly depicted in Saharan rock art?",
+        "options": ["Lions and elephants", "Cattle and giraffes", "Gazelles only", "Birds only"],
+        "correct_answer": "Cattle and giraffes",
+        "explanation": "Ancient rock art shows herds of cattle and giraffes, indicating a wetter Sahara in prehistoric times"
+      },
+      {
+        "id": 3,
+        "question": "What does rock art tell us about ancient Saharan climate?",
+        "options": ["Always dry", "Always wet", "It was greener and wetter", "No change"],
+        "correct_answer": "It was greener and wetter",
+        "explanation": "Depictions of water-loving animals indicate the Sahara was once much wetter"
+      },
+      {
+        "id": 4,
+        "question": "Which ancient people created most of Tassili's rock art?",
+        "options": ["Egyptians", "Berbers", "Tuaregs", "Unknown prehistoric peoples"],
+        "correct_answer": "Unknown prehistoric peoples",
+        "explanation": "Most art predates documented historical civilizations by thousands of years"
+      },
+      {
+        "id": 5,
+        "question": "What technique was used to create most Saharan petroglyphs?",
+        "options": ["Painting", "Carving", "Burning", "Clay"],
+        "correct_answer": "Carving",
+        "explanation": "Most petroglyphs were created by carving or pecking into rock surfaces"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Carbon Footprint in Tourism",
+    "description": "Understand the environmental impact of travel",
+    "category": "sustainability",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Which mode of transport has the lowest carbon footprint per person?",
+        "options": ["Private car", "Shared minibus", "Flying", "Walking"],
+        "correct_answer": "Shared minibus",
+        "explanation": "Shared transport spreads emissions across many people, reducing individual carbon footprint"
+      },
+      {
+        "id": 2,
+        "question": "What percentage of global emissions come from tourism?",
+        "options": ["2%", "5%", "8%", "15%"],
+        "correct_answer": "8%",
+        "explanation": "Tourism accounts for approximately 8% of global greenhouse gas emissions"
+      },
+      {
+        "id": 3,
+        "question": "Which tourism activity has the highest carbon footprint?",
+        "options": ["Hiking", "Desert camping", "Air travel", "Hotel stay"],
+        "correct_answer": "Air travel",
+        "explanation": "International flights produce the most emissions per person compared to other travel activities"
+      },
+      {
+        "id": 4,
+        "question": "How much CO2 does a round-trip flight typically emit?",
+        "options": ["0.5 tons", "1-2 tons", "5-10 tons", "20+ tons"],
+        "correct_answer": "1-2 tons",
+        "explanation": "A typical long-distance round-trip flight emits 1-2 tons of CO2 per person"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Coastal Ecosystems",
+    "description": "Learn about Algeria's Mediterranean and Atlantic coastal zones",
+    "category": "wildlife",
+    "difficulty": "Easy",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the main threat to sea turtles in Algeria?",
+        "options": ["Overfishing", "Pollution", "Plastic waste", "All of the above"],
+        "correct_answer": "All of the above",
+        "explanation": "Sea turtles face multiple threats including fishing nets, marine pollution, and plastic debris"
+      },
+      {
+        "id": 2,
+        "question": "Which Mediterranean fish species is critically endangered in Algeria?",
+        "options": ["Sardine", "Dusky Grouper", "Anchovy", "Mullet"],
+        "correct_answer": "Dusky Grouper",
+        "explanation": "The Dusky Grouper has been overfished and is now critically endangered in Mediterranean waters"
+      },
+      {
+        "id": 3,
+        "question": "What type of seagrass is important for Mediterranean ecosystems?",
+        "options": ["Kelp", "Posidonia", "Sargassum", "Eelgrass"],
+        "correct_answer": "Posidonia",
+        "explanation": "Posidonia oceanica is a critical seagrass species supporting Mediterranean biodiversity"
+      },
+      {
+        "id": 4,
+        "question": "How much of the Mediterranean coast is protected as marine reserves?",
+        "options": ["1%", "5%", "10%", "25%"],
+        "correct_answer": "10%",
+        "explanation": "Only about 10% of Mediterranean coastlines have marine protection"
+      },
+      {
+        "id": 5,
+        "question": "What is overfishing primarily damaging in Algeria's waters?",
+        "options": ["Small fish only", "Fish populations and ecosystems", "Tourist boats only", "Coral reefs"],
+        "correct_answer": "Fish populations and ecosystems",
+        "explanation": "Overfishing depletes fish stocks and disrupts entire marine food webs"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Desert Survival Skills",
+    "description": "Test your knowledge about surviving in harsh desert conditions",
+    "category": "geography",
+    "difficulty": "Hard",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the most critical resource in desert survival?",
+        "options": ["Food", "Water", "Shelter", "Navigation tools"],
+        "correct_answer": "Water",
+        "explanation": "Water is the most critical resource as humans can only survive a few days without it"
+      },
+      {
+        "id": 2,
+        "question": "What is a mirage in the desert caused by?",
+        "options": ["Hallucination", "Heat refraction in air", "Dust storms", "Sand reflection"],
+        "correct_answer": "Heat refraction in air",
+        "explanation": "Mirages occur when hot air near the ground refracts light, creating optical illusions"
+      },
+      {
+        "id": 3,
+        "question": "What is the best time to travel in the Sahara?",
+        "options": ["Midday", "Sunrise to sunset", "Nighttime", "Anytime"],
+        "correct_answer": "Sunrise to sunset",
+        "explanation": "Traveling during daylight hours is safest, avoiding extreme nighttime cold"
+      },
+      {
+        "id": 4,
+        "question": "How much water should a person drink daily in the desert?",
+        "options": ["0.5 liters", "1 liter", "3-4 liters", "6+ liters"],
+        "correct_answer": "3-4 liters",
+        "explanation": "At least 3-4 liters daily is necessary to stay hydrated in hot desert conditions"
+      },
+      {
+        "id": 5,
+        "question": "What protection is essential from desert sun exposure?",
+        "options": ["Light clothing", "Dark clothing", "Light, loose clothing", "No clothing needed"],
+        "correct_answer": "Light, loose clothing",
+        "explanation": "Light, loose clothing reflects heat while allowing air circulation and sun protection"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Local Communities & Tourism",
+    "description": "Understand how tourism impacts local Algerian communities",
+    "category": "culture",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is responsible tourism's main benefit to local communities?",
+        "options": ["Job creation", "Cultural preservation", "Economic development", "All of the above"],
+        "correct_answer": "All of the above",
+        "explanation": "Responsible tourism provides employment, preserves culture, and drives sustainable economic growth"
+      },
+      {
+        "id": 2,
+        "question": "How can visitors support local economies?",
+        "options": ["Buy from local vendors", "Stay in local accommodations", "Hire local guides", "All of the above"],
+        "correct_answer": "All of the above",
+        "explanation": "Supporting local businesses in every way helps communities benefit from tourism"
+      },
+      {
+        "id": 3,
+        "question": "What percentage of tourism revenue should go to local communities?",
+        "options": ["10%", "25%", "50%", "75%"],
+        "correct_answer": "50%",
+        "explanation": "Equitable tourism should ensure at least 50% of revenue reaches local communities"
+      },
+      {
+        "id": 4,
+        "question": "How does tourism help preserve traditional crafts?",
+        "options": ["Eliminates them", "Creates demand for handmade goods", "Reduces prices", "Exports everything"],
+        "correct_answer": "Creates demand for handmade goods",
+        "explanation": "Tourist interest in traditional crafts creates markets and supports artisans"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Renewable Energy in Remote Areas",
+    "description": "Explore sustainable energy solutions for isolated regions",
+    "category": "sustainability",
+    "difficulty": "Medium",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Why is solar energy ideal for remote desert areas?",
+        "options": ["Low cost", "High sun exposure", "Easy installation", "All of the above"],
+        "correct_answer": "All of the above",
+        "explanation": "Desert areas have abundant sunlight, making solar energy practical, affordable, and easy to deploy"
+      },
+      {
+        "id": 2,
+        "question": "What is a challenge with wind energy in the Sahara?",
+        "options": ["No wind", "Sand damage", "High cost", "Requires large installation"],
+        "correct_answer": "Sand damage",
+        "explanation": "Sand storms can damage wind turbines, making maintenance in the Sahara challenging"
+      },
+      {
+        "id": 3,
+        "question": "What is the average daily solar radiation in the Sahara?",
+        "options": ["3 kWh/m²", "5 kWh/m²", "8 kWh/m²", "10+ kWh/m²"],
+        "correct_answer": "5 kWh/m²",
+        "explanation": "The Sahara receives approximately 5-8 kWh/m² of solar energy daily"
+      },
+      {
+        "id": 4,
+        "question": "Which technology stores solar energy for nighttime use?",
+        "options": ["Solar panels", "Batteries", "Mirrors", "Grid system"],
+        "correct_answer": "Batteries",
+        "explanation": "Battery storage systems allow solar energy to be used after sunset"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Endangered Species Protection",
+    "description": "Learn about conservation programs for Algeria's endangered animals",
+    "category": "wildlife",
+    "difficulty": "Hard",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the population status of the Barbary Sheep in Algeria?",
+        "options": ["Extinct", "Critically endangered", "Vulnerable", "Stable"],
+        "correct_answer": "Vulnerable",
+        "explanation": "Once hunted extensively, Barbary Sheep are now vulnerable with recovering populations"
+      },
+      {
+        "id": 2,
+        "question": "Which international organization protects endangered species?",
+        "options": ["UN", "IUCN", "WHO", "UNESCO"],
+        "correct_answer": "IUCN",
+        "explanation": "The International Union for Conservation of Nature (IUCN) maintains the Red List of endangered species"
+      },
+      {
+        "id": 3,
+        "question": "How many Barbary Macaques remain in the wild?",
+        "options": ["100", "500", "1000", "5000"],
+        "correct_answer": "500",
+        "explanation": "Fewer than 500 Barbary Macaques remain in their natural habitat"
+      },
+      {
+        "id": 4,
+        "question": "What is the primary cause of decline for endangered Algerian species?",
+        "options": ["Climate only", "Poaching only", "Habitat loss and poaching", "Natural predators"],
+        "correct_answer": "Habitat loss and poaching",
+        "explanation": "Combined habitat destruction and illegal hunting are the main threats"
+      },
+      {
+        "id": 5,
+        "question": "Which program helps breed endangered species in captivity?",
+        "options": ["Hunting programs", "Breeding programs", "Trade programs", "Export programs"],
+        "correct_answer": "Breeding programs",
+        "explanation": "Captive breeding programs help increase endangered species populations for reintroduction"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Fossil Records & Prehistory",
+    "description": "Discover prehistoric life in Algeria through fossil evidence",
+    "category": "geography",
+    "difficulty": "Hard",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What major fossil discoveries have been made in the Sahara?",
+        "options": ["Dinosaur remains", "Early human ancestors", "Prehistoric sea creatures", "All of the above"],
+        "correct_answer": "All of the above",
+        "explanation": "The Sahara has yielded diverse fossils showing it was once a fertile region"
+      },
+      {
+        "id": 2,
+        "question": "How has climate change affected fossil preservation in deserts?",
+        "options": ["Improved preservation", "Faster erosion", "No effect", "Changed nothing"],
+        "correct_answer": "Faster erosion",
+        "explanation": "Climate fluctuations and erosion expose and damage fossil sites over time"
+      },
+      {
+        "id": 3,
+        "question": "When was the Sahara greener with more water?",
+        "options": ["1 million years ago", "100,000 years ago", "10,000 years ago", "Within 1000 years"],
+        "correct_answer": "10,000 years ago",
+        "explanation": "The Sahara underwent dramatic climate change about 10,000 years ago, shifting to aridity"
+      },
+      {
+        "id": 4,
+        "question": "What evidence proves early humans lived in the Sahara?",
+        "options": ["Rock art", "Stone tools", "Skeletal remains", "All of the above"],
+        "correct_answer": "All of the above",
+        "explanation": "Multiple archaeological evidence types prove human habitation in ancient Sahara"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Ethical Tourism Practices",
+    "description": "Learn how to be a responsible and ethical traveler",
+    "category": "sustainability",
+    "difficulty": "Easy",
+    "questions": [
+      {
+        "id": 1,
+        "question": "What should you do with plastic waste while traveling?",
+        "options": ["Leave it in nature", "Burn it", "Take it with you", "Bury it"],
+        "correct_answer": "Take it with you",
+        "explanation": "All waste should be carried out to prevent environmental damage to natural areas"
+      },
+      {
+        "id": 2,
+        "question": "Is it ethical to photograph wildlife in natural habitats?",
+        "options": ["Never", "Only with guides present", "Without disturbing animals", "Always"],
+        "correct_answer": "Without disturbing animals",
+        "explanation": "Photography is fine as long as wildlife is not harassed or stressed by your presence"
+      },
+      {
+        "id": 3,
+        "question": "How should travelers interact with local communities?",
+        "options": ["Demand services", "Respect local customs", "Ignore locals", "Take photos without permission"],
+        "correct_answer": "Respect local customs",
+        "explanation": "Respecting local culture is essential for ethical tourism"
+      },
+      {
+        "id": 4,
+        "question": "What is 'voluntourism'?",
+        "options": ["Vacation travel", "Volunteer + tourism combined", "Commercial tourism", "Luxury tourism"],
+        "correct_answer": "Volunteer + tourism combined",
+        "explanation": "Voluntourism combines travel with volunteering to help local communities"
+      },
+      {
+        "id": 5,
+        "question": "Should travelers buy souvenirs made from endangered species?",
+        "options": ["Yes, they're rare", "Only if cheap", "Never", "Sometimes"],
+        "correct_answer": "Never",
+        "explanation": "Buying endangered species products fuels poaching and harms conservation efforts"
+      }
+    ]
+  }
+]

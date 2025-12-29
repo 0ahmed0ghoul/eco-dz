@@ -1,8 +1,8 @@
 import { Router } from "express";
-import controller from "../controllers/monuments.controller.js";
+import { getAllMonuments } from "../controllers/monuments.controller.js";
 
 const router = Router();
 
-router.get("/", controller.getAllMonuments);
+router.get("/", getAllMonuments);
 
 export default router;

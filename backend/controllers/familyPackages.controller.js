@@ -1,6 +1,10 @@
-import pool from "../db.js";
+import { getFamilyPackages } from "../data/fileHelpers.js";
 
-exports.getAll = async (req, res) => {
-  const [rows] = await pool.query("SELECT * FROM family_packages");
-  res.json(rows);
+export const getAll = async (req, res) => {
+  try {
+    const packages = await getFamilyPackages();
+    res.json(packages);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching family packages", error: error.message });
+  }
 };

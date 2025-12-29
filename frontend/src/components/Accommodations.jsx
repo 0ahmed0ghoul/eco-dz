@@ -15,9 +15,11 @@ export default function Accommodations() {
         Sustainable Accommodations
       </h2>
       {data.map(a => (
-        <div key={a.id}>
-          <h3>{a.name}</h3>
-          <p>{a.description}</p>
+        <div key={a.id} className="mb-4">
+          <img src={a.image} alt={a.name} className="h-40 w-full object-cover" />
+          <h3 className="font-bold mt-2">{a.name}</h3>
+          <p className="text-gray-600 text-sm mb-2">{a.description}</p>
+          <p className="text-gray-500 text-xs">{a.destination}</p>
         </div>
       ))}
     </>

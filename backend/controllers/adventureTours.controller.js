@@ -1,6 +1,10 @@
-import pool from "../db.js";
+import { getAdventureTours } from "../data/fileHelpers.js";
 
-exports.getAll = async (req, res) => {
-  const [rows] = await pool.query("SELECT * FROM adventure_tours");
-  res.json(rows);
+export const getAll = async (req, res) => {
+  try {
+    const tours = await getAdventureTours();
+    res.json(tours);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching adventure tours", error: error.message });
+  }
 };

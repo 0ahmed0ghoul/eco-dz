@@ -1,8 +1,8 @@
 import { Router } from "express";
-import c from "../controllers/transport.controller.js";
+import { getAll } from "../controllers/transport.controller.js";
 
 const router = Router();
 
-router.get("/", c.getAll);
+router.get("/", getAll);
 
 export default router;

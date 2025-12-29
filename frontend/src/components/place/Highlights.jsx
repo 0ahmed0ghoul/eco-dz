@@ -1,5 +1,4 @@
 import React from "react";
-import Comments from "../Comments";
 
 const PlaceHighlights = ({ place }) => {
   if (!place || !place.highlights || place.highlights.length === 0) {
@@ -38,11 +37,6 @@ const PlaceHighlights = ({ place }) => {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Comments Section */}
-      <div className="mt-12">
-        <Comments destinationId={place.id} destinationType="place" />
       </div>
     </section>
   );

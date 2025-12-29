@@ -1,8 +1,13 @@
-import pool from "../db.js";
+import { getTransport } from "../data/fileHelpers.js";
 
-export default getAll = async (req, res) => {
-  const [rows] = await pool.query("SELECT * FROM green_transportation");
-  res.json(rows);
+export const getAll = async (req, res) => {
+  try {
+    const transport = await getTransport();
+    res.json(transport);
+  } catch (err) {
+    console.error("getAll error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 

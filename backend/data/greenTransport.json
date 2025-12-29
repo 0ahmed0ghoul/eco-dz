@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Electric City Bus",
+    "category": "Electric Vehicles",
+    "type": "Electric Bus",
+    "description": "Zero-emission public transportation for city tours and group travel",
+    "image": "/assets/destinations/electric-bus.jpg",
+    "capacity": 50,
+    "range": "400 km"
+  },
+  {
+    "id": 2,
+    "name": "Tesla Adventure Shuttle",
+    "category": "Electric Vehicles",
+    "type": "Electric Minibus",
+    "description": "Premium electric minibus for eco-conscious group adventures",
+    "image": "/assets/destinations/electric-minibus.jpg",
+    "capacity": 12,
+    "range": "600 km"
+  },
+  {
+    "id": 3,
+    "name": "Mountain Bicycle Tours",
+    "category": "Human-Powered",
+    "type": "Bicycle Tours",
+    "description": "Eco-friendly cycling adventures through scenic landscapes",
+    "image": "/assets/destinations/bicycle-tour.jpg",
+    "capacity": 10,
+    "distance": "50 km per day"
+  },
+  {
+    "id": 4,
+    "name": "Desert E-Bike Expeditions",
+    "category": "Human-Powered",
+    "type": "E-Bike Tours",
+    "description": "Electric-assisted mountain bikes for desert terrain exploration",
+    "image": "/assets/destinations/ebike-tour.jpg",
+    "capacity": 8,
+    "distance": "80 km per day"
+  },
+  {
+    "id": 5,
+    "name": "Solar-Powered Minibus",
+    "category": "Renewable Energy",
+    "type": "Solar Bus",
+    "description": "Sustainable minibus perfect for small group travel with zero emissions",
+    "image": "/assets/destinations/solar-minibus.jpg",
+    "capacity": 15,
+    "range": "200 km"
+  },
+  {
+    "id": 6,
+    "name": "Hybrid HQ Coach",
+    "category": "Renewable Energy",
+    "type": "Hybrid Coach",
+    "description": "Advanced hybrid technology for long-distance eco-friendly travel",
+    "image": "/assets/destinations/hybrid-coach.jpg",
+    "capacity": 45,
+    "range": "800 km"
+  }
+]

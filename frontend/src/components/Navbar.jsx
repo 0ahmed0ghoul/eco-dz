@@ -103,7 +103,7 @@ function Navbar() {
   const handleNavLinkClick = (link) => {
     if (window.innerWidth >= 1024) {
       if (link === "Map") return scrollToMap();
-      if (link === "Quizzes") return navigate("/quiz");
+      if (link === "Quizzes") return navigate("/quizes");
 
       if (activeNavLink === link) {
         setActiveNavLink(null);
@@ -116,7 +116,7 @@ function Navbar() {
       }
     } else {
       if (link === "Map") scrollToMap();
-      if (link === "Quizzes") navigate("/quiz");
+      if (link === "Quizzes") navigate("/quizes");
     }
   };
 

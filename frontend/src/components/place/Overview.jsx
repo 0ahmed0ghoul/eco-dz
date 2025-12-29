@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Comments from "../Comments";
 
 const PlaceOverview = ({ place }) => {
   if (!place) return null;
@@ -52,11 +51,6 @@ const PlaceOverview = ({ place }) => {
         <p className="mt-4 text-sm text-gray-500">
           📍 {place.destination || "Location not specified"} 
         </p>
-      </div>
-
-      {/* Comments Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <Comments destinationId={place.id} destinationType="place" />
       </div>
     </section>
   );

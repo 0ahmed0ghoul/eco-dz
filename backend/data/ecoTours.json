@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "name": "Tassili Adventure Tour",
+    "description": "Explore the stunning Tassili n'Ajjer National Park with its prehistoric rock art and unique landscapes.",
+    "destination": "Illizi – Algeria",
+    "price": 850,
+    "duration": 7,
+    "activities": ["Rock Climbing", "Photography", "Hiking"],
+    "difficulty": "Moderate",
+    "image": "/assets/destinations/Tassili.avif"
+  },
+  {
+    "id": 2,
+    "name": "Ahaggar Mountains Expedition",
+    "description": "Discover the dramatic peaks and vast deserts of the Ahaggar Mountains with experienced guides.",
+    "destination": "Tamanrasset – Algeria",
+    "price": 1200,
+    "duration": 8,
+    "activities": ["Camel Trekking", "Desert Camping", "Stargazing"],
+    "difficulty": "Hard",
+    "image": "/assets/destinations/Alhaggar.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Mount Chelia Hiking Challenge",
+    "description": "Climb the highest peak in the Aurès Mountains and enjoy breathtaking panoramic views.",
+    "destination": "Khenchela – Algeria",
+    "price": 450,
+    "duration": 4,
+    "activities": ["Mountain Hiking", "Photography"],
+    "difficulty": "Hard",
+    "image": "/assets/destinations/Chelia_2.jpg"
+  }
+]

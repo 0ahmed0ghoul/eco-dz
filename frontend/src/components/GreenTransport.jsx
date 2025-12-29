@@ -15,9 +15,10 @@ export default function GreenTransport() {
         Green Transportation Options
       </h2>
       {data.map(t => (
-        <div key={t.id}>
-          <h3>{t.type}</h3>
-          <p>{t.description}</p>
+        <div key={t.id} className="mb-4">
+          <img src={t.image} alt={t.type} className="h-40 w-full object-cover" />
+          <h3 className="font-bold mt-2">{t.type}</h3>
+          <p className="text-gray-600 text-sm">{t.description}</p>
         </div>
       ))}
     </>

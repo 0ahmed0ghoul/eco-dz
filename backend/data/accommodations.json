@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "name": "Chréa Mountain Lodge",
+    "description": "Comfortable lodge nestled in cedar forest with panoramic mountain views",
+    "destination": "Blida – Algeria",
+    "category": "Mountain Lodges",
+    "type": "Lodge",
+    "price_per_night": 120,
+    "rooms": 25,
+    "amenities": ["WiFi", "Restaurant", "Hiking Trails", "Fireplace"],
+    "sustainability": "Solar-powered, water conservation",
+    "image": "/assets/destinations/chrea.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Mount Chelia Eco-Lodge",
+    "description": "Eco-friendly alpine lodge with breathtaking peak views",
+    "destination": "Khenchela – Algeria",
+    "category": "Mountain Lodges",
+    "type": "Lodge",
+    "price_per_night": 135,
+    "rooms": 20,
+    "amenities": ["Panoramic Deck", "Restaurant", "WiFi", "Nature Trails"],
+    "sustainability": "Green energy, local sourcing",
+    "image": "/assets/destinations/Chelia_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Tassili Desert Camp",
+    "description": "Authentic desert eco-camp offering traditional Bedouin hospitality",
+    "destination": "Illizi – Algeria",
+    "category": "Desert Camps",
+    "type": "Camp",
+    "price_per_night": 85,
+    "rooms": 15,
+    "amenities": ["Campfire", "Traditional Meals", "Star Gazing", "Camel Rides"],
+    "sustainability": "Low-impact, minimal waste",
+    "image": "/assets/destinations/Tassili.avif"
+  },
+  {
+    "id": 4,
+    "name": "Sahara Nomad Camp",
+    "description": "Immersive desert experience with traditional tent accommodations",
+    "destination": "Tamanrasset – Algeria",
+    "category": "Desert Camps",
+    "type": "Camp",
+    "price_per_night": 95,
+    "rooms": 12,
+    "amenities": ["Traditional Tents", "Meals", "Guides", "Night Sky Tours"],
+    "sustainability": "Minimal footprint, solar lighting",
+    "image": "/assets/destinations/desert-dunes.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Ahaggar Eco-Resort",
+    "description": "Sustainable resort with traditional architecture in the heart of the Sahara",
+    "destination": "Tamanrasset – Algeria",
+    "category": "Beach & Coastal Resorts",
+    "type": "Resort",
+    "price_per_night": 150,
+    "rooms": 40,
+    "amenities": ["Pool", "Spa", "Restaurant", "Tour Office"],
+    "sustainability": "Renewable energy, local employment",
+    "image": "/assets/destinations/Alhaggar.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Sidi Fredj Coastal Resort",
+    "description": "Beachfront eco-resort with direct access to pristine coastline",
+    "destination": "Algiers – Algeria",
+    "category": "Beach & Coastal Resorts",
+    "type": "Resort",
+    "price_per_night": 180,
+    "rooms": 50,
+    "amenities": ["Beach Access", "Water Sports", "Spa", "Restaurant"],
+    "sustainability": "Water recycling, turtle protection",
+    "image": "/assets/destinations/Sidi Fredj Coast1.webp"
+  }
+]

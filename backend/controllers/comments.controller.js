@@ -1,4 +1,14 @@
-import pool from "../db.js";
+import {
+  getComments as getCommentsData,
+  saveComments,
+  getCommentReplies,
+  saveCommentReplies,
+  getCommentLikes,
+  saveCommentLikes,
+  getReplyLikes,
+  saveReplyLikes,
+  generateId
+} from "../data/fileHelpers.js";
 
 // Get comments for a specific destination
 export const getComments = async (req, res) => {
@@ -6,80 +16,72 @@ export const getComments = async (req, res) => {
   const userId = req.query.userId || null;
 
   try {
-    const [comments] = await pool.query(
-      "SELECT * FROM comments WHERE comment_type = ? AND destination_id = ? ORDER BY created_at DESC",
-      [type, id]
+    const comments = await getCommentsData();
+    const replies = await getCommentReplies();
+    const likes = await getCommentLikes();
+
+    // Filter comments for this destination
+    const destinationComments = comments.filter(
+      (c) => c.comment_type === type && c.destination_id === id
     );
 
-    // Fetch replies and like info for each comment
-    const commentsWithReplies = await Promise.all(
-      comments.map(async (comment) => {
-        const [replies] = await pool.query(
-          "SELECT * FROM comment_replies WHERE comment_id = ? ORDER BY created_at ASC",
-          [comment.id]
-        );
+    // Enrich comments with replies and like info
+    const enrichedComments = destinationComments.map((comment) => {
+      const commentReplies = replies.filter((r) => r.comment_id === comment.id);
+      const likeCount = likes.filter((l) => l.comment_id === comment.id).length;
+      const userLiked = userId
+        ? likes.some((l) => l.comment_id === comment.id && l.user_id === userId)
+        : false;
 
-        // Check if current user liked this comment
-        let userLiked = false;
-        if (userId) {
-          const [likeCheck] = await pool.query(
-            "SELECT id FROM comment_likes WHERE comment_id = ? AND user_id = ?",
-            [comment.id, userId]
-          );
-          userLiked = likeCheck.length > 0;
-        }
+      return {
+        ...comment,
+        likes: likeCount,
+        userLiked,
+        replies: commentReplies
+      };
+    });
 
-        // Get like count
-        const [likeCount] = await pool.query(
-          "SELECT COUNT(*) as count FROM comment_likes WHERE comment_id = ?",
-          [comment.id]
-        );
-
-        return { 
-          ...comment, 
-          likes: likeCount[0].count,
-          userLiked,
-          replies: replies.map(reply => ({
-            ...reply,
-            userLiked: false
-          }))
-        };
-      })
-    );
-
-    res.json(commentsWithReplies);
+    res.json(enrichedComments);
   } catch (error) {
     res.status(500).json({ message: "Error fetching comments", error: error.message });
   }
 };
 
-// Create a new comment (auth required)
+// Create a new comment (auth optional - guests allowed)
 export const createComment = async (req, res) => {
-  const { type, destination_id, rating, comment_text } = req.body;
-  const { id: user_id, name: user_name, email: user_email } = req.user;
+  const { type, destination_id, rating, comment_text, user_name, user_email, user_id } = req.body;
+  
+  // Get user info from auth if logged in, otherwise use provided info
+  const authUser = req.user;
+  const finalUserId = authUser?.id || user_id || `guest_${Date.now()}`;
+  const finalUserName = authUser?.name || user_name || "Guest";
+  const finalUserEmail = authUser?.email || user_email || "guest@example.com";
 
   try {
-    const [result] = await pool.query(
-      "INSERT INTO comments (comment_type, destination_id, user_id, user_name, user_email, rating, comment_text, created_at, likes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [type, destination_id, user_id, user_name, user_email, rating, comment_text, new Date().toISOString(), 0]
-    );
+    const comments = await getCommentsData();
 
     const newComment = {
-      id: result.insertId,
-      type,
+      id: generateId(),
+      comment_type: type,
       destination_id,
-      user_id,
-      user_name,
-      user_email,
+      user_id: finalUserId,
+      user_name: finalUserName,
+      user_email: finalUserEmail,
       rating,
       comment_text,
       created_at: new Date().toISOString(),
+      updated_at: null
+    };
+
+    comments.push(newComment);
+    await saveComments(comments);
+
+    res.status(201).json({
+      ...newComment,
       likes: 0,
       userLiked: false,
       replies: []
-    };
-
-    res.status(201).json(newComment);
+    });
   } catch (error) {
     res.status(500).json({ message: "Error creating comment", error: error.message });
   }
@@ -92,24 +94,27 @@ export const createReply = async (req, res) => {
   const { id: user_id, name: user_name, email: user_email } = req.user;
 
   try {
-    const [result] = await pool.query(
-      "INSERT INTO comment_replies (comment_id, user_id, user_name, user_email, reply_text, likes) VALUES (?, ?, ?, ?, ?, ?)",
-      [comment_id, user_id, user_name, user_email, reply_text, 0]
-    );
+    const commentReplies = await getCommentReplies();
 
     const newReply = {
-      id: result.insertId,
+      id: generateId(),
       comment_id,
       user_id,
       user_name,
       user_email,
       reply_text,
-      likes: 0,
-      userLiked: false,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
+      updated_at: null
     };
 
-    res.status(201).json(newReply);
+    commentReplies.push(newReply);
+    await saveCommentReplies(commentReplies);
+
+    res.status(201).json({
+      ...newReply,
+      likes: 0,
+      userLiked: false
+    });
   } catch (error) {
     res.status(500).json({ message: "Error creating reply", error: error.message });
   }
@@ -121,25 +126,26 @@ export const likeComment = async (req, res) => {
   const user_id = req.user.id;
 
   try {
+    const likes = await getCommentLikes();
+
     // Check if user already liked
-    const [existingLike] = await pool.query(
-      "SELECT id FROM comment_likes WHERE comment_id = ? AND user_id = ?",
-      [id, user_id]
+    const existingLikeIndex = likes.findIndex(
+      (l) => l.comment_id === id && l.user_id === user_id
     );
 
-    if (existingLike.length > 0) {
+    if (existingLikeIndex > -1) {
       // Already liked, so unlike
-      await pool.query(
-        "DELETE FROM comment_likes WHERE comment_id = ? AND user_id = ?",
-        [id, user_id]
-      );
+      likes.splice(existingLikeIndex, 1);
+      await saveCommentLikes(likes);
       res.json({ message: "Comment unliked", liked: false });
     } else {
       // Not liked, so like
-      await pool.query(
-        "INSERT INTO comment_likes (comment_id, user_id) VALUES (?, ?)",
-        [id, user_id]
-      );
+      likes.push({
+        id: generateId(),
+        comment_id: id,
+        user_id
+      });
+      await saveCommentLikes(likes);
       res.json({ message: "Comment liked", liked: true });
     }
   } catch (error) {
@@ -153,25 +159,26 @@ export const likeReply = async (req, res) => {
   const user_id = req.user.id;
 
   try {
+    const likes = await getReplyLikes();
+
     // Check if user already liked
-    const [existingLike] = await pool.query(
-      "SELECT id FROM reply_likes WHERE reply_id = ? AND user_id = ?",
-      [id, user_id]
+    const existingLikeIndex = likes.findIndex(
+      (l) => l.reply_id === id && l.user_id === user_id
     );
 
-    if (existingLike.length > 0) {
+    if (existingLikeIndex > -1) {
       // Already liked, so unlike
-      await pool.query(
-        "DELETE FROM reply_likes WHERE reply_id = ? AND user_id = ?",
-        [id, user_id]
-      );
+      likes.splice(existingLikeIndex, 1);
+      await saveReplyLikes(likes);
       res.json({ message: "Reply unliked", liked: false });
     } else {
       // Not liked, so like
-      await pool.query(
-        "INSERT INTO reply_likes (reply_id, user_id) VALUES (?, ?)",
-        [id, user_id]
-      );
+      likes.push({
+        id: generateId(),
+        reply_id: id,
+        user_id
+      });
+      await saveReplyLikes(likes);
       res.json({ message: "Reply liked", liked: true });
     }
   } catch (error) {
@@ -185,12 +192,20 @@ export const updateComment = async (req, res) => {
   const { rating, comment_text } = req.body;
 
   try {
-    await pool.query(
-      "UPDATE comments SET rating = ?, comment_text = ?, updated_at = NOW() WHERE id = ?",
-      [rating, comment_text, id]
-    );
+    const comments = await getCommentsData();
+    const comment = comments.find((c) => c.id === id);
 
-    res.json({ message: "Comment updated successfully" });
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    comment.rating = rating;
+    comment.comment_text = comment_text;
+    comment.updated_at = new Date().toISOString();
+
+    await saveComments(comments);
+
+    res.json({ message: "Comment updated successfully", comment });
   } catch (error) {
     res.status(500).json({ message: "Error updating comment", error: error.message });
   }
@@ -202,12 +217,19 @@ export const updateReply = async (req, res) => {
   const { reply_text } = req.body;
 
   try {
-    await pool.query(
-      "UPDATE comment_replies SET reply_text = ?, updated_at = NOW() WHERE id = ?",
-      [reply_text, id]
-    );
+    const replies = await getCommentReplies();
+    const reply = replies.find((r) => r.id === id);
 
-    res.json({ message: "Reply updated successfully" });
+    if (!reply) {
+      return res.status(404).json({ message: "Reply not found" });
+    }
+
+    reply.reply_text = reply_text;
+    reply.updated_at = new Date().toISOString();
+
+    await saveCommentReplies(replies);
+
+    res.json({ message: "Reply updated successfully", reply });
   } catch (error) {
     res.status(500).json({ message: "Error updating reply", error: error.message });
   }
@@ -218,7 +240,16 @@ export const deleteComment = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await pool.query("DELETE FROM comments WHERE id = ?", [id]);
+    const comments = await getCommentsData();
+    const commentIndex = comments.findIndex((c) => c.id === id);
+
+    if (commentIndex === -1) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    comments.splice(commentIndex, 1);
+    await saveComments(comments);
+
     res.json({ message: "Comment deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting comment", error: error.message });
@@ -230,7 +261,16 @@ export const deleteReply = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await pool.query("DELETE FROM comment_replies WHERE id = ?", [id]);
+    const replies = await getCommentReplies();
+    const replyIndex = replies.findIndex((r) => r.id === id);
+
+    if (replyIndex === -1) {
+      return res.status(404).json({ message: "Reply not found" });
+    }
+
+    replies.splice(replyIndex, 1);
+    await saveCommentReplies(replies);
+
     res.json({ message: "Reply deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting reply", error: error.message });

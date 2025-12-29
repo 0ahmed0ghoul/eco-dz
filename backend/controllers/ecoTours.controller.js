@@ -1,6 +1,10 @@
-import pool from "../db.js";
+import { getEcoTours } from "../data/fileHelpers.js";
 
-export default getAll = async (req, res) => {
-  const [rows] = await pool.query("SELECT * FROM eco_tours");
-  res.json(rows);
+export const getAll = async (req, res) => {
+  try {
+    const ecoTours = await getEcoTours();
+    res.json(ecoTours);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching eco tours", error: error.message });
+  }
 };

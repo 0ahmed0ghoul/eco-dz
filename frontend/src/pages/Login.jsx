@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import backgroundImage from "/assets/background/2.jpg";
 import backgroundImage2 from "/assets/background/3.jpg";
 import backgroundImage3 from "/assets/background/4.jpg";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '/assets/images/main-logo.png';
 const backgrounds = [backgroundImage, backgroundImage2, backgroundImage3];
 
@@ -13,6 +13,10 @@ const Login = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectFrom = location.state?.from;
+  const redirectMessage = location.state?.message;
+
   // Cycle backgrounds every 8 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,6 +24,7 @@ const Login = () => {
     }, 8000);
     return () => clearInterval(interval);
   }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -38,9 +43,12 @@ const Login = () => {
   
       // Save token
       localStorage.setItem("token", data.token);
+      localStorage.setItem("authToken", data.token);
   
-      // Redirect based on profile completion
-      if (data.isProfileCompleted === 1) {
+      // Redirect to place if coming from place view, otherwise to profile
+      if (redirectFrom) {
+        navigate(redirectFrom);
+      } else if (data.isProfileCompleted === 1) {
         navigate("/user/profile");
       } else {
         navigate("/user/complete-profile", { state: { userId: data.userId } });
@@ -111,6 +119,11 @@ const Login = () => {
               </div>
             </div>
           </div>
+          {redirectMessage && (
+            <div className="bg-blue-500/20 border border-blue-500 text-blue-300 px-4 py-2 rounded-lg text-sm">
+              ℹ️ {redirectMessage}
+            </div>
+          )}
           {error && (
             <div className="bg-red-500/20 border border-red-500 text-red-400 px-4 py-2 rounded-lg text-sm">
               {error}

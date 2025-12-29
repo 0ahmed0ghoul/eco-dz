@@ -1,6 +1,10 @@
-import pool from "../db.js";
+import { getAccommodations } from "../data/fileHelpers.js";
 
-exports.getAll = async (req, res) => {
-  const [rows] = await pool.query("SELECT * FROM sustainable_accommodations");
-  res.json(rows);
+export const getAll = async (req, res) => {
+  try {
+    const accommodations = await getAccommodations();
+    res.json(accommodations);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching accommodations", error: error.message });
+  }
 };

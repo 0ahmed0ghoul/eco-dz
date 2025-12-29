@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "name": "Last Minute Desert Escape",
+    "description": "Limited time offer - 40% off on desert tours this month!",
+    "destination": "Tassili n'Ajjer",
+    "originalPrice": 850,
+    "salePrice": 510,
+    "discount": 40,
+    "endDate": "2025-01-31",
+    "image": "/assets/destinations/Tassili.avif"
+  },
+  {
+    "id": 2,
+    "name": "Mountain Explorer Special",
+    "description": "Early bird discount - 25% off for bookings made before January 15th",
+    "destination": "Mount Chelia",
+    "originalPrice": 450,
+    "salePrice": 337.50,
+    "discount": 25,
+    "endDate": "2025-01-15",
+    "image": "/assets/destinations/Chelia_2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Ahaggar Flash Sale",
+    "description": "24-hour flash sale - 50% off on Ahaggar Mountains tour!",
+    "destination": "Ahaggar Mountains",
+    "originalPrice": 1200,
+    "salePrice": 600,
+    "discount": 50,
+    "endDate": "2025-01-07",
+    "image": "/assets/destinations/Alhaggar.jpg"
+  }
+]

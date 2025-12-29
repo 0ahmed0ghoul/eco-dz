@@ -21,6 +21,7 @@ import familyPackagesRoutes from "./routes/familyPackages.routes.js";
 import adventureToursRoutes from "./routes/adventureTours.routes.js";
 import dealDestinationsRoutes from "./routes/dealDestinations.routes.js";
 import monumentsRoutes from "./routes/monuments.routes.js";
+import quizRoutes from "./routes/quiz.routes.js";
 
 dotenv.config();
 
@@ -63,10 +64,13 @@ app.use("/api/messaging", messagingRoutes);
 app.use("/api/eco-tours", ecoToursRoutes);
 app.use("/api/accommodations", accommodationsRoutes);
 app.use("/api/green-transport", transportRoutes);
+app.use("/api/quizzes", quizRoutes);
 app.use("/api/deals/last-minute", lastMinuteRoutes);
 app.use("/api/deals/family", familyPackagesRoutes);
 app.use("/api/deals/adventure", adventureToursRoutes);
 app.use("/api/deals/destinations", dealDestinationsRoutes);
+app.use("/api/deals/accommodations", accommodationsRoutes);
+app.use("/api/deals/transport", transportRoutes);
 app.use("/api/monuments", monumentsRoutes);
 
 

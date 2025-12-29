@@ -1,5 +1,15 @@
 import { Server } from "socket.io";
-import pool from "../db.js";
+import {
+  getConversations,
+  saveConversations,
+  getMessages,
+  saveMessages,
+  getSupportTickets,
+  saveSupportTickets,
+  getSupportMessages,
+  saveSupportMessages,
+  generateId
+} from "../data/fileHelpers.js";
 
 export const initializeSocket = (httpServer) => {
   const io = new Server(httpServer, {
@@ -43,29 +53,30 @@ export const initializeSocket = (httpServer) => {
       const { conversationId, senderId, message } = data;
 
       try {
-        // Save to database
-        const [result] = await pool.query(
-          "INSERT INTO messages (conversation_id, sender_id, message_text) VALUES (?, ?, ?)",
-          [conversationId, senderId, message]
-        );
+        const messages = await getMessages();
+        const conversations = await getConversations();
 
         const messageData = {
-          id: result.insertId,
-          conversationId,
-          senderId,
+          id: generateId(),
+          conversation_id: conversationId,
+          sender_id: senderId,
           message_text: message,
           created_at: new Date().toISOString(),
           is_read: false
         };
 
+        messages.push(messageData);
+        await saveMessages(messages);
+
+        // Update conversation's last message time
+        const conversation = conversations.find((c) => c.id === conversationId);
+        if (conversation) {
+          conversation.last_message_at = new Date().toISOString();
+          await saveConversations(conversations);
+        }
+
         // Broadcast to conversation room
         io.to(`conversation-${conversationId}`).emit("message-received", messageData);
-
-        // Update last message time
-        await pool.query(
-          "UPDATE conversations SET last_message_at = NOW() WHERE id = ?",
-          [conversationId]
-        );
       } catch (error) {
         console.error("Error saving message:", error);
         socket.emit("error", { message: "Failed to send message" });
@@ -75,10 +86,15 @@ export const initializeSocket = (httpServer) => {
     // Mark message as read
     socket.on("mark-as-read", async (messageId) => {
       try {
-        await pool.query(
-          "UPDATE messages SET is_read = TRUE, read_at = NOW() WHERE id = ?",
-          [messageId]
-        );
+        const messages = await getMessages();
+        const message = messages.find((m) => m.id === messageId);
+
+        if (message) {
+          message.is_read = true;
+          message.read_at = new Date().toISOString();
+          await saveMessages(messages);
+        }
+
         socket.broadcast.emit("message-read", { messageId });
       } catch (error) {
         console.error("Error marking message as read:", error);
@@ -107,29 +123,30 @@ export const initializeSocket = (httpServer) => {
       const { ticketId, senderId, message, isAdmin } = data;
 
       try {
-        // Save to database
-        const [result] = await pool.query(
-          "INSERT INTO support_messages (ticket_id, sender_id, message_text, is_admin) VALUES (?, ?, ?, ?)",
-          [ticketId, senderId, message, isAdmin || false]
-        );
+        const supportMessages = await getSupportMessages();
+        const tickets = await getSupportTickets();
 
         const messageData = {
-          id: result.insertId,
-          ticketId,
-          senderId,
+          id: generateId(),
+          ticket_id: ticketId,
+          sender_id: senderId,
           message_text: message,
           is_admin: isAdmin || false,
           created_at: new Date().toISOString()
         };
 
+        supportMessages.push(messageData);
+        await saveSupportMessages(supportMessages);
+
+        // Update ticket's updated_at
+        const ticket = tickets.find((t) => t.id === ticketId);
+        if (ticket) {
+          ticket.updated_at = new Date().toISOString();
+          await saveSupportTickets(tickets);
+        }
+
         // Broadcast to support room
         io.to(`support-${ticketId}`).emit("support-message-received", messageData);
-
-        // Update ticket status if needed
-        await pool.query(
-          "UPDATE support_tickets SET updated_at = NOW() WHERE id = ?",
-          [ticketId]
-        );
       } catch (error) {
         console.error("Error saving support message:", error);
         socket.emit("error", { message: "Failed to send support message" });

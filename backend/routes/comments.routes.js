@@ -7,8 +7,8 @@ const router = Router();
 // Get comments (no auth needed)
 router.get("/", controller.getComments);
 
-// Create new comment (auth required)
-router.post("/", auth, controller.createComment);
+// Create new comment (auth optional - guests allowed)
+router.post("/", controller.createComment);
 
 // Update comment (auth required)
 router.put("/:id", auth, controller.updateComment);
