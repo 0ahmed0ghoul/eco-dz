@@ -108,7 +108,7 @@ const UserProfile = () => {
     return {
       name: place.name || 'Unknown Place',
       address: place.location || '',
-      image: place.image || '/assets/default-place.jpg',kl;
+      image: place.image || '/assets/default-place.jpg',
       type: place.type || 'Unknown',
       avgRating: place.avg_rating || 0,
       physicalRating: place.physical_rating || 0,
