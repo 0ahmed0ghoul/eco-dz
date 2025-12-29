@@ -10,7 +10,7 @@ export default function Quiz() {
   const [finished, setFinished] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/monuments")
+    fetch("http://localhost:5000/api/places")
       .then(res => res.json())
       .then(data => {
         setMonuments(data);

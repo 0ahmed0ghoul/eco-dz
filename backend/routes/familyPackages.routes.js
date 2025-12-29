@@ -1,5 +1,8 @@
-const router = require("express").Router();
-const c = require("../controllers/familyPackages.controller");
+import { Router } from "express";
+import * as c from "../controllers/familyPackages.controller.js";
+
+const router = Router();
 
 router.get("/", c.getAll);
-module.exports = router;
+
+export default router;

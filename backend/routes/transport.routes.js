@@ -1,5 +1,8 @@
-const router = require("express").Router();
-const c = require("../controllers/transport.controller");
+import { Router } from "express";
+import c from "../controllers/transport.controller.js";
+
+const router = Router();
 
 router.get("/", c.getAll);
-module.exports = router;
+
+export default router;

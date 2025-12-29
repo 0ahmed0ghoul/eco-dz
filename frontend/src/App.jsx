@@ -7,8 +7,14 @@ import CategoryPlaces from "./pages/CategoryPlaces.jsx";
 import Destinations from "./pages/Destinations.jsx";
 import WaysToTravel from "./pages/WaysToTravel.jsx";
 import Quiz from "./pages/Quiz.jsx";
+
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
+import Trip from "./components/Trip.jsx";
+import Inbox from "./components/Inbox.jsx";
+import SupportChat from "./components/SupportChat.jsx";
+
+
 import Destination from "./pages/Destination.jsx";
 import Places from "./pages/Places.jsx";
 import CompleteProfile from "./pages/CompleteProfile.jsx";

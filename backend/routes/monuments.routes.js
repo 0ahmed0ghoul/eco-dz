@@ -1,6 +1,8 @@
-const router = require("express").Router();
-const controller = require("../controllers/monuments.controller");
+import { Router } from "express";
+import controller from "../controllers/monuments.controller.js";
+
+const router = Router();
 
 router.get("/", controller.getAllMonuments);
 
-module.exports = router;
+export default router;

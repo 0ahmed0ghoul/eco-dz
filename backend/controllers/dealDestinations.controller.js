@@ -1,6 +1,6 @@
-const db = require("../db");
+import pool from "../db.js";
 
 exports.getAll = async (req, res) => {
-  const [rows] = await db.query("SELECT * FROM deal_destinations");
+  const [rows] = await pool.query("SELECT * FROM deal_destinations");
   res.json(rows);
 };

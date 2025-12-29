@@ -13,6 +13,14 @@ import userRoutes from "./routes/user.routes.js";
 import commentsRoutes from "./routes/comments.routes.js";
 import messagingRoutes from "./routes/messaging.routes.js";
 import { initializeSocket } from "./socket/socket.js";
+import ecoToursRoutes from "./routes/ecoTours.routes.js";
+import accommodationsRoutes from "./routes/accommodations.routes.js";
+import transportRoutes from "./routes/transport.routes.js";
+import lastMinuteRoutes from "./routes/lastMinute.routes.js";
+import familyPackagesRoutes from "./routes/familyPackages.routes.js";
+import adventureToursRoutes from "./routes/adventureTours.routes.js";
+import dealDestinationsRoutes from "./routes/dealDestinations.routes.js";
+import monumentsRoutes from "./routes/monuments.routes.js";
 
 dotenv.config();
 
@@ -47,23 +55,20 @@ app.use(cors({
 
 app.use("/api/auth", authRoutes);
 app.use("/api/places", placeRoutes);
-<<<<<<< HEAD
 // app.use("/api/trips", tripRoutes);
 app.use("/api/user", userRoutes);
-=======
-app.use("/api/trips", tripRoutes);
+// app.use("/api/trips", tripRoutes);
 app.use("/api/comments", commentsRoutes);
 app.use("/api/messaging", messagingRoutes);
-app.use("/api/eco-tours", require("./routes/ecoTours.routes"));
-app.use("/api/accommodations", require("./routes/accommodations.routes"));
-app.use("/api/green-transport", require("./routes/transport.routes"));
-app.use("/api/deals/last-minute", require("./routes/lastMinute.routes"));
-app.use("/api/deals/family", require("./routes/familyPackages.routes"));
-app.use("/api/deals/adventure", require("./routes/adventureTours.routes"));
-app.use("/api/deals/destinations", require("./routes/dealDestinations.routes"));
-app.use("/api/monuments", require("./routes/monuments.routes"));
+app.use("/api/eco-tours", ecoToursRoutes);
+app.use("/api/accommodations", accommodationsRoutes);
+app.use("/api/green-transport", transportRoutes);
+app.use("/api/deals/last-minute", lastMinuteRoutes);
+app.use("/api/deals/family", familyPackagesRoutes);
+app.use("/api/deals/adventure", adventureToursRoutes);
+app.use("/api/deals/destinations", dealDestinationsRoutes);
+app.use("/api/monuments", monumentsRoutes);
 
->>>>>>> islem
 
 
 /* =======================
@@ -76,9 +81,6 @@ app.get("/", (req, res) => {
   });
 });
 
-/* =======================
-   ERROR HANDLING
-======================= */
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -87,10 +89,6 @@ app.use((err, req, res, next) => {
     error: err.message
   });
 });
-
-/* =======================
-   SERVER LISTEN
-======================= */
 
 const PORT = process.env.PORT || 5000;
 
