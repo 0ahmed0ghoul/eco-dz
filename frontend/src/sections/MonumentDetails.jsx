@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Comments from "../components/Comments";
 import {
   MapPin,
   Calendar,
@@ -367,6 +368,11 @@ export default function MonumentDetails() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Comments Section */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <Comments destinationId={monument.id} destinationType="place" />
       </div>
 
       {/* Image Modal */}

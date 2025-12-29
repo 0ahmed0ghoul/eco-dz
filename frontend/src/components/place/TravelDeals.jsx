@@ -1,4 +1,5 @@
 import React from "react";
+import Comments from "../Comments";
 
 const TravelDeals = ({ place }) => {
   if (!place || !place.deals || place.deals.length === 0) {
@@ -65,6 +66,11 @@ const TravelDeals = ({ place }) => {
           <button className="px-6 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors">
             View more trips
           </button>
+        </div>
+
+        {/* Comments Section */}
+        <div className="mt-12">
+          <Comments destinationId={place.id} destinationType="place" />
         </div>
       </div>
     </section>

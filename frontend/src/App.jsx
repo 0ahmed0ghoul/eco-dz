@@ -12,6 +12,8 @@ import Footer from "./components/Footer.jsx";
 import Destination from "./components/Destination.jsx";
 import Trip from "./components/Trip.jsx";
 import Places from "./components/Places.jsx";
+import Inbox from "./components/Inbox.jsx";
+import SupportChat from "./components/SupportChat.jsx";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
       <Route path="/places/:category/:slug" element={<Destination />} />
       <Route path="/trip/:id" element={<Trip />} />
       <Route path="/quiz" element={<Quiz />} />
+      <Route path="/inbox" element={<Inbox />} />
+      <Route path="/support" element={<SupportChat />} />
     </Routes>
     <Footer />
     </>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Comments from "../Comments";
 
 
 const PlaceOverview = ({ place }) => {
@@ -43,6 +44,11 @@ const PlaceOverview = ({ place }) => {
         <p className="text-lg leading-relaxed text-gray-700">
           {place.description}
         </p>
+      </div>
+
+      {/* Comments Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <Comments destinationId={place.id} destinationType="place" />
       </div>
     </section>
   );

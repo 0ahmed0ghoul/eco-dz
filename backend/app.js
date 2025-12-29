@@ -3,16 +3,24 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import path from "path";
-import { fileURLToPath } from "url"; // ✅ you must import this
+import { fileURLToPath } from "url";
+import http from "http";
 
 import authRoutes from "./routes/auth.routes.js";
 import placeRoutes from "./routes/place.routes.js";
 import tripRoutes from "./routes/trip.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import commentsRoutes from "./routes/comments.routes.js";
+import messagingRoutes from "./routes/messaging.routes.js";
+import { initializeSocket } from "./socket/socket.js";
 
 dotenv.config();
 
 const app = express();
+const httpServer = http.createServer(app);
+
+// Initialize Socket.io
+const io = initializeSocket(httpServer);
 
 // Recreate __dirname in ES module scope
  const __filename = fileURLToPath(import.meta.url); 
@@ -40,6 +48,8 @@ app.use(cors({
 app.use("/api/auth", authRoutes);
 app.use("/api/places", placeRoutes);
 app.use("/api/trips", tripRoutes);
+app.use("/api/comments", commentsRoutes);
+app.use("/api/messaging", messagingRoutes);
 app.use("/api/eco-tours", require("./routes/ecoTours.routes"));
 app.use("/api/accommodations", require("./routes/accommodations.routes"));
 app.use("/api/green-transport", require("./routes/transport.routes"));
@@ -78,6 +88,7 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`🔌 WebSocket ready for real-time messaging`);
 });

@@ -262,8 +262,14 @@ function Navbar() {
                   <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
                 </button>
               )}
-              <button className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group">
+              <button 
+                onClick={() => navigate("/inbox")}
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
+              >
                 <FiMail className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
+                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                  2
+                </span>
               </button>
             </div>
 
