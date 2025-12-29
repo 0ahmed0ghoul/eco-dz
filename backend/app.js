@@ -7,7 +7,7 @@ import { fileURLToPath } from "url"; // ✅ you must import this
 
 import authRoutes from "./routes/auth.routes.js";
 import placeRoutes from "./routes/place.routes.js";
-import tripRoutes from "./routes/trip.routes.js";
+// import tripRoutes from "./routes/trip.routes.js";
 import userRoutes from "./routes/user.routes.js";
 
 dotenv.config();
@@ -39,7 +39,7 @@ app.use(cors({
 
 app.use("/api/auth", authRoutes);
 app.use("/api/places", placeRoutes);
-app.use("/api/trips", tripRoutes);
+// app.use("/api/trips", tripRoutes);
 app.use("/api/user", userRoutes);
 
 
