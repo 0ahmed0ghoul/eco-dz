@@ -4,7 +4,9 @@ import Login from "./pages/Login.jsx";
 import Signin from "./pages/Signin.jsx";
 import Contact from "./pages/Contact.jsx";
 import CategoryPlaces from "./pages/CategoryPlaces.jsx";
-
+import Destinations from "./pages/Destinations.jsx";
+import WaysToTravel from "./pages/WaysToTravel.jsx";
+import Quiz from "./pages/Quiz.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import Destination from "./pages/Destination.jsx";
@@ -20,7 +22,8 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signin />} />
       <Route path="/contact" element={<Contact />} />
-      {/* <Route path="/travels" element={<Travels />} /> */}
+      <Route path="/travels" element={<WaysToTravel />} />
+      <Route path="/destinations" element={<Destinations />} />
       <Route path="/places" element={<Places />} />
       <Route path="/places/:category" element={<CategoryPlaces />} />
       <Route path="/places/:category/:slug" element={<Destination />} />
@@ -29,6 +32,10 @@ function App() {
       <Route path="/user/profile" element={<UserProfile />}/>
 
 
+      <Route path="/trip/:id" element={<Trip />} />
+      <Route path="/quiz" element={<Quiz />} />
+      <Route path="/inbox" element={<Inbox />} />
+      <Route path="/support" element={<SupportChat />} />
     </Routes>
     <Footer />
     </>
