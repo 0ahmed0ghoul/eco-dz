@@ -3,9 +3,12 @@ import {
   getCategories,
   getPlacesByCategory,
   getPlaceBySlug,
+  getAllPlacess,
 } from "../controllers/place.controller.js";
 
 const router = express.Router();
+
+router.get("/", getAllPlacess);
 
 // 1️⃣ Get all categories
 router.get("/categories", getCategories);

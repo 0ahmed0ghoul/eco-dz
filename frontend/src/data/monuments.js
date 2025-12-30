@@ -55,8 +55,8 @@ export const monuments = [
     physicalRating: 2,
   },
   {
-    id: 30,
-    name: "Beni Haroun Dam & Lake",
+    id: 9,
+    name: "Beni Haroun Dam",
     category: "lake",
     destination: "Mila – Algeria",
     lat: 36.43,

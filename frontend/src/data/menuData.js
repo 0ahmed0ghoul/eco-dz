@@ -48,15 +48,15 @@ export const menuData = {
   },
 
   "Ways to Travel": {
-    "Eco-Friendly Tours": {},
-    "Sustainable Accommodations": {},
-    "Green Transportation Options": {},
+    "Eco-Friendly Tours": [],
+    "Sustainable Accommodations": [],
+    "Green Transportation Options": [],
   },
 
   Deals: {
-    "Last Minute Deals": {},
-    "Family Packages": {},
-    "Adventure Tours": {},
+    "Last Minute Deals": [],
+    "Family Packages": [],
+    "Adventure Tours": []
   },
 };
 
