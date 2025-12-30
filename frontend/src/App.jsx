@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Signin from "./pages/Signin.jsx";
@@ -18,12 +18,26 @@ import Place from "./pages/Place.jsx";
 
 import Inbox from "./components/Inbox.jsx";
 import SupportChat from "./components/SupportChat.jsx";
+import { useState } from "react";
+import AdminLogin from "./pages/AdminLogin.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
 
 function App() {
+  const [isAdmin, setIsAdmin] = useState(false); // in-memory state
+
   return (
     <>
     <Navbar />
     <Routes>
+        <Route 
+          path="/admin" 
+          element={isAdmin ? <Navigate to="/admin/dashboard" /> : <AdminLogin setIsAdmin={setIsAdmin} />}
+        />
+        <Route 
+          path="/admin/dashboard" 
+          element={isAdmin ? <AdminDashboard /> : <Navigate to="/admin" />}
+        />
+
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signin />} />

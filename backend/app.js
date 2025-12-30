@@ -19,6 +19,7 @@ import userRoutes from "./routes/user.routes.js";
 import commentsRoutes from "./routes/comments.routes.js";
 import messagingRoutes from "./routes/messaging.routes.js";
 import { initializeSocket } from "./socket/socket.js";
+import adminRoutes from "./routes/admin.route.js";
 
 dotenv.config();
 
@@ -50,6 +51,7 @@ app.use(cors({
 /* =======================
    API ROUTES
 ======================= */
+app.use("/api/admin", adminRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/places", placeRoutes);
