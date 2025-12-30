@@ -13,8 +13,11 @@ function MegaMenu({
   const [selectedCategorySlug, setSelectedCategorySlug] = useState(null);
 
   const handleMegaMenuCategoryClick = (category) => {
+  
+    let categorySlug = category.toLowerCase().replace(/\s+/g, "-").replace(/'/g, "");
+
     setSelectedCategoryKey(category);
-    setSelectedCategorySlug(category); 
+    setSelectedCategorySlug(categorySlug); 
   };
   
 
@@ -104,7 +107,6 @@ function MegaMenu({
 
                       const slug = item[title];
 
-                      console.log(title, slug);
                       return (
                         <button
                           key={slug || index}

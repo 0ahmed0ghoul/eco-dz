@@ -1,12 +1,5 @@
 import pool from "../db.js";
 
-/**
- * 1️⃣ Get categories
- * Returns:
- * - category
- * - total places
- * - images[] (gallery)
- */
 export const getCategories = async (req, res) => {
   try {
     // Get only what we need
@@ -46,7 +39,6 @@ export const getCategories = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 // 2️⃣ Get places by category
 export const getPlacesByCategory = async (req, res) => {
   const { category } = req.params;
@@ -63,17 +55,22 @@ export const getPlacesByCategory = async (req, res) => {
   }
 };
 
-// 3️⃣ Get single place
 export const getPlaceBySlug = async (req, res) => {
   const { category, slug } = req.params;
 
   try {
     const [[place]] = await pool.query(
-      "SELECT * FROM places WHERE category = ? AND slug = ?",
+      `
+      SELECT *
+      FROM places
+      WHERE category = ? AND slug = ?
+      `,
       [category, slug]
     );
 
-    if (!place) return res.status(404).json({ message: "Not found" });
+    if (!place) {
+      return res.status(404).json({ message: "Not found" });
+    }
 
     const [trips] = await pool.query(
       "SELECT * FROM place_trips WHERE place_id = ?",
@@ -96,12 +93,22 @@ export const getPlaceBySlug = async (req, res) => {
     );
 
     const [comments] = await pool.query(
-      `SELECT pc.comment, pc.traveled_date, pc.tour_name, u.name AS reviewer
-       FROM place_comments pc
-       JOIN users u ON u.id = pc.user_id
-       WHERE pc.place_id = ?`,
+      `
+      SELECT 
+        pc.comment,
+        pc.traveled_date,
+        pc.tour_name,
+        COALESCE(
+          CONCAT(u.firstName, ' ', u.lastName),
+          u.username
+        ) AS reviewer
+      FROM place_comments pc
+      JOIN users u ON u.id = pc.user_id
+      WHERE pc.place_id = ?
+      `,
       [place.id]
     );
+    
 
     const totalReviews = ratings.length;
     const overallRating =
@@ -132,6 +139,15 @@ export const getPlaceBySlug = async (req, res) => {
       },
     });
   } catch (err) {
+    console.error("getPlaceBySlug error:", err);
     res.status(500).json({ message: "Server error" });
+  }
+};
+export const getAllPlacess = async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT * FROM places");
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

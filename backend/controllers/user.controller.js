@@ -1,39 +1,159 @@
 import pool from "../db.js";
 
-export const getFavorites = async (req, res) => {
-  const [favorites] = await db.query(
-    `SELECT p.*
-     FROM favorites f
-     JOIN places p ON p.id = f.place_id
-     WHERE f.user_id = ?`,
-    [req.user.id]
-  );
 
-  res.json(favorites);
+export const getFavorites = async (req, res) => {
+ try {
+    const userId = req.user.id;
+    const favorites = await pool.query(
+      'SELECT * FROM favorites WHERE user_id = ? ORDER BY created_at DESC',
+      [userId]
+    );
+    res.json({ favorites });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+
 };
+export const deleteFavorite = async (req, res) => {
+   try {
+      const { placeId } = req.body;
+      const userId = req.user.id;
+      
+      await pool.query(
+        'DELETE FROM favorites WHERE user_id = ? AND place_id = ?',
+        [userId, placeId]
+      );
+      
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+};
+
+
+export const getComments = async (req, res) => {
+  try {
+      const userId = req.user.id;
+      const comments = await pool.query(
+        'SELECT * FROM place_comments WHERE user_id = ? ORDER BY created_at DESC',
+        [userId]
+      );
+      res.json({ comments });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+};
+export const deleteComment = async (req, res) => {
+   try {
+      const commentId = req.params.id;
+      const userId = req.user.id;
+      
+      // Verify ownership
+      const comment = await pool.query(
+        'SELECT * FROM place_comments WHERE id = ? AND user_id = ?',
+        [commentId, userId]
+      );
+      
+      if (!comment.length) {
+        return res.status(404).json({ error: 'Comment not found or unauthorized' });
+      }
+      
+      await pool.query('DELETE FROM place_comments WHERE id = ?', [commentId]);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+}
+
 
 export const getRatings = async (req, res) => {
-  const [ratings] = await db.query(
-    `SELECT p.name, pr.rating
-     FROM place_ratings pr
-     JOIN places p ON p.id = pr.place_id
-     WHERE pr.user_id = ?`,
-    [req.user.id]
-  );
-
-  res.json(ratings);
+  try {
+      const userId = req.user.id;
+      const ratings = await pool.query(
+        'SELECT * FROM place_ratings WHERE user_id = ? ORDER BY created_at DESC',
+        [userId]
+      );
+      res.json({ ratings });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
 };
+export const deleteRating = async (req, res) => {
+  try {
+    const ratingId = req.params.id;
+    const userId = req.user.id;
+    
+    // Verify ownership
+    const rating = await pool.query(
+      'SELECT * FROM place_ratings WHERE id = ? AND user_id = ?',
+      [ratingId, userId]
+    );
+    
+    if (!rating.length) {
+      return res.status(404).json({ error: 'Rating not found or unauthorized' });
+    }
+    
+    await pool.query('DELETE FROM place_ratings WHERE id = ?', [ratingId]);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const GetPlaceDetails = async (req, res) => {
+  try {
+    const { placeIds } = req.body;
+    if (!Array.isArray(placeIds) || placeIds.length === 0) {
+      return res.status(400).json({ error: 'Invalid place IDs' });
+    }
+
+    // Select the needed fields
+    const [rows] = await pool.query(
+      `SELECT 
+         id, 
+         name, 
+         location, 
+         image, 
+         category AS type, 
+         avg_rating, 
+         physical_rating,
+         slug
+       FROM places 
+       WHERE id IN (?)`,
+      [placeIds]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'No places found' });
+    }
+
+    // Convert array to object for easy lookup
+    const placesObj = {};
+    rows.forEach(place => {
+      placesObj[place.id] = place;
+    });
+
+    res.json({ places: placesObj });
+  } catch (error) {
+    console.error('GetPlaceDetails error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+
+
+
 
 export const becomeOrganizer = async (req, res) => {
   const { organization_name, phone, description } = req.body;
 
-  await db.query(
+  await pool.query(
     `INSERT INTO organizer_profiles (user_id, organization_name, phone, description)
      VALUES (?, ?, ?, ?)`,
     [req.user.id, organization_name, phone, description]
   );
 
-  await db.query(
+  await pool.query(
     `INSERT IGNORE INTO user_roles (user_id, role_id)
      VALUES (?, (SELECT id FROM roles WHERE name='organizer'))`,
     [req.user.id]

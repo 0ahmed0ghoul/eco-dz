@@ -3,16 +3,30 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import path from "path";
-import { fileURLToPath } from "url"; // ✅ you must import this
-
+import { fileURLToPath } from "url";
+import http from "http";
+import ecoToursRoutes from "./routes/ecoTours.routes.js";
+import accommodationsRoutes from "./routes/accommodations.routes.js";
+import transportRoutes from "./routes/transport.routes.js";
+import lastMinuteRoutes from "./routes/lastMinute.routes.js";
+import familyPackagesRoutes from "./routes/familyPackages.routes.js";
+import adventureToursRoutes from "./routes/adventureTours.routes.js";
+import dealDestinationsRoutes from "./routes/dealDestinations.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import placeRoutes from "./routes/place.routes.js";
-import tripRoutes from "./routes/trip.routes.js";
+// import tripRoutes from "./routes/trip.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import commentsRoutes from "./routes/comments.routes.js";
+import messagingRoutes from "./routes/messaging.routes.js";
+import { initializeSocket } from "./socket/socket.js";
 
 dotenv.config();
 
 const app = express();
+const httpServer = http.createServer(app);
+
+// Initialize Socket.io
+const io = initializeSocket(httpServer);
 
 // Recreate __dirname in ES module scope
  const __filename = fileURLToPath(import.meta.url); 
@@ -39,8 +53,19 @@ app.use(cors({
 
 app.use("/api/auth", authRoutes);
 app.use("/api/places", placeRoutes);
-app.use("/api/trips", tripRoutes);
+// app.use("/api/trips", tripRoutes);
 app.use("/api/user", userRoutes);
+// app.use("/api/trips", tripRoutes);
+app.use("/api/comments", commentsRoutes);
+app.use("/api/messaging", messagingRoutes);
+app.use("/api/eco-tours", ecoToursRoutes);
+app.use("/api/accommodations", accommodationsRoutes);
+app.use("/api/green-transport", transportRoutes);
+app.use("/api/deals/last-minute", lastMinuteRoutes);
+app.use("/api/deals/family", familyPackagesRoutes);
+app.use("/api/deals/adventure", adventureToursRoutes);
+app.use("/api/deals/destinations", dealDestinationsRoutes);
+
 
 
 /* =======================
@@ -71,6 +96,7 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`🔌 WebSocket ready for real-time messaging`);
 });

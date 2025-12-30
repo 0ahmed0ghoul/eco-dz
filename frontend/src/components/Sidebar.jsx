@@ -2,13 +2,12 @@ import React from "react";
 import {
   FiSearch,
   FiUser,
-  FiHeart,
+  FiPhone,
   FiMail,
   FiX,
   FiChevronRight,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import logo from "/assets/logos/logo.png";
 import { navLinks, menuData } from "../data/menuData";
 import { generateSlug } from "../utils/generateSlug";
 
@@ -18,6 +17,7 @@ function Sidebar({
   selectedMainLink,
   selectedCategory,
   isSignedIn,
+  setIsSignedIn, // ✅ correctly received from Navbar
   closeSidebar,
   setSidebarLevel,
   setSelectedMainLink,
@@ -44,9 +44,12 @@ function Sidebar({
     setSidebarLevel("item");
   };
 
-  const handleItemClick = (slug) => {
-    if (!slug) return;
-    goToPlace(slug);
+  const handleItemClick = (item) => {
+    if (!item) return;
+    const title = Object.keys(item)[0];
+    const placeSlug = item[title];
+    const categorySlug = generateSlug(selectedCategory);
+    goToPlace(categorySlug, placeSlug);
     closeSidebar();
     setActiveNavLink(null);
   };
@@ -70,18 +73,22 @@ function Sidebar({
   if (!isSidebarOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100]">
+    <div className="fixed inset-0 z-100">
       <div
         className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300"
         onClick={closeSidebar}
       />
 
-      <div className="absolute top-0 right-0 w-[340px] h-full bg-white shadow-xl">
+      <div className="absolute top-0 right-0 w-340px h-full bg-white shadow-xl">
         {/* Header */}
+
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <img src='/assets/logos/logo.png'
-             alt="EcoDz Logo" className="h-8" />
+            <img
+              src="/assets/logos/logo.png"
+              alt="EcoDz Logo"
+              className="h-8"
+            />
             <h2 className="text-xl font-bold text-emerald-600">EcoDz</h2>
           </div>
           <button
@@ -90,6 +97,30 @@ function Sidebar({
           >
             <FiX className="w-5 h-5 text-gray-600" />
           </button>
+        </div>
+
+        <div className="border-t border-gray-100 p-4 bg-black/5">
+          <div className="flex items-center justify-between px-2">
+            <div className="flex gap-2">
+              {/* Inbox / Mail */}
+              <button
+                onClick={() => navigate(isSignedIn ? "/user/inbox" : "/login")}
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
+              >
+                <FiMail className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
+              </button>
+
+              {/* Sign In / Sign Out */}
+              {!isSignedIn && (
+                <button
+                  onClick={() => navigate("/login")}
+                  className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+                >
+                  <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Search */}
@@ -199,21 +230,16 @@ function Sidebar({
               <div className="space-y-1">
                 {selectedMainLink &&
                   selectedCategory &&
-                  menuData[selectedMainLink][selectedCategory].map(
-                    (item, index) => {
-                      const title = Object.keys(item)[0];
-                      const slug = item[title];
-
-                      return (
-                        <button
-                          key={slug || index} // ✅ UNIQUE
-                          className="w-full p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors text-left"
-                          onClick={() => handleItemClick(slug)}
-                        >
-                          {title}
-                        </button>
-                      );
-                    }
+                  menuData[selectedMainLink][selectedCategory]?.map(
+                    (item, index) => (
+                      <button
+                        key={Object.values(item)[0] || index} // unique
+                        className="w-full p-3 text-gray-800 font-medium hover:bg-emerald-50 hover:text-emerald-700 rounded-lg transition-colors text-left"
+                        onClick={() => handleItemClick(item)}
+                      >
+                        {Object.keys(item)[0]}
+                      </button>
+                    )
                   )}
               </div>
             </div>
@@ -224,21 +250,33 @@ function Sidebar({
         <div className="absolute bottom-0 left-0 right-0 border-t border-gray-100 p-4 bg-white">
           <div className="flex items-center justify-between px-2">
             <div className="flex gap-2">
-              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <FiHeart className="w-5 h-5 text-gray-700" />
+              <button
+                onClick={() => navigate(isSignedIn ? "/user/inbox" : "/login")}
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
+              >
+                <FiMail className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
               </button>
-              {isSignedIn && (
-                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                  <FiUser className="w-5 h-5 text-gray-700" />
-                </button>
-              )}
-              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <FiMail className="w-5 h-5 text-gray-700" />
+
+              <button
+                onClick={() => navigate("/contact")}
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
+              >
+                <FiPhone className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
               </button>
             </div>
-            <button className="text-sm text-emerald-600 font-medium hover:text-emerald-700 transition-colors">
-              {isSignedIn ? "Sign Out" : "Sign In"}
-            </button>
+
+            {isSignedIn && (
+              <button
+                onClick={() => {
+                  localStorage.removeItem("authToken");
+                  setIsSignedIn(false);
+                  navigate("/login");
+                }}
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors text-gray-700 font-medium"
+              >
+                Sign Out
+              </button>
+            ) }
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ const Login = () => {
       if (!res.ok) throw new Error(data.message || "Login failed");
   
       // Save token
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("authToken", data.token);
   
       // Redirect based on profile completion
       if (data.isProfileCompleted === 1) {

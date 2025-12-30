@@ -8,57 +8,58 @@ export const navLinks = [
 
 export const menuData = {
   Places: {
-    "Desert": [
-      {"Tassili n'Ajjer National Park": "tassili-n-ajjer-national-park"},
-      {"Sahara Desert": "sahara-desert"},
-      {"Grand Erg Oriental": "grand-erg-oriental"},
+    Desert: [
+      { "Tassili n'Ajjer National Park": "tassili-n-ajjer-national-park" },
     ],
-    "Park": [
-      {"Chréa National Park" : "chrea-national-park"},
-      {"Chelia National Park": "paysage-parc-national-chelia"},
 
+    Park: [
+      { "Chréa National Park": "chrea-national-park" },
+    ],
 
+    Lake: [
+      { "Lac Oubeira": "lac-oubeira" },
+      { "Beni Haroun Dam & Lake": "beni-haroun-dam-lake" },
     ],
-    "Lake": [
-      {"Gouraya National Park": "gouraya-national-park"},
-      {"Cape Carbon": "cape-carbon"},
-      {"Lake Oubeira": "lake-oubeira"},
-      {"Beni Haroun Dam and Lake": "beni-haroun-dam-lake"},
+
+    Cave: [
+      { "Zahlane Caves": "zahlane-caves" },
     ],
-    "Cave": [
-      {"Béni Add Caves (Aïn Fezza)": "beni-add-caves-ain-fezza"},
-      {"Zahlane Caves": "zahlane-caves"},
+
+    Mountain: [
+      { "Mount Chelia": "mount-chelia" },
+      { "Hoggar Mountains (Ahaggar)": "hoggar-mountains-ahaggar" },
+      { "Mount Tahat": "mount-tahat" },
+      { "Beni Salah Mountain": "beni-salah-mountain" },
     ],
-    "Mountain": [
-      {"Hoggar Mountains Ahaggar": "hoggar-mountains-ahaggar"},
-      {"Mount Tahat": "mount-tahat"},
-      {"Mount Chenoua": "mount-chenoua"},
-      {"Djurjura Range": "djurjura-range"},
+
+    Forest: [
+      { "Atlas Cedar Forest in Mount Chelia": "atlas-cedar-forest-mount-chelia" },
     ],
-    "Forest": [
-      {"Cedar Forest of Gouraya": "cedar-forest-of-gouraya"},
-      {"Cedar Forest of Beni Snous": "cedar-forest-of-beni-snous"},
-      {"Cedar Forest of Tikjda": "cedar-forest-of-tikjda"},
+
+    Beach: [
+      { "Sidi Fredj Coast": "sidi-fredj-coast" },
     ],
-    "River": [
-      {"Cheliff River": "cheliff-river"},
-      {"Tafna River": "tafna-river"},
-      {"Mouilah River": "mouilah-river"},
+
+    Waterfall: [
+      { "Hammam Meskhoutine": "hammam-meskhoutine" },
     ],
+
     "All Destinations": [],
   },
+
   "Ways to Travel": {
-    ["Eco-Friendly Tours"]: {},
-    ["Sustainable Accommodations"]: {},
-    ["Green Transportation Options"]: {},
-  },
-  Deals: {
-    ["Last Minute Deals"]: {},
-    ["Family Packages"]: {},
-    ["Adventure Tours"]: {},
+    "Eco-Friendly Tours": [],
+    "Sustainable Accommodations": [],
+    "Green Transportation Options": [],
   },
 
+  Deals: {
+    "Last Minute Deals": [],
+    "Family Packages": [],
+    "Adventure Tours": []
+  },
 };
+
 
 export const popularSearches = [
   "Desert Safari",
