@@ -6,7 +6,7 @@ import Inclusions from './trip/Inclusions';
 import BeforeYouBook from './trip/BeforeYouBook';
 import DatesAndPrices from './trip/DatesAndPrices';
 import ImportantNotes from './trip/ImportantNotes';
-import ReviewsSection from './ReviewsSection';
+import ReviewsSection from '../ReviewsSection';
 
 const Trip = () => {
     return (

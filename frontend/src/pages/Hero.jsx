@@ -1,10 +1,10 @@
 import React from "react";
-import Intro from "../components/Intro";
-import GalleryImages from "../components/GalleryImages.jsx";
-import Experiences from "../components/Experiences.jsx";
-import OurPurpose from "../components/OurPurpose.jsx";
-import VideoPart from "../components/VideoPart.jsx";
-import Map from "../components/Map.jsx";
+import Intro from "../components/hero_section/Intro.jsx";
+import GalleryImages from "../components/hero_section/GalleryImages.jsx";
+import Experiences from "../components/hero_section/Experiences.jsx";
+import OurPurpose from "../components/hero_section/OurPurpose.jsx";
+import VideoPart from "../components/hero_section/VideoPart.jsx";
+import Map from "../components/hero_section/Map.jsx";
 import backgroundImage from "/assets/background/2.jpg";
 
 const Hero = () => {

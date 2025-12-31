@@ -1,6 +1,6 @@
-import EcoTours from "../components/EcoTours";
+import EcoTours from "../components/trips/EcoTours";
 import Accommodations from "../components/Accommodations";
-import GreenTransport from "../components/GreenTransport";
+import GreenTransport from "../components/trips/GreenTransport";
 
 export default function WaysToTravel() {
   return (

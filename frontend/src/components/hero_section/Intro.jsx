@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from '/assets/images/main-logo.png';
-import MainSearchBar from "./MainSearchBar.jsx";
+import MainSearchBar from "../navbar_footer/MainSearchBar.jsx";
 
 function Intro() {
 

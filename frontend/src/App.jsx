@@ -1,26 +1,26 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
-import Signin from "./pages/Signin.jsx";
+import Login from "./pages/auth/Login.jsx";
+import Signin from "./pages/auth/Signin.jsx";
 import Contact from "./pages/Contact.jsx";
-import CategoryPlaces from "./pages/CategoryPlaces.jsx";
+import CategoryPlaces from "./pages/places/CategoryPlaces.jsx";
 
 import WaysToTravel from "./pages/WaysToTravel.jsx";
 import Quiz from "./pages/Quiz.jsx";
-import Navbar from "./components/Navbar.jsx";
-import Footer from "./components/Footer.jsx";
-import CompleteProfile from "./pages/CompleteProfile.jsx";
-import UserProfile from "./pages/UserProfile.jsx";
-import Destination from "./pages/Place.jsx";
-import Trip from "./components/Trip.jsx";
-import Places from "./pages/Places.jsx";
-import Place from "./pages/Place.jsx";
+import Navbar from "./components/navbar_footer/Navbar.jsx";
+import Footer from "./components/navbar_footer/Footer.jsx";
+import CompleteProfile from "./pages/auth/CompleteProfile.jsx";
+import UserProfile from "./pages/auth/UserProfile.jsx";
+import Trip from "./components/trips/Trip.jsx";
+import Places from "./pages/places/Places.jsx";
+import Place from "./pages/places/Place.jsx";
 
-import Inbox from "./components/Inbox.jsx";
-import SupportChat from "./components/SupportChat.jsx";
+import Inbox from "./components/inbox/Inbox.jsx";
+import SupportChat from "./components/about_us/SupportChat.jsx";
 import { useState } from "react";
-import AdminLogin from "./pages/AdminLogin.jsx";
-import AdminDashboard from "./pages/AdminDashboard.jsx";
+import AdminLogin from "./pages/admin/AdminLogin.jsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+// import Destination from "./pages/Place.jsx";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false); // in-memory state
@@ -50,7 +50,6 @@ function App() {
       <Route path="/user/complete-profile" element={<CompleteProfile />}/>
       <Route path="/user/profile" element={<UserProfile />}/>
       <Route path="/user/inbox" element={<Inbox />} />
-
 
       <Route path="/trip/:id" element={<Trip />} />
       <Route path="/quiz" element={<Quiz />} />

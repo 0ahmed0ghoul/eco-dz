@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
-import Logo from "../sections/Logo.jsx";
+import Navbar from "../components/navbar_footer/Navbar.jsx";
+import Footer from "../components/navbar_footer/Footer.jsx";
+import Logo from "./Logo.jsx";
 import "../styles/Logo.css";
 import Hero from "./Hero.jsx";
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import QuizQuestion from "../components/QuizQuestion";
-import QuizResult from "../components/QuizResult";
+import QuizQuestion from "../components/quizzes/QuizQuestion";
+import QuizResult from "../components/quizzes/QuizResult";
 
 export default function Quiz() {
   const [monuments, setMonuments] = useState([]);

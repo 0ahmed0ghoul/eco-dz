@@ -73,7 +73,7 @@ export const getPlaceBySlug = async (req, res) => {
     }
 
     const [trips] = await pool.query(
-      "SELECT * FROM place_trips WHERE place_id = ?",
+      "SELECT * FROM trips WHERE place_id = ?",
       [place.id]
     );
 

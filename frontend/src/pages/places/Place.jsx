@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import PlaceOverview from "../components/place/Overview";
-import TravelDeals from "../components/place/TravelDeals";
-import PlaceTrips from "../components/place/trips";
-import PlaceHighlights from "../components/place/Highlights";
-import ReviewsSection from "../components/ReviewsSection";
+import PlaceOverview from "../../components/places/place/Overview";
+import TravelDeals from "../../components/places/place/TravelDeals";
+import PlaceTrips from "../../components/places/place/trips";
+import PlaceHighlights from "../../components/places/place/Highlights";
+import ReviewsSection from "../../components/ReviewsSection";
 
 const Destination = () => {
   const { category, slug } = useParams();

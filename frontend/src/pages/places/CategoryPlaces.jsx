@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-import { generateSlug } from "../utils/generateSlug";
 export default function CategoryPlaces() {
   const { category } = useParams();
   const [places, setPlaces] = useState([]);

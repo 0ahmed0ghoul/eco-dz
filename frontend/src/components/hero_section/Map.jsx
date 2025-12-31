@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { useNavigate } from "react-router-dom";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
-import { monuments } from "../data/monuments";
+import { monuments } from "../../data/monuments";
 
 
 // Default Leaflet Marker

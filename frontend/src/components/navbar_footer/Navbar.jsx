@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FiSearch, FiUser, FiHeart, FiMail, FiX, FiMenu, FiPhone } from "react-icons/fi";
 import { useNavigate, useLocation } from "react-router-dom";
-import { navLinks, menuData, popularSearches } from "../data/menuData";
+import { navLinks, menuData, popularSearches } from "../../data/menuData";
 import MegaMenu from "./MegaMenu";
 import Sidebar from "./Sidebar";
 
@@ -265,27 +265,13 @@ function Navbar() {
                   2
                 </span>
               </button>
-              {isSignedIn ? (
+
                 <button
-                  onClick={() => {
-                    localStorage.removeItem("authToken");
-                    setIsSignedIn(false);
-                    navigate("/login");
-                  }}
-                  className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
-                >
-                  <span className="text-sm font-medium text-gray-700">
-                    Sign Out
-                  </span>
-                </button>
-              ) : (
-                <button
-                  className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
-                  onClick={() => navigate("/login")}
-                >
-                  <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
-                </button>
-              )}
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+                onClick={() => navigate(isSignedIn ? "/user/profile" : "/login")}
+              >
+                <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
+              </button>
 
             </div>
 

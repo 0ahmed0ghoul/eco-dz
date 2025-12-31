@@ -8,8 +8,8 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { navLinks, menuData } from "../data/menuData";
-import { generateSlug } from "../utils/generateSlug";
+import { navLinks, menuData } from "../../data/menuData";
+import { generateSlug } from "../../utils/generateSlug";
 
 function Sidebar({
   isSidebarOpen,
