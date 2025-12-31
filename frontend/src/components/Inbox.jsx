@@ -48,7 +48,7 @@ export default function Inbox() {
 
       if (response.ok) {
         const newConversation = await response.json();
-        setConversations([newConversation, ...conversations]);
+        setConversations( Array.isArray(data) ? [data, ...conversations] : []);
         setNewChatUser("");
         setShowNewChat(false);
         setSelectedConversation(newConversation.id);

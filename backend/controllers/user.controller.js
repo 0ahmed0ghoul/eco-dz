@@ -2,18 +2,51 @@ import pool from "../db.js";
 
 
 export const getFavorites = async (req, res) => {
- try {
+  try {
     const userId = req.user.id;
-    const favorites = await pool.query(
+
+    const [rows] = await pool.query(
       'SELECT * FROM favorites WHERE user_id = ? ORDER BY created_at DESC',
       [userId]
     );
-    res.json({ favorites });
+
+    res.json({ favorites: rows }); // only send rows
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-
 };
+
+export const getComments = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const [rows] = await pool.query(
+      'SELECT * FROM place_comments WHERE user_id = ? ORDER BY created_at DESC',
+      [userId]
+    );
+
+    res.json({ comments: rows }); // only send rows
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getRatings = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const [rows] = await pool.query(
+      'SELECT * FROM place_ratings WHERE user_id = ? ORDER BY created_at DESC',
+      [userId]
+    );
+
+    res.json({ ratings: rows }); // only send rows
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 export const deleteFavorite = async (req, res) => {
    try {
       const { placeId } = req.body;
@@ -30,19 +63,6 @@ export const deleteFavorite = async (req, res) => {
     }
 };
 
-
-export const getComments = async (req, res) => {
-  try {
-      const userId = req.user.id;
-      const comments = await pool.query(
-        'SELECT * FROM place_comments WHERE user_id = ? ORDER BY created_at DESC',
-        [userId]
-      );
-      res.json({ comments });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-};
 export const deleteComment = async (req, res) => {
    try {
       const commentId = req.params.id;
@@ -66,18 +86,7 @@ export const deleteComment = async (req, res) => {
 }
 
 
-export const getRatings = async (req, res) => {
-  try {
-      const userId = req.user.id;
-      const ratings = await pool.query(
-        'SELECT * FROM place_ratings WHERE user_id = ? ORDER BY created_at DESC',
-        [userId]
-      );
-      res.json({ ratings });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-};
+
 export const deleteRating = async (req, res) => {
   try {
     const ratingId = req.params.id;
@@ -102,32 +111,36 @@ export const deleteRating = async (req, res) => {
 
 export const GetPlaceDetails = async (req, res) => {
   try {
-    const { placeIds } = req.body;
-    if (!Array.isArray(placeIds) || placeIds.length === 0) {
+    let { placeIds } = req.body;
+
+    // Convert to numbers + remove duplicates
+    const cleanIds = [...new Set(placeIds)]
+      .map(id => Number(id))
+      .filter(id => !isNaN(id));
+
+    if (cleanIds.length === 0) {
       return res.status(400).json({ error: 'Invalid place IDs' });
     }
 
-    // Select the needed fields
     const [rows] = await pool.query(
       `SELECT 
-         id, 
-         name, 
-         location, 
-         image, 
-         category AS type, 
-         avg_rating, 
+         id,
+         name,
+         location,
+         image,
+         category AS type,
+         avg_rating,
          physical_rating,
          slug
-       FROM places 
-       WHERE id IN (?)`,
-      [placeIds]
+       FROM places
+       WHERE id IN (${cleanIds.map(() => '?').join(',')})`,
+      cleanIds
     );
 
     if (rows.length === 0) {
       return res.status(404).json({ message: 'No places found' });
     }
 
-    // Convert array to object for easy lookup
     const placesObj = {};
     rows.forEach(place => {
       placesObj[place.id] = place;
@@ -139,6 +152,7 @@ export const GetPlaceDetails = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
 
 
 

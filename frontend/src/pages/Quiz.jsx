@@ -29,6 +29,7 @@ export default function Quiz() {
 
   // Fetch quizzes from API
   useEffect(() => {
+<<<<<<< HEAD
     const fetchQuizzes = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/quizzes");
@@ -43,6 +44,14 @@ export default function Quiz() {
     };
 
     fetchQuizzes();
+=======
+    fetch("http://localhost:5000/api/places")
+      .then(res => res.json())
+      .then(data => {
+        setMonuments(data);
+        setQuestion(generateQuestion(data));
+      });
+>>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
   }, []);
 
   const selectRandomQuiz = (allQuizzes) => {

@@ -10,31 +10,31 @@ router.use(auth);
 // === DIRECT MESSAGING ===
 
 // Get or create conversation
-router.post("/conversations", controller.getOrCreateConversation);
+router.post("/conversations",auth, controller.getOrCreateConversation);
 
 // Get user's conversations (inbox)
-router.get("/conversations", controller.getUserConversations);
+router.get("/conversations",auth, controller.getUserConversations);
 
 // Get messages in a conversation
-router.get("/conversations/:conversationId/messages", controller.getConversationMessages);
+router.get("/conversations/:conversationId/messages",auth, controller.getConversationMessages);
 
 // === SUPPORT CHAT ===
 
 // Create support ticket
-router.post("/support/tickets", controller.createSupportTicket);
+router.post("/support/tickets", auth , controller.createSupportTicket);
 
 // Get user's support tickets
-router.get("/support/tickets", controller.getUserSupportTickets);
+router.get("/support/tickets", auth , controller.getUserSupportTickets);
 
 // Get support ticket details with messages
-router.get("/support/tickets/:ticketId", controller.getSupportTicketDetails);
+router.get("/support/tickets/:ticketId", auth , controller.getSupportTicketDetails);
 
 // === ADMIN ROUTES ===
 
 // Update ticket status (admin only)
-router.put("/support/tickets/:ticketId/status", controller.updateTicketStatus);
+router.put("/support/tickets/:ticketId/status", auth , controller.updateTicketStatus);
 
 // Get all support tickets (admin only)
-router.get("/support/admin/tickets", controller.getAllSupportTickets);
+router.get("/support/admin/tickets", auth , controller.getAllSupportTickets);
 
 export default router;

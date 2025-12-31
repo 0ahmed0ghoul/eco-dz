@@ -52,6 +52,7 @@ export const getUserConversations = async (req, res) => {
   const userId = req.user.id;
 
   try {
+<<<<<<< HEAD
     const conversations = await getConversations();
     const messages = await getMessages();
 
@@ -86,10 +87,33 @@ export const getUserConversations = async (req, res) => {
     });
 
     res.json(enrichedConversations);
+=======
+    const [conversations] = await pool.query(
+      `SELECT c.*, 
+        CASE WHEN c.user1_id = ? THEN u.username ELSE u2.username END as other_user_name,
+        CASE WHEN c.user1_id = ? THEN u.email ELSE u2.email END as other_user_email,
+        CASE WHEN c.user1_id = ? THEN c.user2_id ELSE c.user1_id END as other_user_id,
+        m.message_text as last_message,
+        COUNT(CASE WHEN m.is_read = FALSE AND m.sender_id != ? THEN 1 END) as unread_count,
+        MAX(m.created_at) as last_message_at
+      FROM conversations c
+      LEFT JOIN users u ON c.user2_id = u.id
+      LEFT JOIN users u2 ON c.user1_id = u2.id
+      LEFT JOIN messages m ON c.id = m.conversation_id
+      WHERE c.user1_id = ? OR c.user2_id = ?
+      GROUP BY c.id
+      ORDER BY last_message_at DESC`,
+      [userId, userId, userId, userId, userId, userId]
+    );
+
+    res.json(conversations); // ✅ must be an array
+>>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Error fetching conversations", error: error.message });
   }
 };
+
 
 // Get messages in a conversation
 export const getConversationMessages = async (req, res) => {

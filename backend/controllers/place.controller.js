@@ -1,12 +1,5 @@
 import pool from "../db.js";
 
-/**
- * 1️⃣ Get categories
- * Returns:
- * - category
- * - total places
- * - images[] (gallery)
- */
 export const getCategories = async (req, res) => {
   try {
     const [categories] = await pool.query(
@@ -30,7 +23,6 @@ export const getCategories = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 // 2️⃣ Get places by category
 export const getPlacesByCategory = async (req, res) => {
   const { category } = req.params;
@@ -121,5 +113,13 @@ export const getPlaceBySlug = async (req, res) => {
   } catch (err) {
     console.error("getPlaceBySlug error:", err);
     res.status(500).json({ message: "Server error" });
+  }
+};
+export const getAllPlacess = async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT * FROM places");
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

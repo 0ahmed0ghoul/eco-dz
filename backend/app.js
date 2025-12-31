@@ -5,7 +5,13 @@ import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
 import http from "http";
-
+import ecoToursRoutes from "./routes/ecoTours.routes.js";
+import accommodationsRoutes from "./routes/accommodations.routes.js";
+import transportRoutes from "./routes/transport.routes.js";
+import lastMinuteRoutes from "./routes/lastMinute.routes.js";
+import familyPackagesRoutes from "./routes/familyPackages.routes.js";
+import adventureToursRoutes from "./routes/adventureTours.routes.js";
+import dealDestinationsRoutes from "./routes/dealDestinations.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import placeRoutes from "./routes/place.routes.js";
 // import tripRoutes from "./routes/trip.routes.js";
@@ -13,6 +19,7 @@ import userRoutes from "./routes/user.routes.js";
 import commentsRoutes from "./routes/comments.routes.js";
 import messagingRoutes from "./routes/messaging.routes.js";
 import { initializeSocket } from "./socket/socket.js";
+<<<<<<< HEAD
 import ecoToursRoutes from "./routes/ecoTours.routes.js";
 import accommodationsRoutes from "./routes/accommodations.routes.js";
 import transportRoutes from "./routes/transport.routes.js";
@@ -22,6 +29,9 @@ import adventureToursRoutes from "./routes/adventureTours.routes.js";
 import dealDestinationsRoutes from "./routes/dealDestinations.routes.js";
 import monumentsRoutes from "./routes/monuments.routes.js";
 import quizRoutes from "./routes/quiz.routes.js";
+=======
+import adminRoutes from "./routes/admin.route.js";
+>>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
 
 dotenv.config();
 
@@ -53,6 +63,7 @@ app.use(cors({
 /* =======================
    API ROUTES
 ======================= */
+app.use("/api/admin", adminRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/places", placeRoutes);
@@ -64,14 +75,20 @@ app.use("/api/messaging", messagingRoutes);
 app.use("/api/eco-tours", ecoToursRoutes);
 app.use("/api/accommodations", accommodationsRoutes);
 app.use("/api/green-transport", transportRoutes);
+<<<<<<< HEAD
 app.use("/api/quizzes", quizRoutes);
+=======
+>>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
 app.use("/api/deals/last-minute", lastMinuteRoutes);
 app.use("/api/deals/family", familyPackagesRoutes);
 app.use("/api/deals/adventure", adventureToursRoutes);
 app.use("/api/deals/destinations", dealDestinationsRoutes);
+<<<<<<< HEAD
 app.use("/api/deals/accommodations", accommodationsRoutes);
 app.use("/api/deals/transport", transportRoutes);
 app.use("/api/monuments", monumentsRoutes);
+=======
+>>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
 
 
 
