@@ -42,10 +42,6 @@ const Login = () => {
       if (!res.ok) throw new Error(data.message || "Login failed");
   
       // Save token
-<<<<<<< HEAD
-      localStorage.setItem("token", data.token);
-=======
->>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
       localStorage.setItem("authToken", data.token);
   
       // Redirect to place if coming from place view, otherwise to profile

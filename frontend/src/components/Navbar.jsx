@@ -247,40 +247,9 @@ function Navbar() {
             </div>
 
             <div className="hidden lg:flex items-center gap-2">
-<<<<<<< HEAD
-              <button 
-              onClick={isSignedIn ? () => navigate('/favorite-list') : () => navigate('/login')}
-              className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group">
-                <FiHeart className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
-                <span className="absolute -top-0.5 -right-0.5 bg-emerald-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                  3
-                </span>
-              </button>
-              
-                <button 
-                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
-                onClick={isSignedIn ? () => navigate('/profile') : () => navigate('/login')}
-                >
-                  <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
-                </button>
-            
-              <button 
-              className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
-              onClick={() => navigate('/contact')}
-              >
-                <FiMail className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
-                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                  2
-                </span>
-              </button>
-              <button 
-              className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
-              onClick={() => navigate('/inbox')}
-=======
               <button
                 onClick={() => navigate(isSignedIn ? "/user/inbox" : "/login")}
                 className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
->>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
               >
                 <FiMail className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
                 <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
