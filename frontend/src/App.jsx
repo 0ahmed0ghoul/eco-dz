@@ -4,28 +4,13 @@ import Login from "./pages/Login.jsx";
 import Signin from "./pages/Signin.jsx";
 import Contact from "./pages/Contact.jsx";
 import CategoryPlaces from "./pages/CategoryPlaces.jsx";
-<<<<<<< HEAD
-import Destinations from "./pages/Destinations.jsx";
-=======
 
->>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
 import WaysToTravel from "./pages/WaysToTravel.jsx";
 import Deals from "./pages/Deals.jsx";
 import Quiz from "./pages/Quiz.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
-<<<<<<< HEAD
-import Trip from "./components/Trip.jsx";
-import Inbox from "./components/Inbox.jsx";
-import SupportChat from "./components/SupportChat.jsx";
-
-
-import Destination from "./pages/Destination.jsx";
-import Places from "./pages/Places.jsx";
-import CompleteProfile from "./pages/CompleteProfile.jsx";
-import UserProfile from "./pages/UserProfile.jsx";
-=======
 import CompleteProfile from "./pages/CompleteProfile.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import Destination from "./pages/Place.jsx";
@@ -38,8 +23,6 @@ import SupportChat from "./components/SupportChat.jsx";
 import { useState } from "react";
 import AdminLogin from "./pages/AdminLogin.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
-
->>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
 function App() {
   const [isAdmin, setIsAdmin] = useState(false); // in-memory state
 
@@ -61,23 +44,6 @@ function App() {
       <Route path="/register" element={<Signin />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/travels" element={<WaysToTravel />} />
-<<<<<<< HEAD
-      <Route path="/accommodations" element={<WaysToTravel />} />
-      <Route path="/green-transport" element={<WaysToTravel />} />
-      <Route path="/destinations" element={<Destinations />} />
-      <Route path="/places" element={<Places />} />
-      <Route path="/places/:category" element={<CategoryPlaces />} />
-      <Route path="/places/:category/:slug" element={<Destination />} />
-      <Route path="/deals" element={<Deals />} />
-      <Route path="/deals/:type" element={<Deals />} />
-      <Route path="/deals/:type/:subType" element={<Deals />} />
-      <Route path="/quiz" element={<Quiz />} />
-      <Route path="/quizes" element={<Quiz />} />
-      <Route path="/profile" element={<UserProfile />} />
-      <Route path="/complete-profile" element={<CompleteProfile />} />
-      <Route path="/trip" element={<Trip />} />
-      <Route path="/inbox" element={<Inbox />} />
-=======
       <Route path="/places" element={<Places />} />
       <Route path="/places/:category" element={<CategoryPlaces />} />
       <Route path="/places/:category/:slug" element={<Place />} />
@@ -89,7 +55,6 @@ function App() {
 
       <Route path="/trip/:id" element={<Trip />} />
       <Route path="/quiz" element={<Quiz />} />
->>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
       <Route path="/support" element={<SupportChat />} />
     </Routes>
     <Footer />
