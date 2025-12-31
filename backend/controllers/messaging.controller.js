@@ -9,6 +9,7 @@ import {
   saveSupportMessages,
   generateId
 } from "../data/fileHelpers.js";
+import pool from "../db.js";
 
 // Get or create conversation between two users
 export const getOrCreateConversation = async (req, res) => {
@@ -52,42 +53,6 @@ export const getUserConversations = async (req, res) => {
   const userId = req.user.id;
 
   try {
-<<<<<<< HEAD
-    const conversations = await getConversations();
-    const messages = await getMessages();
-
-    // Filter conversations for this user
-    const userConversations = conversations.filter(
-      (c) => c.user1_id === userId || c.user2_id === userId
-    );
-
-    // Add last message and unread count for each conversation
-    const enrichedConversations = userConversations.map((c) => {
-      const conversationMessages = messages.filter((m) => m.conversation_id === c.id);
-      const lastMessage = conversationMessages[conversationMessages.length - 1];
-      const unreadCount = conversationMessages.filter(
-        (m) => !m.is_read && m.sender_id !== userId
-      ).length;
-
-      const otherUserId = c.user1_id === userId ? c.user2_id : c.user1_id;
-
-      return {
-        ...c,
-        other_user_id: otherUserId,
-        last_message: lastMessage?.message_text || null,
-        unread_count: unreadCount
-      };
-    });
-
-    // Sort by last message time
-    enrichedConversations.sort((a, b) => {
-      const aTime = new Date(a.last_message_at || a.created_at);
-      const bTime = new Date(b.last_message_at || b.created_at);
-      return bTime - aTime;
-    });
-
-    res.json(enrichedConversations);
-=======
     const [conversations] = await pool.query(
       `SELECT c.*, 
         CASE WHEN c.user1_id = ? THEN u.username ELSE u2.username END as other_user_name,
@@ -107,7 +72,6 @@ export const getUserConversations = async (req, res) => {
     );
 
     res.json(conversations); // ✅ must be an array
->>>>>>> 9f30c1c95bd3e6e31521eab5aa07080d5559dec1
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching conversations", error: error.message });
