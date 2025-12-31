@@ -248,6 +248,12 @@ function Navbar() {
 
             <div className="hidden lg:flex items-center gap-2">
               <button
+                onClick={() => navigate("/demo")}
+                className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-600 hover:to-blue-600 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm"
+              >
+                🏢 Agency
+              </button>
+              <button
                 onClick={() => navigate(isSignedIn ? "/user/inbox" : "/login")}
                 className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
               >

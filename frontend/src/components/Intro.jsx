@@ -3,7 +3,6 @@ import logo from '/assets/images/main-logo.png';
 import MainSearchBar from "./MainSearchBar.jsx";
 
 function Intro() {
-
   return (
     <section
       id="intro"

@@ -14,6 +14,15 @@ import { auth } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
+router.get("/all", async (req, res) => {
+  try {
+    const { getUsers } = await import("../data/fileHelpers.js");
+    const users = await getUsers();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users", error: error.message });
+  }
+});
 
 router.get("/favorites", auth, getFavorites);
 router.delete('/favorites', auth , deleteFavorite );

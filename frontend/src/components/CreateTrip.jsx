@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { FiX, FiPlus } from 'react-icons/fi';
+import { FiX, FiPlus, FiUpload, FiTrash2 } from 'react-icons/fi';
 
 export default function CreateTrip({ userProfile, onTripCreated }) {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [selectedActivities, setSelectedActivities] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -14,7 +16,6 @@ export default function CreateTrip({ userProfile, onTripCreated }) {
     price: '',
     maxParticipants: '',
     startDate: '',
-    image: '',
     activities: []
   });
 
@@ -39,23 +40,59 @@ export default function CreateTrip({ userProfile, onTripCreated }) {
     }
   };
 
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    
+    const newImages = [...selectedImages];
+    const newPreviews = [...imagePreviews];
+
+    files.forEach(file => {
+      if (newImages.length < 10) {
+        newImages.push(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          newPreviews.push(reader.result);
+          setImagePreviews([...newPreviews]);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    setSelectedImages(newImages);
+  };
+
+  const removeImage = (index) => {
+    setSelectedImages(selectedImages.filter((_, i) => i !== index));
+    setImagePreviews(imagePreviews.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
-      const token = localStorage.getItem('authToken');
+      const formDataToSend = new FormData();
+      formDataToSend.append('title', formData.title);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('destination', formData.destination);
+      formDataToSend.append('duration', formData.duration);
+      formDataToSend.append('price', formData.price);
+      formDataToSend.append('maxParticipants', formData.maxParticipants);
+      formDataToSend.append('startDate', formData.startDate);
+      formDataToSend.append('activities', JSON.stringify(selectedActivities));
+      if (selectedImages.length > 0) {
+        selectedImages.forEach(img => {
+          formDataToSend.append('images', img);
+        });
+      }
+      
       const response = await fetch('http://localhost:5000/api/agency/trips', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
-        body: JSON.stringify({
-          ...formData,
-          activities: selectedActivities
-        })
+        body: formDataToSend
       });
 
       if (!response.ok) {
@@ -75,10 +112,11 @@ export default function CreateTrip({ userProfile, onTripCreated }) {
         price: '',
         maxParticipants: '',
         startDate: '',
-        image: '',
         activities: []
       });
       setSelectedActivities([]);
+      setSelectedImage(null);
+      setImagePreview(null);
       if (onTripCreated) onTripCreated(data.trip);
     } catch (err) {
       setError(err.message);
@@ -226,15 +264,54 @@ export default function CreateTrip({ userProfile, onTripCreated }) {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Image URL
+                  Trip Images (up to 10)
                 </label>
-                <input
-                  type="url"
-                  value={formData.image}
-                  onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
-                  placeholder="https://example.com/image.jpg"
-                />
+                <div className="space-y-4">
+                  {/* Image Previews */}
+                  {imagePreviews.length > 0 && (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {imagePreviews.map((preview, idx) => (
+                        <div key={idx} className="relative group">
+                          <img src={preview} alt={`Preview ${idx}`} className="w-full h-32 object-cover rounded-lg" />
+                          <button
+                            type="button"
+                            onClick={() => removeImage(idx)}
+                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <FiTrash2 className="w-4 h-4" />
+                          </button>
+                          {idx === 0 && (
+                            <span className="absolute bottom-1 left-1 bg-emerald-600 text-white text-xs px-2 py-1 rounded">Primary</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Upload Area */}
+                  <div className="border-2 border-dashed border-emerald-300 rounded-lg p-6 bg-emerald-50 text-center hover:border-emerald-500 transition-colors">
+                    <FiUpload className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+                    <p className="text-gray-600 text-sm mb-2">Click to upload images or drag and drop</p>
+                    <p className="text-xs text-gray-500 mb-3">PNG, JPG, GIF up to 5MB each ({imagePreviews.length}/10)</p>
+                    <label htmlFor="trip-images" className="inline-block">
+                      <input
+                        id="trip-images"
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleImageChange}
+                        className="hidden"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => document.getElementById('trip-images').click()}
+                        className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm font-medium"
+                      >
+                        Add Images
+                      </button>
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <div>

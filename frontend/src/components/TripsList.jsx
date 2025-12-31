@@ -1,200 +1,245 @@
-import React, { useState, useEffect } from 'react';
-import { FiMapPin, FiClock, FiUsers, FiStar, FiHeart, FiShare2 } from 'react-icons/fi';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  FiMapPin,
+  FiClock,
+  FiUsers,
+  FiStar,
+  FiHeart,
+  FiShare2,
+  FiChevronLeft,
+  FiChevronRight,
+} from "react-icons/fi";
 
 export default function TripsList() {
   const [trips, setTrips] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
-  const token = localStorage.getItem('authToken');
+  const [filter, setFilter] = useState("all");
+  const [imageIndexes, setImageIndexes] = useState({});
+  const navigate = useNavigate();
+  const token = localStorage.getItem("authToken");
 
   useEffect(() => {
     fetchTrips();
-    if (token) {
-      fetchFavorites();
-    }
+    if (token) fetchFavorites();
   }, []);
 
   const fetchTrips = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/agency/trips');
-      const data = await response.json();
-      setTrips(data);
-    } catch (err) {
-      console.error('Error fetching trips:', err);
-    } finally {
-      setLoading(false);
-    }
+    const res = await fetch("http://localhost:5000/api/agency/trips");
+    const data = await res.json();
+    setTrips(data);
+    setLoading(false);
   };
 
   const fetchFavorites = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/agency/favorites', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+    const res = await fetch("http://localhost:5000/api/agency/favorites", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await res.json();
+    setFavorites(data.map(f => f.agencyId));
+  };
+
+  const toggleFavorite = async agencyId => {
+    if (!token) return alert("Login required");
+
+    if (favorites.includes(agencyId)) {
+      await fetch(`http://localhost:5000/api/agency/favorites/${agencyId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await response.json();
-      setFavorites(data.map(f => f.agencyId));
-    } catch (err) {
-      console.error('Error fetching favorites:', err);
+      setFavorites(favorites.filter(id => id !== agencyId));
+    } else {
+      await fetch("http://localhost:5000/api/agency/favorites", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ agencyId }),
+      });
+      setFavorites([...favorites, agencyId]);
     }
   };
 
-  const toggleFavorite = async (agencyId) => {
-    if (!token) {
-      alert('Please login to add favorites');
-      return;
-    }
+  const getImage = trip => trip.image;
 
-    try {
-      if (favorites.includes(agencyId)) {
-        await fetch(`http://localhost:5000/api/agency/favorites/${agencyId}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        setFavorites(favorites.filter(id => id !== agencyId));
-      } else {
-        await fetch('http://localhost:5000/api/agency/favorites', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ agencyId })
-        });
-        setFavorites([...favorites, agencyId]);
-      }
-    } catch (err) {
-      console.error('Error toggling favorite:', err);
-    }
-  };
+  if (loading)
+    return <div className="text-center py-20 text-lg">Loading adventures…</div>;
 
-  if (loading) {
-    return <div className="text-center py-12">Loading trips...</div>;
-  }
-
-  const filteredTrips = filter === 'all' ? trips : trips.filter(trip => {
-    if (filter === 'favorites') {
-      return favorites.includes(trip.agencyId);
-    }
-    return true;
-  });
+  const filteredTrips =
+    filter === "favorites"
+      ? trips.filter(t => favorites.includes(t.agencyId))
+      : trips;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Explore Adventures</h2>
-        
-        <div className="flex space-x-3 mb-6">
+    <div className="max-w-7xl mx-auto px-4 py-12">
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-4xl font-extrabold text-gray-900">
+          🌍 Explore Adventures
+        </h1>
+
+        <div className="flex gap-3">
           <button
-            onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'all'
-                ? 'bg-emerald-600 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            onClick={() => setFilter("all")}
+            className={`px-5 py-2 rounded-full font-semibold transition ${
+              filter === "all"
+                ? "bg-emerald-600 text-white shadow-lg"
+                : "bg-gray-200 hover:bg-gray-300"
             }`}
           >
             All Trips
           </button>
+
           {token && (
             <button
-              onClick={() => setFilter('favorites')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
-                filter === 'favorites'
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              onClick={() => setFilter("favorites")}
+              className={`px-5 py-2 rounded-full font-semibold transition ${
+                filter === "favorites"
+                  ? "bg-emerald-600 text-white shadow-lg"
+                  : "bg-gray-200 hover:bg-gray-300"
               }`}
             >
-              <FiHeart className="w-5 h-5" />
-              <span>My Favorites</span>
+              ❤️ Favorites
             </button>
           )}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredTrips.map((trip) => (
-          <div key={trip.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            {/* Trip Image */}
-            <div className="relative h-48 overflow-hidden bg-gray-200">
-              <img
-                src={trip.image}
-                alt={trip.title}
-                className="w-full h-full object-cover hover:scale-110 transition-transform"
-              />
-              <button
-                onClick={() => toggleFavorite(trip.agencyId)}
-                className={`absolute top-3 right-3 p-2 rounded-full transition-colors ${
-                  favorites.includes(trip.agencyId)
-                    ? 'bg-red-500 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'
-                }`}
-              >
-                <FiHeart className={`w-5 h-5 ${favorites.includes(trip.agencyId) ? 'fill-current' : ''}`} />
-              </button>
+      {/* GRID */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredTrips.map(trip => {
+          const soldOut =
+            trip.currentParticipants >= trip.maxParticipants;
 
-              <div className="absolute top-3 left-3 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                ${trip.price}
-              </div>
-            </div>
+          return (
+            <div
+              key={trip.id}
+              className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300"
+            >
+              {/* IMAGE */}
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src={getImage(trip)}
+                  alt={trip.title}
+                  className="h-full w-full object-cover group-hover:scale-110 transition duration-700"
+                />
 
-            {/* Trip Details */}
-            <div className="p-4">
-              <p className="text-sm text-gray-500 mb-1">{trip.agencyName}</p>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">{trip.title}</h3>
-              <p className="text-gray-600 text-sm mb-4 line-clamp-2">{trip.description}</p>
+                {/* GRADIENT */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
-              {/* Trip Info */}
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center text-gray-700 text-sm">
-                  <FiMapPin className="w-4 h-4 mr-2 text-emerald-600" />
-                  {trip.destination}
-                </div>
-                <div className="flex items-center text-gray-700 text-sm">
-                  <FiClock className="w-4 h-4 mr-2 text-emerald-600" />
-                  {trip.duration}
-                </div>
-                <div className="flex items-center text-gray-700 text-sm">
-                  <FiUsers className="w-4 h-4 mr-2 text-emerald-600" />
-                  {trip.currentParticipants}/{trip.maxParticipants} participants
-                </div>
-              </div>
-
-              {/* Rating */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center">
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <FiStar
-                        key={i}
-                        className={`w-4 h-4 ${i < Math.floor(trip.rating) ? 'fill-current' : ''}`}
-                      />
-                    ))}
+                {/* SOLD OUT */}
+                {soldOut && (
+                  <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center text-center">
+                    <span className="text-white tracking-widest text-xs mb-2">
+                      AVAILABILITY
+                    </span>
+                    <span className="text-4xl font-black text-red-500 drop-shadow-lg">
+                      SOLD OUT
+                    </span>
+                    <span className="text-gray-200 text-sm mt-2">
+                      No seats left
+                    </span>
                   </div>
-                  <span className="text-sm text-gray-600 ml-2">({trip.reviews})</span>
-                </div>
+                )}
+
+                {/* PRICE */}
+                <span className="absolute top-4 left-4 bg-emerald-600 text-white px-4 py-1 rounded-full font-bold shadow">
+                  ${trip.price}
+                </span>
+
+                {/* FAVORITE */}
+                <button
+                  onClick={() => toggleFavorite(trip.agencyId)}
+                  className={`absolute top-4 right-4 p-2 rounded-full transition ${
+                    favorites.includes(trip.agencyId)
+                      ? "bg-red-500 text-white"
+                      : "bg-white text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  <FiHeart
+                    className={`w-5 h-5 ${
+                      favorites.includes(trip.agencyId)
+                        ? "fill-current"
+                        : ""
+                    }`}
+                  />
+                </button>
               </div>
 
-              {/* Actions */}
-              <div className="flex space-x-2">
-                <button className="flex-1 bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition-colors font-medium">
-                  Book Now
-                </button>
-                <button className="flex-1 border border-emerald-600 text-emerald-600 py-2 rounded-lg hover:bg-emerald-50 transition-colors flex items-center justify-center">
-                  <FiShare2 className="w-4 h-4" />
-                </button>
+              {/* CONTENT */}
+              <div className="p-6">
+                <p className="text-sm text-gray-500 mb-1">
+                  {trip.agencyName}
+                </p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {trip.title}
+                </h3>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                  {trip.description}
+                </p>
+
+                {/* INFO */}
+                <div className="space-y-2 text-sm text-gray-700 mb-4">
+                  <div className="flex items-center gap-2">
+                    <FiMapPin className="text-emerald-600" />
+                    {trip.destination}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FiClock className="text-emerald-600" />
+                    {trip.duration}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FiUsers className="text-emerald-600" />
+                    {trip.currentParticipants}/{trip.maxParticipants}
+                  </div>
+                </div>
+
+                {/* RATING */}
+                <div className="flex items-center gap-1 mb-5">
+                  {[...Array(5)].map((_, i) => (
+                    <FiStar
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i < Math.round(trip.rating)
+                          ? "text-yellow-400 fill-current"
+                          : "text-gray-300"
+                      }`}
+                    />
+                  ))}
+                  <span className="text-sm text-gray-500 ml-2">
+                    ({trip.reviews})
+                  </span>
+                </div>
+
+                {/* ACTIONS */}
+                <div className="flex gap-3">
+                  <button
+                    disabled={soldOut}
+                    onClick={() => navigate(`/trip/${trip.id}/book`)}
+                    className={`flex-1 py-2 rounded-xl font-semibold transition ${
+                      soldOut
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-emerald-600 text-white hover:bg-emerald-700"
+                    }`}
+                  >
+                    {soldOut ? "Fully Booked" : "Book Now"}
+                  </button>
+
+                  <button className="p-2 rounded-xl border border-emerald-600 text-emerald-600 hover:bg-emerald-50">
+                    <FiShare2 />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {filteredTrips.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-600 text-lg">No trips found</p>
+        <div className="text-center py-20 text-gray-600 text-lg">
+          No trips found 🌿
         </div>
       )}
     </div>

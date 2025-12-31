@@ -1,33 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import backgroundImage from "/assets/background/2.jpg";
-import backgroundImage2 from "/assets/background/3.jpg";
-import backgroundImage3 from "/assets/background/4.jpg";
-import { useNavigate, useLocation } from 'react-router-dom';
-import logo from '/assets/images/main-logo.png';
-const backgrounds = [backgroundImage, backgroundImage2, backgroundImage3];
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { FiLogIn, FiMail, FiLock, FiAlertCircle } from "react-icons/fi";
 
-const Login = () => {
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [error, setError] = useState("");
+export default function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const redirectFrom = location.state?.from;
-  const redirectMessage = location.state?.message;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Cycle backgrounds every 8 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % backgrounds.length);
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setError("");
+    setLoading(true);
     setError("");
   
     try {

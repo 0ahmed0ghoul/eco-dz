@@ -1,7 +1,8 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
-import Signin from "./pages/Signin.jsx";
+import DemoHome from "./pages/DemoHome.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import Register from "./components/Register.jsx";
 import Contact from "./pages/Contact.jsx";
 import CategoryPlaces from "./pages/CategoryPlaces.jsx";
 
@@ -15,6 +16,7 @@ import CompleteProfile from "./pages/CompleteProfile.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import Destination from "./pages/Place.jsx";
 import Trip from "./components/Trip.jsx";
+import TripBooking from "./pages/TripBooking.jsx";
 import Places from "./pages/Places.jsx";
 import Place from "./pages/Place.jsx";
 
@@ -23,7 +25,9 @@ import SupportChat from "./components/SupportChat.jsx";
 import { useState } from "react";
 import AdminLogin from "./pages/AdminLogin.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
-function App() {
+
+function AppContent() {
+  const location = useLocation();
   const [isAdmin, setIsAdmin] = useState(false); // in-memory state
 
   return (
@@ -40,8 +44,10 @@ function App() {
         />
 
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Signin />} />
+      <Route path="/demo" element={<DemoHome />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/travels" element={<WaysToTravel />} />
       <Route path="/places" element={<Places />} />
@@ -54,11 +60,18 @@ function App() {
 
 
       <Route path="/trip/:id" element={<Trip />} />
+      <Route path="/trip/:tripId/book" element={<TripBooking />} />
       <Route path="/quiz" element={<Quiz />} />
       <Route path="/support" element={<SupportChat />} />
     </Routes>
     <Footer />
     </>
+  );
+}
+
+function App() {
+  return (
+    <AppContent />
   );
 }
 

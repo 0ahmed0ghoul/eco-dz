@@ -19,5 +19,12 @@
     "agencyId": "user-2",
     "agencyName": "Desert Dreams Agency",
     "createdAt": "2025-01-09T08:45:00Z"
+  },
+  {
+    "id": "1767172493755yhisii8ta",
+    "userId": "demo-agency",
+    "agencyId": "demo-agency",
+    "agencyName": "Demo Agency",
+    "createdAt": "2025-12-31T09:14:53.755Z"
   }
 ]

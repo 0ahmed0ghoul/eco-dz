@@ -1,0 +1,92 @@
+[
+  {
+    "id": "booking-1767179984059-uijchu8mi",
+    "userId": "1767178317777iqqzwnwxe",
+    "tripId": "1767178820381zcs6xjrhn",
+    "tripTitle": "dsfsd",
+    "agencyId": "1767178317777iqqzwnwxe",
+    "agencyName": "mohamed",
+    "participants": 1,
+    "fullName": "mohamed",
+    "email": "iskemiskem29@gmail.com",
+    "phone": "0541784447",
+    "totalPrice": 42,
+    "tripDates": {
+      "startDate": "2026-01-02",
+      "endDate": "2026-01-02"
+    },
+    "createdAt": "2025-12-31T11:19:44.059Z"
+  },
+  {
+    "id": "booking-1767180080549-zujvyorhq",
+    "userId": "1767178317777iqqzwnwxe",
+    "tripId": "1767178287137cbfu7ja6g",
+    "tripTitle": "ff",
+    "agencyId": "1767173704084i6giesq4h",
+    "agencyName": "islem",
+    "participants": 2,
+    "fullName": "mohamed",
+    "email": "iskemiskem29@gmail.com",
+    "phone": "0541784447",
+    "totalPrice": 8,
+    "tripDates": {
+      "startDate": "2025-12-06",
+      "endDate": "2025-12-06"
+    },
+    "createdAt": "2025-12-31T11:21:20.549Z"
+  },
+  {
+    "id": "booking-1767180466468-ldn4f8a9w",
+    "userId": "1767178317777iqqzwnwxe",
+    "tripId": "1767178287137cbfu7ja6g",
+    "tripTitle": "ff",
+    "agencyId": "1767173704084i6giesq4h",
+    "agencyName": "islem",
+    "participants": 1,
+    "fullName": "mohamed",
+    "email": "mohamed2005islem@gmail.com",
+    "phone": "0541784447",
+    "totalPrice": 4,
+    "tripDates": {
+      "startDate": "2025-12-06",
+      "endDate": "2025-12-06"
+    },
+    "createdAt": "2025-12-31T11:27:46.468Z"
+  },
+  {
+    "id": "booking-1767180852086-s2oxbbwk1",
+    "userId": "1767178317777iqqzwnwxe",
+    "tripId": "1767171857469zeduh2d26",
+    "tripTitle": "osos",
+    "agencyId": "demo-agency",
+    "agencyName": "Demo Agency",
+    "participants": 13,
+    "fullName": "mohamed",
+    "email": "mohamed2005islem@gmail.com",
+    "phone": "0541784447",
+    "totalPrice": 962,
+    "tripDates": {
+      "startDate": "2025-12-04",
+      "endDate": "2025-12-04"
+    },
+    "createdAt": "2025-12-31T11:34:12.086Z"
+  },
+  {
+    "id": "booking-1767180876315-w4ybx5jpi",
+    "userId": "1767178317777iqqzwnwxe",
+    "tripId": "1767171857469zeduh2d26",
+    "tripTitle": "osos",
+    "agencyId": "demo-agency",
+    "agencyName": "Demo Agency",
+    "participants": 1,
+    "fullName": "mohamed",
+    "email": "mohamed@gmail.com",
+    "phone": "0541784447",
+    "totalPrice": 74,
+    "tripDates": {
+      "startDate": "2025-12-04",
+      "endDate": "2025-12-04"
+    },
+    "createdAt": "2025-12-31T11:34:36.316Z"
+  }
+]

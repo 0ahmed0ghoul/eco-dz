@@ -14,18 +14,25 @@ export default function AgenciesPage() {
 
   const fetchData = async () => {
     try {
+      // Fetch all users to get agency data
+      const usersResponse = await fetch('http://localhost:5000/api/user/all');
+      const usersData = await usersResponse.json();
+      
+      // Filter agencies (users with role === 'agency')
+      const agenciesList = usersData
+        .filter(user => user.role === 'agency')
+        .map(user => ({
+          id: user.id,
+          name: user.agencyName || user.username,
+          image: user.agencyImage,
+          description: user.agencyDescription || '',
+          tripCount: 0
+        }));
+
+      // Fetch trips to count per agency
       const response = await fetch('http://localhost:5000/api/agency/trips');
       const tripsData = await response.json();
       setTrips(tripsData);
-
-      // Extract unique agencies from trips
-      const agenciesList = [...new Map(
-        tripsData.map(trip => [trip.agencyId, {
-          id: trip.agencyId,
-          name: trip.agencyName,
-          tripCount: 0
-        }])
-      ).values()];
 
       // Count trips per agency
       agenciesList.forEach(agency => {
@@ -39,7 +46,7 @@ export default function AgenciesPage() {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const favData = await favResponse.json();
-        setFavorites(favData.map(f => f.agencyId));
+        setFavorites(favData.map(f => f.id));
       }
     } catch (err) {
       console.error('Error fetching data:', err);
@@ -92,32 +99,37 @@ export default function AgenciesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {agencies.map((agency) => {
           const agencyTrips = trips.filter(t => t.agencyId === agency.id);
-          const avgRating = agencyTrips.length > 0
-            ? (agencyTrips.reduce((sum, t) => sum + t.rating, 0) / agencyTrips.length).toFixed(1)
-            : 0;
+          const tripCount = agencyTrips.length;
+          const avgRating = tripCount > 0
+            ? (agencyTrips.reduce((sum, t) => sum + t.rating, 0) / tripCount).toFixed(1)
+            : 'N/A';
 
           return (
             <div key={agency.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              {/* Featured Trip Image */}
-              {agencyTrips.length > 0 && (
-                <div className="relative h-40 overflow-hidden bg-gradient-to-br from-emerald-400 to-emerald-600">
+              {/* Agency Logo/Image */}
+              <div className="relative h-40 overflow-hidden bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
+                {agency.image ? (
                   <img
-                    src={agencyTrips[0].image}
+                    src={agency.image}
                     alt={agency.name}
-                    className="w-full h-full object-cover opacity-80"
+                    className="w-full h-full object-cover"
                   />
-                  <button
-                    onClick={() => toggleFavorite(agency.id)}
-                    className={`absolute top-3 right-3 p-2 rounded-full transition-colors ${
-                      favorites.includes(agency.id)
-                        ? 'bg-red-500 text-white'
-                        : 'bg-white text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    <FiHeart className={`w-5 h-5 ${favorites.includes(agency.id) ? 'fill-current' : ''}`} />
-                  </button>
-                </div>
-              )}
+                ) : (
+                  <div className="text-white text-3xl font-bold">
+                    {agency.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <button
+                  onClick={() => toggleFavorite(agency.id)}
+                  className={`absolute top-3 right-3 p-2 rounded-full transition-colors ${
+                    favorites.includes(agency.id)
+                      ? 'bg-red-500 text-white'
+                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <FiHeart className={`w-5 h-5 ${favorites.includes(agency.id) ? 'fill-current' : ''}`} />
+                </button>
+              </div>
 
               {/* Agency Info */}
               <div className="p-4">
@@ -134,7 +146,7 @@ export default function AgenciesPage() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-2 mb-4 pt-3 border-t border-gray-200">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-emerald-600">{agency.tripCount}</p>
+                    <p className="text-2xl font-bold text-emerald-600">{tripCount}</p>
                     <p className="text-xs text-gray-600">Active Trips</p>
                   </div>
                   <div className="text-center">
