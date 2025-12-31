@@ -105,3 +105,15 @@ export const saveUsers = async (data) => writeJsonFile("users.json", data);
 export const generateId = () => {
   return Date.now().toString() + Math.random().toString(36).substr(2, 9);
 };
+
+// Trips operations
+export const getTrips = async () => readJsonFile("trips.json");
+export const saveTrips = async (data) => writeJsonFile("trips.json", data);
+
+// Favorite Agencies operations
+export const getFavoriteAgencies = async () => readJsonFile("favoriteAgencies.json");
+export const saveFavoriteAgencies = async (data) => writeJsonFile("favoriteAgencies.json", data);
+
+// Email Subscriptions operations
+export const getEmailSubscriptions = async () => readJsonFile("emailSubscriptions.json");
+export const saveEmailSubscriptions = async (data) => writeJsonFile("emailSubscriptions.json", data);

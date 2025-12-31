@@ -1,0 +1,29 @@
+[
+  {
+    "id": "sub-1",
+    "userId": "user-1",
+    "agencyId": "user-2",
+    "agencyName": "Desert Dreams Agency",
+    "emailNotifications": true,
+    "unsubscribeToken": "token-abc123def456",
+    "createdAt": "2025-01-12T15:30:00Z"
+  },
+  {
+    "id": "sub-2",
+    "userId": "user-1",
+    "agencyId": "user-3",
+    "agencyName": "Coastal Escapes",
+    "emailNotifications": true,
+    "unsubscribeToken": "token-xyz789uvw012",
+    "createdAt": "2025-01-10T11:20:00Z"
+  },
+  {
+    "id": "sub-3",
+    "userId": "user-4",
+    "agencyId": "user-2",
+    "agencyName": "Desert Dreams Agency",
+    "emailNotifications": true,
+    "unsubscribeToken": "token-pqr345stu678",
+    "createdAt": "2025-01-09T08:45:00Z"
+  }
+]

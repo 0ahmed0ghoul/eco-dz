@@ -1,0 +1,23 @@
+[
+  {
+    "id": "fav-1",
+    "userId": "user-1",
+    "agencyId": "user-2",
+    "agencyName": "Desert Dreams Agency",
+    "createdAt": "2025-01-12T15:30:00Z"
+  },
+  {
+    "id": "fav-2",
+    "userId": "user-1",
+    "agencyId": "user-3",
+    "agencyName": "Coastal Escapes",
+    "createdAt": "2025-01-10T11:20:00Z"
+  },
+  {
+    "id": "fav-3",
+    "userId": "user-4",
+    "agencyId": "user-2",
+    "agencyName": "Desert Dreams Agency",
+    "createdAt": "2025-01-09T08:45:00Z"
+  }
+]

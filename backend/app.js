@@ -18,6 +18,7 @@ import placeRoutes from "./routes/place.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import commentsRoutes from "./routes/comments.routes.js";
 import messagingRoutes from "./routes/messaging.routes.js";
+import agencyRoutes from "./routes/agency.routes.js";
 import { initializeSocket } from "./socket/socket.js";
 import adminRoutes from "./routes/admin.route.js";
 
@@ -67,6 +68,7 @@ app.use("/api/deals/last-minute", lastMinuteRoutes);
 app.use("/api/deals/family", familyPackagesRoutes);
 app.use("/api/deals/adventure", adventureToursRoutes);
 app.use("/api/deals/destinations", dealDestinationsRoutes);
+app.use("/api/agency", agencyRoutes);
 
 
 
