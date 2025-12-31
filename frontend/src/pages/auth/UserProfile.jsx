@@ -34,11 +34,14 @@ const UserProfile = () => {
 
   const fileInputRef = useRef(null);
 
+  // Helper to get token
+  const getToken = () => localStorage.getItem("authToken");
+
   // Fetch user and all activity
   useEffect(() => {
     const fetchUserAndActivity = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = getToken();
         if (!token) throw new Error("No token found, please login.");
 
         setLoadingUser(true);
@@ -69,23 +72,18 @@ const UserProfile = () => {
         const comData = await comRes.json();
         const rateData = await rateRes.json();
 
-        const favoritesList = favData.favorites || [];
-        const commentsList = comData.comments || [];
-        const ratingsList = rateData.ratings || [];
+        setFavorites(favData.favorites || []);
+        setComments(comData.comments || []);
+        setRatings(rateData.ratings || []);
 
-        setFavorites(favoritesList);
-        setComments(commentsList);
-        setRatings(ratingsList);
-
-        // Collect all unique placeIds
+        // Fetch places details
         const allPlaceIds = [
-          ...favoritesList.map((f) => f.place_id),
-          ...commentsList.map((c) => c.place_id),
-          ...ratingsList.map((r) => r.place_id),
+          ...favData.favorites.map((f) => f.place_id),
+          ...comData.comments.map((c) => c.place_id),
+          ...rateData.ratings.map((r) => r.place_id),
         ];
         const uniquePlaceIds = [...new Set(allPlaceIds)];
 
-        // Fetch place details once
         if (uniquePlaceIds.length > 0) {
           const placesRes = await fetch(
             "http://localhost:5000/api/user/places/details",
@@ -164,11 +162,11 @@ const UserProfile = () => {
     };
   };
 
-  // Handlers remain the same
+  // Handlers
   const handleRemoveFavorite = async (placeId) => {
     if (!window.confirm("Remove this place from favorites?")) return;
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch("http://localhost:5000/api/user/favorites", {
         method: "DELETE",
         headers: {
@@ -187,7 +185,7 @@ const UserProfile = () => {
   const handleDeleteComment = async (commentId) => {
     if (!window.confirm("Delete this comment?")) return;
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(
         `http://localhost:5000/api/user/comments/${commentId}`,
         {
@@ -204,7 +202,7 @@ const UserProfile = () => {
   const handleDeleteRating = async (ratingId) => {
     if (!window.confirm("Delete this rating?")) return;
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(
         `http://localhost:5000/api/user/ratings/${ratingId}`,
         {
@@ -231,7 +229,7 @@ const UserProfile = () => {
 
     try {
       setUploading(true);
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(
         "http://localhost:5000/api/user/upload-profile-picture",
         {
@@ -283,7 +281,6 @@ const UserProfile = () => {
     );
 
   if (!user) return null;
-
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-blue-50/30 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
@@ -295,8 +292,13 @@ const UserProfile = () => {
               Manage your account and activity
             </p>
           </div>
-          <button 
-          className="nav-link-button relative h-16 flex items-center px-4 font-medium text-gray-800 hover:text-emerald-600 transition-colors cursor-pointer whitespace-nowrap">
+          <button
+            className="nav-link-button relative h-16 flex items-center px-4 font-medium text-gray-800 hover:text-emerald-600 transition-colors cursor-pointer whitespace-nowrap"
+            onClick={() => {
+              localStorage.removeItem("authtoken"); // remove token
+              window.location.href = "/login"; // redirect to login
+            }}
+          >
             Logout
           </button>
         </div>

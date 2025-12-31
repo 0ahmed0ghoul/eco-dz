@@ -27,15 +27,27 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getAllOrganizers = async (req, res) => {
-  const [rows] = await pool.query('SELECT id, name, email, status, created_at FROM approaved ORDER BY id DESC');
+  const [rows] = await pool.query('SELECT * FROM organizers ORDER BY id DESC');
   res.json({ organizers: rows });
 }
+export const approveOrganizer = async (req, res) => {
+  const organizerId = req.params.id;
+  await pool.query('UPDATE organizers SET verified = 1 WHERE id = ?', [organizerId]);
+  res.json({ message: 'Organizer approved' });
+}
+export const rejectOrganizer = async (req, res) => {
+  const organizerId = req.params.id;
+  await pool.query('UPDATE organizers SET verified = -1 WHERE id = ?', [organizerId]);
+  res.json({ message: 'Organizer rejected and deleted' });
+}
 
-export const addPlace = async (req, res) => {
-  const { name, location, category } = req.body;
-  await pool.query('INSERT INTO places (name, location, category) VALUES (?, ?, ?)', [name, location, category]);
-  res.json({ message: 'Place added' });
-};
+
+export const getAllTrips = async (req, res) => {
+  const [rows] = await pool.query('SELECT * FROM trips ORDER BY created_at DESC');
+  res.json({ trips: rows });
+}
+
+
 
 export const approveTrip = async (req, res) => {
   const tripId = req.params.id;
@@ -43,14 +55,20 @@ export const approveTrip = async (req, res) => {
   res.json({ message: 'Trip approved' });
 };
 
+export const rejectTrip = async (req, res) => {
+  const tripId = req.params.id;
+  await pool.query('UPDATE trips SET approved = -1 WHERE id = ?', [tripId]);
+  res.json({ message: 'Trip rejected' });
+}
+
+export const addPlace = async (req, res) => {
+  const { name, location, category } = req.body;
+  await pool.query('INSERT INTO places (name, location, category) VALUES (?, ?, ?)', [name, location, category]);
+  res.json({ message: 'Place added' });
+};
 export const deletePlace = async (req, res) => {
   const id = req.params.id;
   await pool.query('DELETE FROM places WHERE id = ?', [id]);
   res.json({ message: 'Place deleted' });
 };
 
-// Trips
-export const getPendingTrips = async (req, res) => {
-  const [rows] = await pool.query('SELECT * FROM trips WHERE approved = 0 ORDER BY created_at DESC');
-  res.json({ trips: rows });
-};

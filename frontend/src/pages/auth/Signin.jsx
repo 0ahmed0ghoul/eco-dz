@@ -4,6 +4,8 @@ import backgroundImage2 from "/assets/background/3.jpg";
 import backgroundImage3 from "/assets/background/4.jpg";
 import logo from '/assets/images/main-logo.png';
 import { useNavigate } from 'react-router-dom';
+import TravellerSignupForm from '../../components/forms/TravellerSignupForm.jsx';
+import AgencySignupForm from '../../components/forms/AgencySignupForm.jsx';
 
 const backgrounds = [backgroundImage, backgroundImage2, backgroundImage3];
 
@@ -16,6 +18,7 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [error, setError] = useState("");
+  const [role, setRole] = useState("traveller"); // "traveller" or "agency"
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,103 +68,59 @@ const Signup = () => {
 
   return (
     <div className="relative flex items-center justify-center min-h-screen overflow-hidden">
-      {/* Background slideshow */}
+      {/* Background */}
       {backgrounds.map((bg, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === currentIndex ? "opacity-100" : "opacity-0"
+          }`}
           style={{
             backgroundImage: `url(${bg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            animation: index === currentIndex ? "zoomIn 8s ease-in-out forwards" : "none",
           }}
         />
       ))}
+      <div className="absolute inset-0 bg-black/50" />
 
-      <div className="absolute inset-0 bg-black/50"></div>
-
-      {/* Signup Card */}
-      <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-10 border border-white/20 shadow-2xl">
+      {/* Card */}
+      <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
         {/* Logo */}
-        <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-20">
-          <img
-            src={logo}
-            alt="EcoDz - Sustainable Travel in Algeria"
-            className="w-28 h-28 object-contain rounded-full shadow-xl border-4 border-white/30"
-            loading="lazy"
-          />
+        <div className="absolute -top-16 left-1/2 -translate-x-1/2">
+          <img src={logo} className="w-28 h-28 rounded-full border-4 border-white/30" />
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6 mt-12">
-          {/* Username */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Choose a username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200 text-gray-300 font-bold"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="your.email@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              disabled={isLoading}
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200 text-gray-300 font-bold"
-            />
-          </div>
-          {error && (
-          <div className="bg-red-500/20 border border-red-500 text-red-400 px-4 py-2 rounded-lg text-sm">
-            {error}
-          </div>
-          )}
-         
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Create a strong password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              minLength="8"
-              disabled={isLoading}
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200"
-            />
-          </div>
-
-          {/* Submit */}
+        {/* Role Switch */}
+        <div className="flex mt-14 mb-6 bg-white/10 rounded-xl p-1">
           <button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-emerald-700 hover:to-teal-700 transition duration-300 transform hover:scale-[1.02] shadow-lg ${
-              isLoading ? 'opacity-70 cursor-not-allowed' : ''
+            onClick={() => setRole("traveller")}
+            className={`flex-1 py-2 rounded-lg font-semibold transition ${
+              role === "traveller"
+                ? "bg-emerald-600 text-white"
+                : "text-gray-300"
             }`}
           >
-            {isLoading ? "Creating Account..." : "Create Account"}
+            Traveller
           </button>
+          <button
+            onClick={() => setRole("agency")}
+            className={`flex-1 py-2 rounded-lg font-semibold transition ${
+              role === "agency"
+                ? "bg-emerald-600 text-white"
+                : "text-gray-300"
+            }`}
+          >
+            Travel Agency
+          </button>
+        </div>
 
-          {/* Link to Login */}
-          <p className="text-center text-sm text-gray-300 mt-4">
-            Already have an account?{' '}
-            <a href="/login" className="font-medium text-emerald-600 hover:text-emerald-700">Sign In</a>
-          </p>
-        </form>
+        {/* Forms */}
+        {role === "traveller" ? (
+          <TravellerSignupForm />
+        ) : (
+          <AgencySignupForm />
+        )}
       </div>
     </div>
   );

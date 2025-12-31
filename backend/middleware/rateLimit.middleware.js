@@ -5,3 +5,4 @@ export const authLimiter = rateLimit({
   max: 20,
   message: "Too many attempts, try again later",
 });
+

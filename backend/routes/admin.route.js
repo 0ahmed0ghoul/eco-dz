@@ -1,22 +1,34 @@
 import express from 'express';
-import { adminLogin, deletePlace, getAllOrganizers, getAllUsers, getPendingTrips } from '../controllers/admin.controller.js';
-import { getAllPlaces } from '../controllers/admin.controller.js';
-import { addPlace } from '../controllers/admin.controller.js';
-import { approveTrip } from '../controllers/admin.controller.js';
+import { 
+    adminLogin, 
+    approveOrganizer, 
+    deletePlace, getAllOrganizers,
+    getAllTrips, getAllUsers,
+    rejectOrganizer,
+    rejectTrip ,
+    getAllPlaces,
+    addPlace,
+    approveTrip
+} from '../controllers/admin.controller.js';
+
 const router = express.Router();
 
 router.post('/login', adminLogin);
-
-router.get('/places', getAllPlaces);
 router.get('/users', getAllUsers);
-router.get('/trips/pending', getPendingTrips);
 
+//places routes
+router.get('/places', getAllPlaces);
 router.post('/places', addPlace);
-router.post('/trips/approve/:id', approveTrip); // approve trips from agencies
-
 router.delete('/places/:id', deletePlace);
 
-router.get('/oganizers',getAllOrganizers); 
+//trips routes
+router.get('/trips', getAllTrips);
+router.post('/trips/:id/approve', approveTrip); // approve trips from agencies
+router.delete('/trips/:id/reject',rejectTrip)  // reject trips from agencies
 
+//organizer routes
+router.get('/organizers',getAllOrganizers); 
+router.post('/organizers/:id/approve', approveOrganizer); // approve  agencies
+router.delete('/organizers/:id/delete', rejectOrganizer); // reject agencies
 
 export default router;

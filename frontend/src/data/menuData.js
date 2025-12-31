@@ -1,6 +1,6 @@
 export const navLinks = [
   "Places",
-  "Ways to Travel",
+  "Trips",
   "Deals",
   "Map",
   "Quizzes"
@@ -47,10 +47,11 @@ export const menuData = {
     "All Destinations": [],
   },
 
-  "Ways to Travel": {
+  "Trips": {
     "Eco-Friendly Tours": [],
     "Sustainable Accommodations": [],
     "Green Transportation Options": [],
+    "All trips":[]
   },
 
   Deals: {
