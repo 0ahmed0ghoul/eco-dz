@@ -1,5 +1,4 @@
 import { getUsers, saveUsers, getTrips, saveTrips, getFavoriteAgencies, saveFavoriteAgencies, getEmailSubscriptions, saveEmailSubscriptions, generateId } from "../data/fileHelpers.js";
-import nodemailer from "nodemailer";
 
 // Switch user role to agency
 export const switchToAgency = async (req, res) => {
