@@ -47,17 +47,14 @@ export const menuData = {
     "All Destinations": [],
   },
 
-  "Trips": {
-    "Eco-Friendly Tours": [],
-    "Sustainable Accommodations": [],
-    "Green Transportation Options": [],
-    "All trips":[]
+  Trips: {
+    "All Trips": [],
   },
+  
+
 
   Deals: {
-    "Last Minute Deals": [],
-    "Family Packages": [],
-    "Adventure Tours": []
+    "All Deals": []
   },
 };
 

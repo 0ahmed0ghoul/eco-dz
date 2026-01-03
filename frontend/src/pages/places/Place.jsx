@@ -4,7 +4,7 @@ import PlaceOverview from "../../components/places/place/Overview";
 import TravelDeals from "../../components/places/place/TravelDeals";
 import PlaceTrips from "../../components/places/place/trips";
 import PlaceHighlights from "../../components/places/place/Highlights";
-import ReviewsSection from "../../components/ReviewsSection";
+import ReviewsSection from "../../components/places/place/ReviewsSection";
 
 const Destination = () => {
   const { category, slug } = useParams();
@@ -18,6 +18,7 @@ const Destination = () => {
 
         const encodedCategory = encodeURIComponent(category);
         const encodedSlug = encodeURIComponent(slug);
+        console.log(encodedCategory,encodedSlug);
 
         const res = await fetch(
           `http://localhost:5000/api/places/${encodedCategory}/${encodedSlug}`
@@ -60,8 +61,8 @@ const Destination = () => {
       <TravelDeals place={place} />
       <PlaceTrips place={place} />
       <PlaceHighlights place={place} />
-      <ReviewsSection reviewsData={place.reviewsData} />
-    </section>
+      <ReviewsSection placeId={place.id} place={place} reviewsData={place.reviewsData} />
+      </section>
   );
 };
 

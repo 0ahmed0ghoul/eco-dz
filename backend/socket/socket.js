@@ -4,10 +4,17 @@ import pool from "../db.js";
 export const initializeSocket = (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: (origin, callback) => {
+        if (!origin || ["http://localhost:5173","http://localhost:5174"].includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
       credentials: true
     }
   });
+  
 
   const userSockets = {}; // Track online users
 

@@ -17,7 +17,8 @@ function Sidebar({
   selectedMainLink,
   selectedCategory,
   isSignedIn,
-  setIsSignedIn, // ✅ correctly received from Navbar
+  setIsSignedIn,
+  userRole,
   closeSidebar,
   setSidebarLevel,
   setSelectedMainLink,
@@ -70,6 +71,33 @@ function Sidebar({
     closeSidebar();
   };
 
+  const goToProfile = () => {
+    if (!isSignedIn) {
+      navigate("/login");
+      closeSidebar();
+      return;
+    }
+
+    if (userRole === "agency") {
+      navigate("/agency/dashboard");
+    } else {
+      navigate("/user/profile");
+    }
+
+    closeSidebar();
+  };
+
+  const goToInbox = () => {
+    if (!isSignedIn) {
+      navigate("/login");
+      closeSidebar();
+      return;
+    }
+
+    navigate(userRole === "agency" ? "/agency/inbox" : "/user/inbox");
+    closeSidebar();
+  };
+
   if (!isSidebarOpen) return null;
 
   return (
@@ -111,14 +139,12 @@ function Sidebar({
               </button>
 
               {/* Sign In / Sign Out */}
-              {!isSignedIn && (
-                <button
-                  onClick={() => navigate("/login")}
-                  className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
-                >
-                  <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
-                </button>
-              )}
+              <button
+                onClick={goToProfile}
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+              >
+                <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
+              </button>
             </div>
           </div>
         </div>
@@ -251,7 +277,7 @@ function Sidebar({
           <div className="flex items-center justify-between px-2">
             <div className="flex gap-2">
               <button
-                onClick={() => navigate(isSignedIn ? "/user/inbox" : "/login")}
+                onClick={goToInbox}
                 className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
               >
                 <FiMail className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
@@ -276,7 +302,7 @@ function Sidebar({
               >
                 Sign Out
               </button>
-            ) }
+            )}
           </div>
         </div>
       </div>

@@ -8,6 +8,8 @@ function MegaMenu({
   navLinksRef,
   goToPlace,
   goToAllDestinations,
+  goToAllTrips,
+  goToAllDeals,
 }) {
   const [selectedCategoryKey, setSelectedCategoryKey] = useState(null);
   const [selectedCategorySlug, setSelectedCategorySlug] = useState(null);
@@ -33,12 +35,20 @@ function MegaMenu({
     goToAllDestinations();
     setActiveNavLink(null);
   };
+  const handleAllTripsClick = () =>{
+    goToAllTrips();
+    setActiveNavLink(null);
+  }
+  const handleAllDealsClick = () =>{
+    goToAllDeals();
+    setActiveNavLink(null);
+  }
 
   if (!activeNavLink || !menuData[activeNavLink]) return null;
 
   return (
     <div
-      className="mega-menu-container absolute left-0 bg-white w-[800px] border border-gray-200 shadow-xl z-40"
+      className="mega-menu-container absolute left-0 bg-white w-800px border border-gray-200 shadow-xl z-40"
       style={{
         top: "100%",
         left: navLinksRef.current[activeNavLink]?.offsetLeft || 0,
@@ -57,7 +67,10 @@ function MegaMenu({
               {activeNavLink &&
                 Object.keys(menuData[activeNavLink]).map((category) => {
                   const isAll = category === "All Destinations";
+                  const isAllDestinations = category === 'All Trips'
+                  const isAllDeals = category === 'All Deals'
                   const isActive = selectedCategoryKey === category;
+            
 
                   return (
                     <button
@@ -72,7 +85,11 @@ function MegaMenu({
                       onClick={() => {
                         if (isAll) {
                           handleAllDestinationsClick();
-                        } else {
+                        } else if (isAllDestinations) {
+                          handleAllTripsClick();
+                        }else if (isAllDeals) {
+                          handleAllDealsClick();
+                        } else{
                           handleMegaMenuCategoryClick(category);
                         }
                       }}

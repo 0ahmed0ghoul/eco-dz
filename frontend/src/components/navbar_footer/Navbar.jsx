@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FiSearch, FiUser, FiHeart, FiMail, FiX, FiMenu, FiPhone } from "react-icons/fi";
+import {
+  FiSearch,
+  FiUser,
+  FiHeart,
+  FiMail,
+  FiX,
+  FiMenu,
+  FiPhone,
+} from "react-icons/fi";
 import { useNavigate, useLocation } from "react-router-dom";
 import { navLinks, menuData, popularSearches } from "../../data/menuData";
 import MegaMenu from "./MegaMenu";
@@ -7,6 +15,8 @@ import Sidebar from "./Sidebar";
 
 function Navbar() {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarLevel, setSidebarLevel] = useState("main");
@@ -30,17 +40,46 @@ function Navbar() {
   const navLinksRef = useRef({});
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken"); // or "authToken" depending on your app
+    const token = localStorage.getItem("authToken");
+    const role = localStorage.getItem("role"); // "agency" | "user"
+    console.log("role :", role);
     setIsSignedIn(!!token);
+    setUserRole(role);
   }, []);
 
   const goToPlace = (categorySlug, placeSlug) => {
     navigate(`/places/${categorySlug}/${placeSlug}`);
     closeSidebar();
   };
+  const goToProfile = () => {
+    if (!isSignedIn) {
+      navigate("/login");
+      return;
+    }
 
+    if (userRole === "agency") {
+      navigate("/agency/dashboard");
+    } else {
+      navigate("/user/profile");
+    }
+  };
   const goToAllDestinations = () => {
     navigate("/places");
+    setActiveNavLink(null);
+    setSelectedCategoryKey(null);
+    setSelectedCategorySlug(null);
+    closeSidebar();
+  };
+  const goToAllTrips = () => {
+    navigate("/trips");
+    setActiveNavLink(null);
+    setSelectedCategoryKey(null);
+    setSelectedCategorySlug(null);
+    closeSidebar();
+  };
+
+  const goToAllDeals = () => {
+    navigate("/deals");
     setActiveNavLink(null);
     setSelectedCategoryKey(null);
     setSelectedCategorySlug(null);
@@ -91,7 +130,6 @@ function Navbar() {
   const handleDeleteSearch = (item) => {
     setRecentSearches((prev) => prev.filter((search) => search !== item));
   };
-
   const closeSidebar = () => {
     setIsSidebarOpen(false);
     setTimeout(() => {
@@ -100,7 +138,6 @@ function Navbar() {
       setSelectedCategory(null);
     }, 300);
   };
-
   const handleNavLinkClick = (link) => {
     if (window.innerWidth >= 1024) {
       if (link === "Map") return scrollToMap();
@@ -120,7 +157,6 @@ function Navbar() {
       if (link === "Quizzes") navigate("/quiz");
     }
   };
-
   const scrollToMap = () => {
     const mapSection = document.getElementById("maps");
     if (!mapSection) return;
@@ -131,7 +167,6 @@ function Navbar() {
     });
     closeSidebar();
   };
-
   const handleSidebarMapClick = () => scrollToMap();
 
   return (
@@ -248,31 +283,25 @@ function Navbar() {
 
             <div className="hidden lg:flex items-center gap-2">
               <button
-                onClick={() => navigate(isSignedIn ? "/user/inbox" : "/login")}
-                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
+                className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
+                onClick={goToProfile}
               >
                 <FiMail className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
-                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                  2
-                </span>
+
               </button>
               <button
                 onClick={() => navigate(isSignedIn ? "/contact" : "/Contact")}
                 className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative group"
               >
                 <FiPhone className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
-                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                  2
-                </span>
               </button>
 
-                <button
+              <button
                 className="p-2.5 rounded-full hover:bg-gray-100 transition-colors group"
-                onClick={() => navigate(isSignedIn ? "/user/profile" : "/login")}
+                onClick={goToProfile}
               >
                 <FiUser className="w-5 h-5 text-gray-700 group-hover:text-emerald-600 transition-colors" />
               </button>
-
             </div>
 
             {/* Sidebar toggle */}
@@ -297,27 +326,32 @@ function Navbar() {
           navLinksRef={navLinksRef}
           goToPlace={goToPlace}
           goToAllDestinations={goToAllDestinations}
+          goToAllTrips ={goToAllTrips}
+          goToAllDeals ={goToAllDeals}
         />
       </nav>
 
       <Sidebar
-  isSidebarOpen={isSidebarOpen}
-  sidebarLevel={sidebarLevel}
-  selectedMainLink={selectedMainLink}
-  selectedCategory={selectedCategory}
-  isSignedIn={isSignedIn}              // ✅ pass the actual value
-  setIsSignedIn={setIsSignedIn}        // ✅ pass the setter
-  menuData={menuData}
-  closeSidebar={closeSidebar}
-  setSidebarLevel={setSidebarLevel}
-  setSelectedMainLink={setSelectedMainLink}
-  setSelectedCategory={setSelectedCategory}
-  goToPlace={goToPlace}
-  handleSidebarMapClick={handleSidebarMapClick}
-  activeNavLink={activeNavLink}
-  setActiveNavLink={setActiveNavLink}
-  goToAllDestinations={goToAllDestinations}
-/>
+        isSidebarOpen={isSidebarOpen}
+        sidebarLevel={sidebarLevel}
+        selectedMainLink={selectedMainLink}
+        selectedCategory={selectedCategory}
+        isSignedIn={isSignedIn} // ✅ pass the actual value
+        setIsSignedIn={setIsSignedIn} // ✅ pass the setter
+        userRole={userRole} // ✅ add this
+        menuData={menuData}
+        closeSidebar={closeSidebar}
+        setSidebarLevel={setSidebarLevel}
+        setSelectedMainLink={setSelectedMainLink}
+        setSelectedCategory={setSelectedCategory}
+        goToPlace={goToPlace}
+        handleSidebarMapClick={handleSidebarMapClick}
+        activeNavLink={activeNavLink}
+        setActiveNavLink={setActiveNavLink}
+        goToAllDestinations={goToAllDestinations}
+        goToAllTrips={goToAllTrips}
+        goToAllDeals ={goToAllDeals}
+      />
 
       <div className="h-16 lg:h-16" />
     </>

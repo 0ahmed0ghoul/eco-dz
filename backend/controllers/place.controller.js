@@ -151,3 +151,163 @@ export const getAllPlacess = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getPlaceLikes = async (req, res) => {
+  const placeId = req.params.id;
+  const userId = req.user?.id || null;
+
+  try {
+    // 1️⃣ Count total likes
+    const [[countRow]] = await pool.query(
+      "SELECT COUNT(*) AS count FROM place_ratings WHERE place_id = ?",
+      [placeId]
+    );
+
+    let likedByUser = false;
+
+    // 2️⃣ Check if user liked (fast & safe)
+    if (userId) {
+      const [[existsRow]] = await pool.query(
+        `
+        SELECT EXISTS(
+          SELECT 1
+          FROM place_ratings
+          WHERE user_id = ? AND place_id = ?
+        ) AS liked
+        `,
+        [userId, placeId]
+      );
+
+      likedByUser = !!existsRow.liked;
+    }
+
+    res.json({
+      count: countRow.count,
+      likedByUser,
+    });
+  } catch (err) {
+    console.error("getPlaceLikes error:", err);
+    res.status(500).json({ message: "Failed to load likes" });
+  }
+};
+
+
+export const toggleLike = async (req, res) => {
+  const userId = req.user.id;
+  const placeId = req.params.id;
+
+  try {
+    // Try to delete first (UNLIKE)
+    const [deleteResult] = await pool.query(
+      "DELETE FROM place_ratings WHERE user_id = ? AND place_id = ?",
+      [userId, placeId]
+    );
+
+    let liked;
+
+    if (deleteResult.affectedRows === 0) {
+      // No row deleted → LIKE
+      await pool.query(
+        "INSERT INTO place_ratings (user_id, place_id, rating) VALUES (?, ?, 1)",
+        [userId, placeId]
+      );
+      liked = true;
+    } else {
+      liked = false;
+    }
+
+    const [[countRow]] = await pool.query(
+      "SELECT COUNT(*) AS count FROM place_ratings WHERE place_id = ?",
+      [placeId]
+    );
+
+    res.json({
+      liked,
+      count: countRow.count,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Toggle like failed" });
+  }
+};
+
+export const ratePlace = async (req, res) => {
+  const userId = req.user.id;
+  const placeId = req.params.id;
+  const { rating } = req.body; // 1–5
+
+  if (rating < 1 || rating > 5) {
+    return res.status(400).json({ message: "Invalid rating" });
+  }
+
+  try {
+    await pool.query(
+      `INSERT INTO place_ratings (user_id, place_id, rating)
+       VALUES (?, ?, ?)
+       ON DUPLICATE KEY UPDATE rating = ?`,
+      [userId, placeId, rating, rating]
+    );
+
+    res.json({ message: "Rating saved" });
+  } catch (err) {
+    res.status(500).json({ message: "Rating failed" });
+  }
+};
+
+
+export const getPlaceReviews = async (req, res) => {
+  const placeId = req.params.id;
+
+  try {
+    const [reviews] = await pool.query(
+      `SELECT pr.id, pr.review, pr.rating, pr.image, pr.created_at,
+              CONCAT(u.firstName, ' ', u.lastName) AS reviewer
+       FROM place_reviews pr
+       JOIN users u ON pr.user_id = u.id
+       WHERE pr.place_id = ?
+       ORDER BY pr.created_at DESC`,
+      [placeId]
+    );
+
+    res.json(reviews || []); // always return an array
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to load reviews" });
+  }
+};
+export const addPlaceReview = async (req, res) => {
+  const userId = req.user.id;
+  const placeId = req.params.id;
+  const { review, rating } = req.body;
+  console.log(req.file);
+  let image = null;
+  if (req.file) {
+    // URL the frontend can use
+    image = `/assets/reviews/${req.file.filename}`;
+  }
+
+  try {
+    const [result] = await pool.query(
+      "INSERT INTO place_reviews (user_id, place_id, review, rating, image) VALUES (?, ?, ?, ?, ?)",
+      [userId, placeId, review, rating, image]
+    );
+
+    // Return the new review
+    const [[newReview]] = await pool.query(
+      `SELECT pr.id, pr.review, pr.rating, pr.image, pr.created_at,
+              CONCAT(u.firstName, ' ', u.lastName) AS reviewer
+       FROM place_reviews pr
+       JOIN users u ON pr.user_id = u.id
+       WHERE pr.id = ?`,
+      [result.insertId]
+    );
+
+    res.status(201).json(newReview);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to add review" });
+  }
+};
+
+
+

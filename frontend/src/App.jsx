@@ -5,7 +5,6 @@ import Signin from "./pages/auth/Signin.jsx";
 import Contact from "./pages/Contact.jsx";
 import CategoryPlaces from "./pages/places/CategoryPlaces.jsx";
 
-import WaysToTravel from "./pages/WaysToTravel.jsx";
 import Quiz from "./pages/Quiz.jsx";
 import Navbar from "./components/navbar_footer/Navbar.jsx";
 import Footer from "./components/navbar_footer/Footer.jsx";
@@ -15,7 +14,7 @@ import Trip from "./components/trips/Trip.jsx";
 import Places from "./pages/places/Places.jsx";
 import Place from "./pages/places/Place.jsx";
 
-import Inbox from "./components/inbox/Inbox.jsx";
+import Inbox from "./pages/Inbox.jsx";
 import SupportChat from "./components/about_us/SupportChat.jsx";
 import { useState } from "react";
 import AdminLogin from "./pages/admin/AdminLogin.jsx";
@@ -23,6 +22,10 @@ import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 // import Destination from "./pages/Place.jsx";
 import ProtectedRoute from "./pages/auth/ProtectedRoute.jsx"; // adjust path
 import AgencyDashboard from "./pages/auth/AgencyDashboard.jsx";
+import Trips from "./pages/Trips.jsx";
+import Deals from "./pages/Deals.jsx";
+import DealDetails from "./pages/DealDetails.jsx";
+import TripDetails from "./pages/TripDetails.jsx";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false); // in-memory state
@@ -46,14 +49,21 @@ function App() {
           path="/admin/dashboard"
           element={isAdmin ? <AdminDashboard /> : <Navigate to="/admin" />}
         />
-
         {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signin />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/travels" element={<WaysToTravel />} />
         <Route path="/places" element={<Places />} />
+        <Route path="/trips" element={<Trips />} />
+        <Route path="/trips/:id" element={<TripDetails />} />
+        <Route path="/deals" element={<Deals />} />
+        <Route path="/deals/:id" element={<DealDetails />} />
+
+        // Inbox list
+        <Route path="/inbox" element={<Inbox />} />
+
+
         <Route path="/places/:category" element={<CategoryPlaces />} />
         <Route path="/places/:category/:slug" element={<Place />} />
         <Route path="/quiz" element={<Quiz />} />
@@ -66,7 +76,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         {/* Protected user routes */}
         <Route
           path="/user/complete-profile"
@@ -92,12 +101,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/agency/dashboard"
-          element={
-              <AgencyDashboard />
-          }
-        />
+        <Route path="/agency/dashboard" element={<AgencyDashboard />} />
       </Routes>
       <Footer />
     </>
