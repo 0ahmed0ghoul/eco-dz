@@ -1,14 +1,22 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  MapPin,
+  Tag,
+  Star,
+  Building2,
+  Phone,
+  Globe,
+  Edit,
+  Plus,
+  LogOut,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import HighlightsCard from "./HighlightsCard";
+import TripsCard from "./TripsCard";
+import DealsCard from "./DealsCard";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,29 +27,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  Calendar,
-  MapPin,
-  Tag,
-  Star,
-  Building2,
-  Phone,
-  Globe,
-  Trash2,
-  Edit,
-  Plus,
-  LogOut,
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import TripForm from "../../components/forms/TripForm";
-import DealForm from "../../components/forms/DealForm";
-import HighlightForm from "../../components/forms/HighlightForm";
 
 // API Service Layer
 const useApiService = () => {
   const token = localStorage.getItem("authToken");
 
   const fetchData = async (endpoint) => {
+    console.log(endpoint);
     const response = await fetch(
       `http://localhost:5000/api/agency/${endpoint}`,
       {
@@ -187,10 +179,8 @@ const AgencyDashboard = () => {
     id: null,
     title: "",
   });
-  const [createModal, setCreateModal] = useState({
-    open: false,
-    type: null, // "trip" | "deal" | "highlight"
-  });
+  const [createType, setCreateType] = useState(null);
+  // "trip" | "deal" | "highlight" | null
 
   const apiService = useApiService();
 
@@ -200,14 +190,16 @@ const AgencyDashboard = () => {
     setError(null);
 
     try {
-      const [tripsData, dealsData, highlightsData] = await Promise.all([
-        apiService.fetchData("trips"),
-        apiService.fetchData("deals"),
-        apiService.fetchData("highlights"),
-      ]);
+      const [tripsData, dealsData, highlightsData, profileData] =
+        await Promise.all([
+          apiService.fetchData("trips"),
+          apiService.fetchData("deals"),
+          apiService.fetchData("highlights"),
+          apiService.fetchData("profile"),
+        ]);
 
       setTrips(tripsData.trips || []);
-      setAgency(tripsData.agency || null);
+      setAgency(profileData.agency || null);
       setDeals(dealsData.deals || []);
       setHighlights(highlightsData.highlights || []);
     } catch (err) {
@@ -252,6 +244,7 @@ const AgencyDashboard = () => {
   };
 
   if (loading) return <DashboardSkeleton />;
+  console.log(agency.logo);
 
   if (error) {
     return (
@@ -275,6 +268,11 @@ const AgencyDashboard = () => {
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <img
+            src={agency.logo}
+            alt="Logo"
+            className="h-16 w-16 rounded-full object-cover border-2 border-gray-200 shadow-sm"
+          />{" "}
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
             <p className="text-gray-600 mt-2">
@@ -288,7 +286,7 @@ const AgencyDashboard = () => {
             <div className="flex gap-2 flex-wrap">
               <Button
                 variant="outline"
-                onClick={() => setCreateModal({ open: true, type: "trip" })}
+                onClick={() => navigate("/agency/trips/create")}
               >
                 <Plus className="h-4 w-4 mr-1" />
                 Add Trip
@@ -296,7 +294,7 @@ const AgencyDashboard = () => {
 
               <Button
                 variant="outline"
-                onClick={() => setCreateModal({ open: true, type: "deal" })}
+                onClick={() => navigate("/agency/deals/create")}
               >
                 <Plus className="h-4 w-4 mr-1" />
                 Add Deal
@@ -304,9 +302,7 @@ const AgencyDashboard = () => {
 
               <Button
                 variant="outline"
-                onClick={() =>
-                  setCreateModal({ open: true, type: "highlight" })
-                }
+                onClick={() => navigate("/agency/highlights/create")}
               >
                 <Plus className="h-4 w-4 mr-1" />
                 Add Highlight
@@ -337,160 +333,9 @@ const AgencyDashboard = () => {
           {/* Left Column - Trips & Deals */}
           <div className="lg:col-span-2 space-y-8">
             {/* Trips Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5" />
-                  Your Trips
-                </CardTitle>
-                <CardDescription>
-                  Manage and track your trip listings
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {trips.length > 0 ? (
-                  <div className="space-y-4">
-                    {trips.map((trip) => {
-                      const status = getApprovalStatus(trip.approved);
-                      return (
-                        <div
-                          key={trip.id}
-                          className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                        >
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                              <h3 className="font-bold text-lg">
-                                {trip.title}
-                              </h3>
-                              <Badge variant={status.variant}>
-                                {status.label}
-                              </Badge>
-                            </div>
-                            <p className="text-gray-600 mb-2 line-clamp-2">
-                              {trip.description}
-                            </p>
-                            <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                              <span className="flex items-center gap-1">
-                                <Calendar className="h-4 w-4" />
-                                {trip.start_date} → {trip.end_date}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Tag className="h-4 w-4" />$
-                                {trip.price || "Price on request"}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="flex gap-2 mt-4 sm:mt-0">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="gap-1"
-                            >
-                              <Edit className="h-4 w-4" />
-                              Edit
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              size="sm"
-                              className="gap-1"
-                              onClick={() =>
-                                handleDeleteClick("trips", trip.id, trip.title)
-                              }
-                            >
-                              <Trash2 className="h-4 w-4" />
-                              Delete
-                            </Button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <div className="text-gray-400 mb-4">
-                      <MapPin className="h-12 w-12 mx-auto" />
-                    </div>
-                    <p className="text-gray-500">No trips created yet</p>
-                    <Button className="mt-4">Create Your First Trip</Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
+            <TripsCard trips={trips} onDelete={handleDeleteClick} />
             {/* Deals Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Tag className="h-5 w-5" />
-                  Active Deals
-                </CardTitle>
-                <CardDescription>Special offers and discounts</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {deals.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {deals.map((deal) => (
-                      <Card
-                        key={deal.id}
-                        className="overflow-hidden border-2 hover:border-blue-300 transition-colors"
-                      >
-                        <CardContent className="p-6">
-                          <div className="flex justify-between items-start mb-4">
-                            <h3 className="font-bold text-lg">{deal.title}</h3>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() =>
-                                handleDeleteClick("deals", deal.id, deal.title)
-                              }
-                            >
-                              <Trash2 className="h-4 w-4 text-gray-400 hover:text-red-600" />
-                            </Button>
-                          </div>
-                          <p className="text-gray-600 mb-4 text-sm line-clamp-2">
-                            {deal.description}
-                          </p>
-                          <div className="space-y-3">
-                            <div className="flex items-center justify-between">
-                              <span className="text-gray-500 line-through">
-                                ${deal.original_price}
-                              </span>
-                              <span className="text-2xl font-bold text-green-600">
-                                ${deal.discounted_price}
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between text-sm text-gray-500">
-                              <span>Save {deal.discount_percentage}%</span>
-                              <span>
-                                {deal.start_date} - {deal.end_date}
-                              </span>
-                            </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2">
-                              <div
-                                className="bg-gradient-to-r from-green-400 to-green-500 h-2 rounded-full"
-                                style={{
-                                  width: `${Math.min(
-                                    deal.discount_percentage,
-                                    100
-                                  )}%`,
-                                }}
-                              />
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <div className="text-gray-400 mb-4">
-                      <Tag className="h-12 w-12 mx-auto" />
-                    </div>
-                    <p className="text-gray-500">No deals created yet</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <DealsCard deals={deals} onDelete={handleDeleteClick} />
           </div>
 
           {/* Right Column - Agency Info & Highlights */}
@@ -555,87 +400,13 @@ const AgencyDashboard = () => {
                 )}
               </CardContent>
             </Card>
-
-            {/* Highlights */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Star className="h-5 w-5" />
-                  Highlights
-                </CardTitle>
-                <CardDescription>Featured content</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {highlights.length > 0 ? (
-                  <div className="space-y-3">
-                    {highlights.map((highlight) => (
-                      <div
-                        key={highlight.id}
-                        className="flex items-start justify-between p-3 border rounded-lg hover:bg-gray-50"
-                      >
-                        <div>
-                          <h4 className="font-semibold">{highlight.title}</h4>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {highlight.description}
-                          </p>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() =>
-                            handleDeleteClick(
-                              "highlights",
-                              highlight.id,
-                              highlight.title
-                            )
-                          }
-                        >
-                          <Trash2 className="h-4 w-4 text-gray-400 hover:text-red-600" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-6">
-                    <div className="text-gray-400 mb-3">
-                      <Star className="h-8 w-8 mx-auto" />
-                    </div>
-                    <p className="text-gray-500">No highlights yet</p>
-                  </div>
-                )}
-                <Button className="w-full mt-4" variant="secondary">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Highlight
-                </Button>
-              </CardContent>
-            </Card>
+            <HighlightsCard
+              highlights={highlights}
+              onDelete={handleDeleteClick}
+            />
           </div>
         </div>
       </div>
-      <AlertDialog
-        open={createModal.open}
-        onOpenChange={() => setCreateModal({ open: false, type: null })}
-      >
-        <AlertDialogContent className="max-w-lg">
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {createModal.type === "trip" && "Create New Trip"}
-              {createModal.type === "deal" && "Create New Deal"}
-              {createModal.type === "highlight" && "Create New Highlight"}
-            </AlertDialogTitle>
-          </AlertDialogHeader>
-
-          {createModal.type === "trip" && (
-            <TripForm onSuccess={fetchDashboard} />
-          )}
-          {createModal.type === "deal" && (
-            <DealForm onSuccess={fetchDashboard} />
-          )}
-          {createModal.type === "highlight" && (
-            <HighlightForm onSuccess={fetchDashboard} />
-          )}
-        </AlertDialogContent>
-      </AlertDialog>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog

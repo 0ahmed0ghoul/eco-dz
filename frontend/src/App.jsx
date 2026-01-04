@@ -21,11 +21,15 @@ import AdminLogin from "./pages/admin/AdminLogin.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 // import Destination from "./pages/Place.jsx";
 import ProtectedRoute from "./pages/auth/ProtectedRoute.jsx"; // adjust path
-import AgencyDashboard from "./pages/auth/AgencyDashboard.jsx";
+import AgencyDashboard from "./pages/auth/agency/AgencyDashboard.jsx";
 import Trips from "./pages/Trips.jsx";
 import Deals from "./pages/Deals.jsx";
 import DealDetails from "./pages/DealDetails.jsx";
 import TripDetails from "./pages/TripDetails.jsx";
+import CreateDeal from "./pages/auth/agency/create/CreateDeal.jsx";
+import CreateHighlight from "./pages/auth/agency/create/CreateHighlight.jsx";
+import CreateTrip from "./pages/auth/agency/create/CreateTrip.jsx";
+import CompleteAgencyProfile from "./pages/auth/agency/CompleteAgencyProfile.jsx";
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false); // in-memory state
@@ -59,11 +63,8 @@ function App() {
         <Route path="/trips/:id" element={<TripDetails />} />
         <Route path="/deals" element={<Deals />} />
         <Route path="/deals/:id" element={<DealDetails />} />
-
         // Inbox list
         <Route path="/inbox" element={<Inbox />} />
-
-
         <Route path="/places/:category" element={<CategoryPlaces />} />
         <Route path="/places/:category/:slug" element={<Place />} />
         <Route path="/quiz" element={<Quiz />} />
@@ -101,7 +102,18 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/agency/complete-profile" element={<CompleteAgencyProfile />} />
+
         <Route path="/agency/dashboard" element={<AgencyDashboard />} />
+
+        <Route path="/agency/trips/create" element={<CreateTrip />} />
+        <Route path="/agency/trips/edit/:id" element={<CreateTrip />} />
+
+        <Route path="/agency/deals/create" element={<CreateDeal />} />
+        <Route path="/agency/deals/edit/:id" element={<CreateDeal />} />
+
+        <Route path="/agency/highlights/create" element={<CreateHighlight />} />
+        <Route path="/agency/highlights/edit/:id" element={<CreateHighlight />} />
       </Routes>
       <Footer />
     </>

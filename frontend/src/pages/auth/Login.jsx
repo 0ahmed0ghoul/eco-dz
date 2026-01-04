@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import backgroundImage from "/assets/background/2.jpg";
 import backgroundImage2 from "/assets/background/3.jpg";
 import backgroundImage3 from "/assets/background/4.jpg";
-import { useNavigate } from "react-router-dom";
 import logo from "/assets/images/main-logo.png";
 
 const backgrounds = [backgroundImage, backgroundImage2, backgroundImage3];
@@ -16,6 +16,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Background carousel
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % backgrounds.length);
@@ -41,29 +42,27 @@ const Login = () => {
       });
 
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Login failed");
 
-      if (!res.ok) {
-        throw new Error(data.error || "Login failed");
-      }
-
-      console.log('token is :', data.token);
+      // Save token and role
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("role", role);
 
-      // Traveller redirect
+      // Redirect logic
       if (role === "traveller") {
         if (data.isProfileCompleted === 1) {
           navigate("/user/profile");
         } else {
           navigate("/user/complete-profile", { state: { userId: data.userId } });
         }
+      } else if (role === "agency") {
+        // If you want agencies to complete profile too:
+        if (data.isProfileCompleted === 1) {
+          navigate("/agency/dashboard");
+        } else {
+          navigate("/agency/complete-profile", { state: { userId: data.userId } });
+        }
       }
-
-      // Agency redirect
-      if (role === "agency") {
-        navigate("/agency/dashboard");
-      }
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -93,7 +92,10 @@ const Login = () => {
       <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
         {/* Logo */}
         <div className="absolute -top-16 left-1/2 -translate-x-1/2">
-          <img src={logo} className="w-28 h-28 rounded-full border-4 border-white/30" />
+          <img
+            src={logo}
+            className="w-28 h-28 rounded-full border-4 border-white/30"
+          />
         </div>
 
         {/* Role Switch */}
@@ -129,7 +131,6 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             disabled={isLoading}
           />
-
           <Input
             label="Password"
             type="password"
@@ -159,9 +160,7 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-/* helpers */
+/* Helpers */
 const Input = ({ label, ...props }) => (
   <div>
     <label className="block text-sm text-gray-300 mb-2">{label}</label>
@@ -178,3 +177,5 @@ const ErrorBox = ({ text }) => (
     {text}
   </div>
 );
+
+export default Login;
