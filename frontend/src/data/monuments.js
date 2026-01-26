@@ -137,7 +137,7 @@ export const monuments = [
     destination: "Oum El Bouaghi – Algeria",
     lat: 35.87,
     lng: 7.11,
-    image: "/assets/destinations/Beni Salah Mountain.jpg",
+    image: "/assets/destinations/Beni_Salah_Mountain.jpg",
     description: "Scenic mountain known for its unique rock formations and hiking trails.",
     physicalRating: 4,
   },
