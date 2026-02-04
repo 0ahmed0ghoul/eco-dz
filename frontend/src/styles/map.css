@@ -1,0 +1,21 @@
+.gallery-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+}
+
+.gallery-scroll img {
+  width: 160px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Hide scrollbar */
+.gallery-scroll::-webkit-scrollbar {
+  display: none;
+}
