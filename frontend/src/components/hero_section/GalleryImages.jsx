@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const galleryImages = [
-  "/assets/destinations/Alhaggar.jpg",
-  "/assets/destinations/Atlas_Cedar_Forest.jpg",
-  "/assets/destinations/Beni_Salah_Mountain.jpg",
-  "/assets/destinations/bni_haroun.jpg",
-  "/assets/destinations/chrea.jpg",
+  "https://res.cloudinary.com/du9fvpbft/image/upload/v1773699739/Alhaggar_t3yb3e.jpg",
+  "https://res.cloudinary.com/du9fvpbft/image/upload/v1773699746/Atlas_Cedar_Forest_lg38u4.jpg",
+  "https://res.cloudinary.com/du9fvpbft/image/upload/v1773699766/Beni_Salah_Mountain_qris1f.jpg",
+  "https://res.cloudinary.com/du9fvpbft/image/upload/v1773699749/bni_haroun_voduo1.jpg",
+  "https://res.cloudinary.com/du9fvpbft/image/upload/v1773699751/chrea_yt0isz.jpg",
 ];
 
 const stats = [

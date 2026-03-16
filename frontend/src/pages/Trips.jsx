@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import backgroundImage from "/assets/background/2.jpg";
 import {
   FaCalendarAlt,
   FaClock,
@@ -78,7 +77,7 @@ console.log(trips);
       {/* Dynamic Background Overlay */}
       <div 
         className="fixed inset-0 bg-cover bg-center -z-10"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        style={{ backgroundImage: `url(https://res.cloudinary.com/du9fvpbft/image/upload/v1773699764/2_coyeij.jpg)` }}
       />
 
       {/* Hero Header */}

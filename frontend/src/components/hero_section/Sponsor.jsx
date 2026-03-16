@@ -10,7 +10,7 @@ export default function OurPurpose() {
   return (
     <section
       style={{
-        backgroundImage: 'url(/public/assets/background/speed.png)',
+        backgroundImage: 'url(https://res.cloudinary.com/du9fvpbft/image/upload/v1773699724/speed_ihfafy.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import backgroundImage from "/assets/background/2.jpg";
-import backgroundImage2 from "/assets/background/3.jpg";
-import backgroundImage3 from "/assets/background/4.jpg";
-import logo from '/assets/images/main-logo.png';
 import { useNavigate } from 'react-router-dom';
 
 // Add eye icons (you can also use an icon library like react-icons)
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+const backgroundImage2= 'https://res.cloudinary.com/du9fvpbft/image/upload/v1773699764/2_coyeij.jpg';
+const backgroundImage= 'https://res.cloudinary.com/du9fvpbft/image/upload/v1773699712/3_xyulog.jpg'
+const backgroundImage3= 'https://res.cloudinary.com/du9fvpbft/image/upload/v1773699721/4_cm7ixk.jpg'
 
 const backgrounds = [backgroundImage, backgroundImage2, backgroundImage3];
 
@@ -275,7 +275,8 @@ const Signup = () => {
 
       <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
         <div className="absolute -top-16 left-1/2 -translate-x-1/2">
-          <img src={logo} className="w-28 h-28 rounded-full border-4 border-white/30" />
+          <img src="https://res.cloudinary.com/du9fvpbft/image/upload/v1773699771/main-logo_hgq6s1.png"
+           className="w-28 h-28 rounded-full border-4 border-white/30" />
         </div>
 
         {/* Role switch */}

@@ -277,7 +277,7 @@ useEffect(() => {
               onClick={() => (window.location.href = "/")}
             >
               <img
-                src="/assets/logos/logo.png"
+                src="https://res.cloudinary.com/du9fvpbft/image/upload/v1773699771/logo_hnuzvb.png"
                 alt="EcoDz Logo"
                 className="h-10 lg:h-12 transition-transform group-hover:scale-105 duration-300"
               />

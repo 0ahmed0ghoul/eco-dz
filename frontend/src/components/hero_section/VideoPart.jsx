@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import ecoDZ from "/assets/videos/ecodz.mp4";
 export default function VideoWithFeatures() {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);

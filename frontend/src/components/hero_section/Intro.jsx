@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import logo from "/assets/images/main-logo.png";
 import MainSearchBar from "../navbar_footer/MainSearchBar.jsx";
 
 function Intro() {
@@ -34,7 +33,7 @@ function Intro() {
               className="relative cursor-pointer"
             >
               <img
-                src={logo}
+                src="https://res.cloudinary.com/du9fvpbft/image/upload/v1773699771/main-logo_hgq6s1.png"
                 alt="EcoDz"
                 className="
                   w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32

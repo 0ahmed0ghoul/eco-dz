@@ -113,7 +113,7 @@ export default function Map() {
       });
 
       marker.bindPopup(`
-        <div class="space-y-2 style={{backgroundImage : src(assets/destination/${place.image})}}>
+        <div class="space-y-2 style={{backgroundImage : src(https://res.cloudinary.com/du9fvpbft/image/upload/v1773699768/${place.image})}}>
           <h3 class="font-bold text-lg">${place.name}</h3>
           <p class="text-sm text-gray-600">
             <strong>Category:</strong> ${place.category}

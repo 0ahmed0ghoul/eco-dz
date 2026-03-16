@@ -16,7 +16,6 @@ import {
   FaSortAmountUp,
   FaChevronRight
 } from "react-icons/fa";
-import backgroundImage from "/assets/background/3.jpg";
 
 export default function DealsPage() {
   const navigate = useNavigate();
@@ -140,7 +139,7 @@ console.log(deals);
       {/* Enhanced Background with Overlay */}
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat bg-fixed -z-10"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        style={{ backgroundImage: `url("https://collection.cloudinary.com/du9fvpbft/e57f95c53c7a47ace65d0fdaecfa7973")` }}
       >
       </div>
 

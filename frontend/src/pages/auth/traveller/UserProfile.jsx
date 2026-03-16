@@ -278,7 +278,7 @@ const [userPoints, setUserPoints] = useState(0);
     return {
       name: place.name || "Unknown Place",
       address: place.location || "",
-      image: place.image || "/assets/default-place.jpg",
+      image: place.image || "",
       type: place.type || "Unknown",
       avgRating: place.avg_rating || 0,
       physicalRating: place.physical_rating || 0,

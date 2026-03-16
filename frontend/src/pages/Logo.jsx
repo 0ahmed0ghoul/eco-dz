@@ -87,7 +87,7 @@ const Logo = ({ onComplete }) => {
 
           {/* Logo image */}
           <image
-            href={"/assets/logos/logo.png"}
+            href={"https://res.cloudinary.com/du9fvpbft/image/upload/v1773699771/logo_hnuzvb.png"}
             x="150"
             y="70"
             width="100"

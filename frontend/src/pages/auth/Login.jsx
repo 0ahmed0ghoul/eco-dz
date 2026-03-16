@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import backgroundImage from "/assets/background/2.jpg";
-import backgroundImage2 from "/assets/background/3.jpg";
-import backgroundImage3 from "/assets/background/4.jpg";
-import logo from "/assets/images/main-logo.png";
+
+const backgroundImage2= 'https://res.cloudinary.com/du9fvpbft/image/upload/v1773699764/2_coyeij.jpg';
+const backgroundImage= 'https://res.cloudinary.com/du9fvpbft/image/upload/v1773699712/3_xyulog.jpg'
+const backgroundImage3= 'https://res.cloudinary.com/du9fvpbft/image/upload/v1773699721/4_cm7ixk.jpg'
 
 const backgrounds = [backgroundImage, backgroundImage2, backgroundImage3];
 
@@ -93,7 +93,7 @@ const Login = () => {
         {/* Logo */}
         <div className="absolute -top-16 left-1/2 -translate-x-1/2">
           <img
-            src={logo}
+            src="https://res.cloudinary.com/du9fvpbft/image/upload/v1773699771/main-logo_hgq6s1.png"
             className="w-28 h-28 rounded-full border-4 border-white/30"
           />
         </div>

@@ -113,7 +113,7 @@ function Sidebar({
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div className="flex items-center gap-3">
             <img
-              src="/assets/logos/logo.png"
+              src="https://res.cloudinary.com/du9fvpbft/image/upload/v1773699771/logo_hnuzvb.png"
               alt="EcoDz Logo"
               className="h-8"
             />
