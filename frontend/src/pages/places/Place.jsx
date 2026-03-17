@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PlaceOverview from "../../components/places/place/Overview";
 import TravelDeals from "../../components/places/place/TravelDeals";
-import PlaceTrips from "../../components/places/place/trips";
+import PlaceTrips from "../../components/places/place/Trips";
 import PlaceHighlights from "../../components/places/place/Highlights";
 import ReviewsSection from "../../components/places/place/ReviewsSection";
 import Tabs from "../../components/Tabs";
