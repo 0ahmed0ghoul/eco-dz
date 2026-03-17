@@ -13,9 +13,8 @@ const tabs = [
   { label: "Welcome", id: "intro" },
   { label: "Image Gallery", id: "gallery" },
   { label: "Trips & Deals", id: "trips" },
-  { label: "Compaign", id: "apart" },
+  { label: "Campaign", id: "apart" }, // Fixed typo: "Compaign" -> "Campaign"
   { label: "Our Collaborative", id: "collab" },
-
   { label: "Highlights", id: "highlight" },
   { label: "Interactive map", id: "map" },
 ];
@@ -23,50 +22,123 @@ const tabs = [
 const Hero = () => {
   const [trips, setTrips] = useState([]);
   const [deals, setDeals] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState({
+    trips: true,
+    deals: true
+  });
   const [error, setError] = useState(null);
+
+  // Get API URL with fallback
+  const API_URL = import.meta.env.VITE_API_URL || 'https://eco-dz-2.onrender.com';
 
   /* ================= Fetch Trips ================= */
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/trips`);
-        if (!res.ok) throw new Error("Failed to fetch trips");
+        console.log('🔍 Fetching trips from:', `${API_URL}/api/trips`);
+        
+        const res = await fetch(`${API_URL}/api/trips`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (!res.ok) {
+          throw new Error(`Failed to fetch trips: ${res.status} ${res.statusText}`);
+        }
+        
         const data = await res.json();
+        console.log('✅ Trips fetched:', data);
         setTrips(Array.isArray(data) ? data : []);
       } catch (err) {
+        console.error('❌ Error fetching trips:', err);
         setError(err.message);
       } finally {
-        setLoading(false);
+        setLoading(prev => ({ ...prev, trips: false }));
       }
     };
+    
     fetchTrips();
-  }, []);
+  }, [API_URL]);
 
   /* ================= Fetch Deals ================= */
   useEffect(() => {
     const fetchDeals = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/deals`);
+        console.log('🔍 Fetching deals from:', `${API_URL}/api/deals`);
+        
+        const res = await fetch(`${API_URL}/api/deals`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (!res.ok) {
+          throw new Error(`Failed to fetch deals: ${res.status} ${res.statusText}`);
+        }
+        
         const data = await res.json();
-        setDeals(data.deals || []);
+        console.log('✅ Deals fetched:', data);
+        
+        // Handle different response structures
+        if (data.deals && Array.isArray(data.deals)) {
+          setDeals(data.deals);
+        } else if (Array.isArray(data)) {
+          setDeals(data);
+        } else {
+          setDeals([]);
+          console.warn('Unexpected deals response format:', data);
+        }
       } catch (err) {
-        console.error(err);
+        console.error('❌ Error fetching deals:', err);
+        setError(err.message);
       } finally {
-        setLoading(false);
+        setLoading(prev => ({ ...prev, deals: false }));
       }
     };
+    
     fetchDeals();
-  }, []);
+  }, [API_URL]);
 
+  // Show loading state
+  if (loading.trips || loading.deals) {
+    return (
+      <div className="w-full min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-green-600 border-r-transparent"></div>
+          <p className="mt-4 text-gray-600">Loading experiences...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
   if (error) {
     return (
-      <div className="p-8 text-red-600 text-center font-medium">{error}</div>
+      <div className="w-full min-h-screen flex items-center justify-center p-8">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-lg text-center">
+          <h2 className="text-red-600 text-xl font-semibold mb-2">Oops! Something went wrong</h2>
+          <p className="text-red-500 mb-4">{error}</p>
+          <p className="text-gray-600 text-sm">
+            Please try refreshing the page. If the problem persists, contact support.
+          </p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+          >
+            Refresh Page
+          </button>
+        </div>
+      </div>
     );
   }
 
   return (
-    <div className="w-full"> {/* ADD THIS WRAPPER */}
+    <div className="w-full">
       {/* TOP HERO PART */}
       <section className="hero relative flex flex-col min-h-1/2 px-5 bg-white" id="intro">
         <Intro />
@@ -78,7 +150,7 @@ const Hero = () => {
       </div>
 
       {/* Main Content Sections */}
-      <div className="relative  bg-white ">
+      <div className="relative bg-white">
         <AnimatedSection variant={1}>
           <div id="gallery">
             <GalleryImages />
@@ -87,7 +159,12 @@ const Hero = () => {
 
         <AnimatedSection variant={2} delay={0.1}>
           <div id="trips">
-            <Experiences trips={trips} deals={deals} />
+            <Experiences 
+              trips={trips} 
+              deals={deals} 
+              // Pass loading state if Experiences component needs it
+              loading={loading.trips || loading.deals}
+            />
           </div>
         </AnimatedSection>
 
@@ -96,8 +173,9 @@ const Hero = () => {
             <OurPurpose />
           </div>
         </AnimatedSection>
+        
         <AnimatedSection variant={1} delay={0.15}>
-          <div id="apart">
+          <div id="collab">
             <Sponsor />
           </div>
         </AnimatedSection>
