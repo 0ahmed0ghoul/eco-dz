@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 
 export const auth = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  console.log('auth----------------------------------------------------------------');
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -39,7 +38,6 @@ export const authOptional = (req, res, next) => {
   next();
 };
 export const authorize = (...allowedRoles) => {
-  console.log('authorize----------------------------------------------------------------');
 
   return (req, res, next) => {
     if (!req.user) {
