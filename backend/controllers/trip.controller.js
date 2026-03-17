@@ -5,6 +5,10 @@ import pool from "../db.js";
 // ========================
 export const getAllTrips = async (req, res) => {
   try {
+        // Log what's coming in
+        console.log('Headers:', req.headers);
+        console.log('Cookies:', req.cookies);
+        
     const [trips] = await pool.query(`
       SELECT 
         t.id,

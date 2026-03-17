@@ -5,12 +5,13 @@ import {
   FiPhone,
   FiMessageCircle,
   FiMenu,
+  FiX,
 } from "react-icons/fi";
 import { useNavigate, useLocation } from "react-router-dom";
 import { navLinks, menuData } from "../../data/menuData";
 import MegaMenu from "./MegaMenu";
 import Sidebar from "./Sidebar";
-import { socket } from "../../socket/socket";
+import { initializeSocket, getSocket } from "../../socket/socket"; // 👈 FIXED IMPORT
 import { jwtDecode } from "jwt-decode";
 
 
@@ -58,60 +59,65 @@ function Navbar() {
     setUserRole(role);
   }, []);
 
-// ✅ REAL-TIME unread messages via Socket.IO
-useEffect(() => {
-  const token = localStorage.getItem("authToken");
-  const role = localStorage.getItem("role");
-  let userId = null;
+  // ✅ REAL-TIME unread messages via Socket.IO
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const role = localStorage.getItem("role");
+    let userId = null;
 
-  if (token) {
-    const decoded = jwtDecode(token);
-    userId = decoded.id || decoded.userId; // depends on backend
-  }
-  if (!token || !userId) return;
-  // socket.on("connect", () => {
-  //   console.log("✅ Socket connected:", socket.id);
-  // });
-  
-  // 🔹 Connect socket
-  socket.auth = { token };
-  socket.connect();
-
-  // 🔹 Tell backend user is online
-  socket.emit("user-online", { userId, role });
-
-  const fetchUnreadMessages = async () => {
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/messaging/unread-count`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!res.ok) return;
-      const data = await res.json();
-      setUnreadCount(data.unreadCount ?? 0);
-    } catch (err) {
-      console.error("Unread fetch error:", err);
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        userId = decoded.id || decoded.userId; // depends on backend
+      } catch (err) {
+        console.error("❌ Error decoding token:", err);
+        return;
+      }
     }
-  };
+    
+    if (!token || !userId) return;
 
-  // 🔹 Initial fetch
-  fetchUnreadMessages();
+    // 🔹 Initialize socket connection
+    const socket = initializeSocket(); // 👈 Use initializeSocket instead of socket.connect
+    
+    // 🔹 Tell backend user is online
+    if (socket) {
+      socket.emit("user-online", { userId, role });
+    }
 
-  // 🔹 Listen when backend tells inbox changed
-  socket.on("conversation-updated", () => {
+    const fetchUnreadMessages = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/messaging/unread-count`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        setUnreadCount(data.unreadCount ?? 0);
+      } catch (err) {
+        console.error("❌ Unread fetch error:", err);
+      }
+    };
+
+    // 🔹 Initial fetch
     fetchUnreadMessages();
-  });
 
-  return () => {
-    socket.off("conversation-updated");
-    socket.disconnect();
-  };
-}, []);
+    // 🔹 Listen when backend tells inbox changed
+    if (socket) {
+      socket.on("conversation-updated", fetchUnreadMessages);
+    }
 
+    return () => {
+      if (socket) {
+        socket.off("conversation-updated", fetchUnreadMessages);
+      }
+      // Don't disconnect here - let other components use it
+    };
+  }, []);
 
   // ✅ Fetch recent searches
   useEffect(() => {
@@ -124,7 +130,7 @@ useEffect(() => {
         const data = await res.json();
         setRecentSearches(data);
       } catch (err) {
-        console.error(err);
+        console.error("❌ Error fetching recent searches:", err);
       }
     };
 
@@ -191,6 +197,7 @@ useEffect(() => {
     setSelectedCategorySlug(null);
     closeSidebar();
   };
+  
   const goToAllTrips = () => {
     navigate("/trips");
     setActiveNavLink(null);
@@ -198,6 +205,7 @@ useEffect(() => {
     setSelectedCategorySlug(null);
     closeSidebar();
   };
+  
   const goToAllDeals = () => {
     navigate("/deals");
     setActiveNavLink(null);
@@ -261,6 +269,7 @@ useEffect(() => {
     setUnreadCount(0);
     navigate("/inbox");
   };
+  
   const handleSidebarMapClick = () => scrollToMap();
 
   return (

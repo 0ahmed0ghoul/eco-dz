@@ -24,42 +24,47 @@ const Hero = () => {
   const [deals, setDeals] = useState([]);
   const [loading, setLoading] = useState({
     trips: true,
-    deals: true
+    deals: true,
   });
   const [error, setError] = useState(null);
 
   // Get API URL with fallback
-  const API_URL = import.meta.env.VITE_API_URL || 'https://eco-dz-2.onrender.com';
+  const API_URL =
+    import.meta.env.VITE_API_URL || "https://eco-dz-2.onrender.com";
 
   /* ================= Fetch Trips ================= */
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        console.log('🔍 Fetching trips from:', `${API_URL}/api/trips`);
-        
+        console.log("🔍 Fetching trips from:", `${API_URL}/api/trips`);
+
         const res = await fetch(`${API_URL}/api/trips`, {
-          method: 'GET',
-          credentials: 'include',
+          method: "GET",
+          // Remove credentials for public endpoints
+          // credentials: 'include',  // 👈 COMMENT OUT OR REMOVE
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
-        
+
         if (!res.ok) {
-          throw new Error(`Failed to fetch trips: ${res.status} ${res.statusText}`);
+          // Log the actual error response
+          const errorText = await res.text();
+          console.error("❌ Trips error response:", errorText);
+          throw new Error(`Failed to fetch trips: ${res.status}`);
         }
-        
+
         const data = await res.json();
-        console.log('✅ Trips fetched:', data);
+        console.log("✅ Trips fetched:", data);
         setTrips(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error('❌ Error fetching trips:', err);
+        console.error("❌ Error fetching trips:", err);
         setError(err.message);
       } finally {
-        setLoading(prev => ({ ...prev, trips: false }));
+        setLoading((prev) => ({ ...prev, trips: false }));
       }
     };
-    
+
     fetchTrips();
   }, [API_URL]);
 
@@ -67,23 +72,25 @@ const Hero = () => {
   useEffect(() => {
     const fetchDeals = async () => {
       try {
-        console.log('🔍 Fetching deals from:', `${API_URL}/api/deals`);
-        
+        console.log("🔍 Fetching deals from:", `${API_URL}/api/deals`);
+
         const res = await fetch(`${API_URL}/api/deals`, {
-          method: 'GET',
-          credentials: 'include',
+          method: "GET",
+          credentials: "include",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
-        
+
         if (!res.ok) {
-          throw new Error(`Failed to fetch deals: ${res.status} ${res.statusText}`);
+          throw new Error(
+            `Failed to fetch deals: ${res.status} ${res.statusText}`
+          );
         }
-        
+
         const data = await res.json();
-        console.log('✅ Deals fetched:', data);
-        
+        console.log("✅ Deals fetched:", data);
+
         // Handle different response structures
         if (data.deals && Array.isArray(data.deals)) {
           setDeals(data.deals);
@@ -91,16 +98,16 @@ const Hero = () => {
           setDeals(data);
         } else {
           setDeals([]);
-          console.warn('Unexpected deals response format:', data);
+          console.warn("Unexpected deals response format:", data);
         }
       } catch (err) {
-        console.error('❌ Error fetching deals:', err);
+        console.error("❌ Error fetching deals:", err);
         setError(err.message);
       } finally {
-        setLoading(prev => ({ ...prev, deals: false }));
+        setLoading((prev) => ({ ...prev, deals: false }));
       }
     };
-    
+
     fetchDeals();
   }, [API_URL]);
 
@@ -121,12 +128,15 @@ const Hero = () => {
     return (
       <div className="w-full min-h-screen flex items-center justify-center p-8">
         <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-lg text-center">
-          <h2 className="text-red-600 text-xl font-semibold mb-2">Oops! Something went wrong</h2>
+          <h2 className="text-red-600 text-xl font-semibold mb-2">
+            Oops! Something went wrong
+          </h2>
           <p className="text-red-500 mb-4">{error}</p>
           <p className="text-gray-600 text-sm">
-            Please try refreshing the page. If the problem persists, contact support.
+            Please try refreshing the page. If the problem persists, contact
+            support.
           </p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="mt-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
           >
@@ -140,7 +150,10 @@ const Hero = () => {
   return (
     <div className="w-full">
       {/* TOP HERO PART */}
-      <section className="hero relative flex flex-col min-h-1/2 px-5 bg-white" id="intro">
+      <section
+        className="hero relative flex flex-col min-h-1/2 px-5 bg-white"
+        id="intro"
+      >
         <Intro />
       </section>
 
@@ -159,9 +172,9 @@ const Hero = () => {
 
         <AnimatedSection variant={2} delay={0.1}>
           <div id="trips">
-            <Experiences 
-              trips={trips} 
-              deals={deals} 
+            <Experiences
+              trips={trips}
+              deals={deals}
               // Pass loading state if Experiences component needs it
               loading={loading.trips || loading.deals}
             />
@@ -173,7 +186,7 @@ const Hero = () => {
             <OurPurpose />
           </div>
         </AnimatedSection>
-        
+
         <AnimatedSection variant={1} delay={0.15}>
           <div id="collab">
             <Sponsor />
