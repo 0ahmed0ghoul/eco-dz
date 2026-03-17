@@ -59,7 +59,7 @@ const AdminDashboard = () => {
   const fetchPlaces = async () => {
     setLoading((prev) => ({ ...prev, places: true }));
     try {
-      const res = await fetch("http://localhost:5000/api/admin/places");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/places`);
       const data = await res.json();
       setPlaces(data.places || []);
     } catch (error) {
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     setLoading((prev) => ({ ...prev, users: true }));
     try {
-      const res = await fetch("http://localhost:5000/api/admin/users");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users`);
       const data = await res.json();
       setUsers(data.users || []);
     } catch (error) {
@@ -85,7 +85,7 @@ const AdminDashboard = () => {
   const fetchOrganizers = async () => {
     setLoading((prev) => ({ ...prev, agencies: true }));
     try {
-      const res = await fetch("http://localhost:5000/api/admin/agencies");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/agencies`);
       const data = await res.json();
 
       const approvedOrganizers = (data.agencies || []).filter(
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
   const fetchTrips = async () => {
     setLoading((prev) => ({ ...prev, trips: true }));
     try {
-      const res = await fetch("http://localhost:5000/api/admin/trips");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/trips`);
       const data = await res.json();
 
       const approvedTrips = (data.trips || []).filter(
@@ -158,7 +158,7 @@ const AdminDashboard = () => {
       return;
     }
     try {
-      const res = await fetch("http://localhost:5000/api/admin/places", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/places`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newPlace),
@@ -178,7 +178,7 @@ const AdminDashboard = () => {
   const handleDeletePlace = async (id, name) => {
     if (!window.confirm(`Are you sure you want to delete "${name}"?`)) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/places/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/places/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {
@@ -194,7 +194,7 @@ const AdminDashboard = () => {
   const handleApproveTrip = async (id, title) => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/admin/trips/${id}/approve`,
+        `${import.meta.env.VITE_API_URL}/api/admin/trips/${id}/approve`,
         { method: "POST" }
       );
       if (res.ok) {
@@ -211,7 +211,7 @@ const AdminDashboard = () => {
     if (!window.confirm(`Reject trip "${title}"?`)) return;
     try {
       const res = await fetch(
-        `http://localhost:5000/api/admin/trips/${id}/reject`,
+        `${import.meta.env.VITE_API_URL}/api/admin/trips/${id}/reject`,
         { method: "POST" }
       );
       if (res.ok) {
@@ -227,7 +227,7 @@ const AdminDashboard = () => {
   const handleApproveOrganizer = async (id, name) => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/admin/agencies/${id}/approve`,
+        `${import.meta.env.VITE_API_URL}/api/admin/agencies/${id}/approve`,
         { method: "POST" }
       );
   
@@ -246,7 +246,7 @@ const AdminDashboard = () => {
   
     try {
       const res = await fetch(
-        `http://localhost:5000/api/admin/agencies/${id}/reject`,
+        `${import.meta.env.VITE_API_URL}/api/admin/agencies/${id}/reject`,
         { method: "POST" }
       );
   

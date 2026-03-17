@@ -210,7 +210,7 @@ const TabContent = ({
                       <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                         <img
                           className="w-3/12 h-36"
-                          src={`http://localhost:5000/uploads/reviews/${c.image}`}
+                          src={`${import.meta.env.VITE_API_URL}/uploads/reviews/${c.image}`}
                           alt="review"
                         />
                       </div>

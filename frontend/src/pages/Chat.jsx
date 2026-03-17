@@ -32,7 +32,7 @@ export default function Chat({
     const fetchMessages = async () => {
       const token = localStorage.getItem("authToken");
       const res = await fetch(
-        `http://localhost:5000/api/messaging/conversations/${conversationId}/messages`,
+        `${import.meta.env.VITE_API_URL}/api/messaging/conversations/${conversationId}/messages`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const data = await res.json();

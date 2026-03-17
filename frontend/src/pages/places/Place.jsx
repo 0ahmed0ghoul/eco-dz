@@ -29,7 +29,7 @@ const Destination = () => {
         const encodedSlug = encodeURIComponent(slug);
 
         const res = await fetch(
-          `http://localhost:5000/api/places/${encodedCategory}/${encodedSlug}`
+          `${import.meta.env.VITE_API_URL}/api/places/${encodedCategory}/${encodedSlug}`
         );
 
         if (!res.ok) {

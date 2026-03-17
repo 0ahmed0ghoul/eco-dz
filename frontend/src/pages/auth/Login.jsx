@@ -31,8 +31,8 @@ const Login = () => {
 
     const endpoint =
       role === "traveller"
-        ? "http://localhost:5000/api/auth/traveller/login"
-        : "http://localhost:5000/api/auth/agency/login";
+        ? `${import.meta.env.VITE_API_URL}/api/auth/traveller/login`
+        : `${import.meta.env.VITE_API_URL}/api/auth/agency/login`;
 
     try {
       const res = await fetch(endpoint, {

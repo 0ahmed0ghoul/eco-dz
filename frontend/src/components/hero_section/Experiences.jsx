@@ -65,7 +65,7 @@ export default function ExperienceGallery({ trips = [], deals = [] }) {
         return imageData?.url || null;
       } catch {
         // Fallback: if image is just a string (old format)
-        return item.image ? `http://localhost:5000/uploads/deals/${item.image}` : null;
+        return item.image ? `${import.meta.env.VITE_API_URL}/uploads/deals/${item.image}` : null;
       }
     } else {
       try {

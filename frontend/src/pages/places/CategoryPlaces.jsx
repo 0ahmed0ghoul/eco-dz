@@ -13,7 +13,7 @@ export default function CategoryPlaces() {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/places/${category}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/places/${category}`);
         const data = await res.json();
         setPlaces(data);
       } catch (error) {

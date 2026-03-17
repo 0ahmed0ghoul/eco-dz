@@ -21,7 +21,7 @@ import {
 import { toast } from "react-hot-toast";
 
 // --- Constants & Config ---
-const API_BASE = "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_URL;
 const ENDPOINTS = {
   TRIPS: (id) => `${API_BASE}/api/trips/${id}`,
   USER_BOOKINGS: `${API_BASE}/api/bookings/getUserBookings`,

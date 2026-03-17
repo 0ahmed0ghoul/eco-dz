@@ -56,7 +56,7 @@ export default function DealsCard({ deals, onDelete }) {
                   {deal.image && (
                     <div className="relative h-48 overflow-hidden">
                       <img
-                        src={`http://localhost:5000/uploads/deals/${deal.image}`}
+                        src={`${import.meta.env.VITE_API_URL}/uploads/deals/${deal.image}`}
                         alt={deal.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />

@@ -25,7 +25,7 @@ export default function SupportChat() {
 
   const initSocket = () => {
     const token = localStorage.getItem("authToken");
-    socketRef.current = io("http://localhost:5000", {
+    socketRef.current = io("https://eco-dz-2.onrender.com", {
       auth: { token }
     });
 
@@ -42,7 +42,7 @@ export default function SupportChat() {
     try {
       setLoading(true);
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://localhost:5000/api/messaging/support/tickets", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messaging/support/tickets`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await response.json();
@@ -57,7 +57,7 @@ export default function SupportChat() {
   const fetchTicketDetails = async (ticketId) => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(`http://localhost:5000/api/messaging/support/tickets/${ticketId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messaging/support/tickets/${ticketId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await response.json();
@@ -82,7 +82,7 @@ export default function SupportChat() {
     
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://localhost:5000/api/messaging/support/tickets", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/messaging/support/tickets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

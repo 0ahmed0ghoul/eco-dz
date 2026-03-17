@@ -52,7 +52,7 @@ export default function Inbox() {
         const token = localStorage.getItem("authToken");
         if (!token) return;
         try {
-          const res = await fetch("http://localhost:5000/api/auth/me", {
+          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           if (!res.ok) throw new Error("Failed to fetch user");
@@ -71,7 +71,7 @@ export default function Inbox() {
   useEffect(() => {
     if (!currentUserId) return;
 
-    const newSocket = io("http://localhost:5000", {
+    const newSocket = io(import.meta.env.VITE_API_URL, {
       auth: { token: localStorage.getItem("authToken") },
       transports: ["websocket", "polling"],
     });
@@ -104,7 +104,7 @@ export default function Inbox() {
       setLoading(true);
       const token = localStorage.getItem("authToken");
       const res = await fetch(
-        "http://localhost:5000/api/messaging/conversations",
+        `${import.meta.env.VITE_API_URL}/api/messaging/conversations`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -127,7 +127,7 @@ export default function Inbox() {
     try {
       const token = localStorage.getItem("authToken");
       await fetch(
-        `http://localhost:5000/api/messaging/conversations/${conversationId}/mark-read`,
+        `${import.meta.env.VITE_API_URL}/api/messaging/conversations/${conversationId}/mark-read`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -159,7 +159,7 @@ export default function Inbox() {
     try {
       const token = localStorage.getItem("authToken");
       const res = await fetch(
-        `http://localhost:5000/api/user/search?query=${term}`,
+        `${import.meta.env.VITE_API_URL}/api/user/search?query=${term}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -176,7 +176,7 @@ export default function Inbox() {
     try {
       const token = localStorage.getItem("authToken");
       const res = await fetch(
-        "http://localhost:5000/api/messaging/conversations",
+        `${import.meta.env.VITE_API_URL}/api/messaging/conversations`,
         {
           method: "POST",
           headers: {
@@ -291,7 +291,7 @@ export default function Inbox() {
                     <img
                       src={
                         conv.other_user_avatar
-                          ? `http://localhost:5000/uploads/avatars/${conv.other_user_avatar}`
+                          ? `${import.meta.env.VITE_API_URL}/uploads/avatars/${conv.other_user_avatar}`
                           : "/default-avatar.png"
                       }
                       alt="avatar"

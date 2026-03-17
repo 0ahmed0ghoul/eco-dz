@@ -30,7 +30,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/trips");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/trips`);
         if (!res.ok) throw new Error("Failed to fetch trips");
         const data = await res.json();
         setTrips(Array.isArray(data) ? data : []);
@@ -47,7 +47,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchDeals = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/deals");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/deals`);
         const data = await res.json();
         setDeals(data.deals || []);
       } catch (err) {

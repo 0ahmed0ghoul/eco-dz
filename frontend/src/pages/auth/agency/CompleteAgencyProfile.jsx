@@ -31,7 +31,7 @@ const CompleteProfile = () => {
     const fetchProfile = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/agency/profile",
+          `${import.meta.env.VITE_API_URL}/api/agency/profile`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ const CompleteProfile = () => {
         setDescription(data.agency.description || "");
 
         if (data.logo) {
-          setPreview(`http://localhost:5000/${data.logo}`);
+          setPreview(`${import.meta.env.VITE_API_URL}/${data.logo}`);
         }
       } catch (err) {
         console.error(err);
@@ -101,7 +101,7 @@ const CompleteProfile = () => {
       const token = localStorage.getItem("authToken");
   
       const res = await fetch(
-        "http://localhost:5000/api/auth/agency/complete-profile",
+        `${import.meta.env.VITE_API_URL}/api/auth/agency/complete-profile`,
         {
           method: "POST",
           headers: {

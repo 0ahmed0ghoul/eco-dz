@@ -83,7 +83,7 @@ useEffect(() => {
   const fetchUnreadMessages = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/messaging/unread-count",
+        `${import.meta.env.VITE_API_URL}/api/messaging/unread-count`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,7 +118,7 @@ useEffect(() => {
     const fetchRecentSearches = async () => {
       const token = localStorage.getItem("authToken");
       try {
-        const res = await fetch("http://localhost:5000/api/searches/recent", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/searches/recent`, {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         const data = await res.json();

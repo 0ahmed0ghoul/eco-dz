@@ -66,7 +66,7 @@ export default function Map() {
 
   /* ---------- FETCH ---------- */
   useEffect(() => {
-    fetch("http://localhost:5000/api/places")
+    fetch("https://eco-dz-2.onrender.com/api/places")
       .then((res) => res.json())
       .then((data) =>
         setPlaces(

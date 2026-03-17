@@ -36,7 +36,7 @@ const AgenciesList = () => {
   const fetchAgencies = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:5000/api/agencies');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/agencies`);
       const data = await res.json();
       setAgencies(data.agencies || []);
     } catch (err) {
@@ -101,7 +101,7 @@ const AgenciesList = () => {
         return;
       }
 
-      await fetch(`http://localhost:5000/api/agencies/${agencyId}/follow`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/agencies/${agencyId}/follow`, {
         method: isFollowing ? 'DELETE' : 'POST',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -246,7 +246,7 @@ const AgenciesList = () => {
                         <div className="w-16 h-16 rounded-xl border-2 border-white shadow-md overflow-hidden bg-gradient-to-br from-blue-500 to-cyan-500">
                           {agency.avatar ? (
                             <img
-                              src={`http://localhost:5000/uploads/avatars/${agency.avatar}`}
+                              src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${agency.avatar}`}
                               alt={agency.username}
                               className="w-full h-full object-cover"
                             />
@@ -355,7 +355,7 @@ const AgenciesList = () => {
                       <div className="w-20 h-20 rounded-xl border-4 border-white/30 overflow-hidden">
                         {agency.avatar ? (
                           <img
-                            src={`http://localhost:5000/uploads/avatars/${agency.avatar}`}
+                            src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${agency.avatar}`}
                             alt={agency.username}
                             className="w-full h-full object-cover"
                           />

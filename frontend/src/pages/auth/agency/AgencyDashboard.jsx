@@ -39,7 +39,7 @@ const useApiService = () => {
   const fetchData = async (endpoint) => {
     console.log("token : ", token);
     const response = await fetch(
-      `http://localhost:5000/api/agency/${endpoint}`,
+      `${import.meta.env.VITE_API_URL}/api/agency/${endpoint}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ const useApiService = () => {
 
   const deleteData = async (type, id) => {
     const response = await fetch(
-      `http://localhost:5000/api/agency/${type}/${id}`,
+      `${import.meta.env.VITE_API_URL}/api/agency/${type}/${id}`,
       {
         method: "DELETE",
         headers: {

@@ -29,7 +29,7 @@ const ProfileSidebar = ({
           <div className="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl bg-linear-to-br from-blue-50 to-purple-50">
             {user.avatar ? (
               <img
-                src={`http://localhost:5000/uploads/avatars/${user.avatar}`}
+                src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${user.avatar}`}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />

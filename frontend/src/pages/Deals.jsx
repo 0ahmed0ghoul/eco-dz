@@ -31,7 +31,7 @@ console.log(deals);
   useEffect(() => {
     const fetchDeals = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/deals");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/deals`);
         if (!res.ok) throw new Error("Failed to fetch deals");
         const data = await res.json();
         const dealsList = data.deals || [];
@@ -313,7 +313,7 @@ function DealCard({ deal, navigate, formatDate, calculateSavings }) {
             initial={{ scale: 1 }}
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.5 }}
-            src={`http://localhost:5000/uploads/deals/${deal.image}`}
+            src={`${import.meta.env.VITE_API_URL}/uploads/deals/${deal.image}`}
             alt={deal.title}
             className="w-full h-full object-cover"
           />

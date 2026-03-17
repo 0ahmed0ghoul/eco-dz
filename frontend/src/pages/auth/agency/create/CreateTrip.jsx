@@ -26,7 +26,7 @@ export default function CreateTrip() {
 
   // Fetch places
   useEffect(() => {
-    fetch("http://localhost:5000/api/places")
+    fetch(`${import.meta.env.VITE_API_URL}/api/places`)
       .then((r) => r.json())
       .then(setPlaces)
       .catch(console.error);
@@ -36,7 +36,7 @@ export default function CreateTrip() {
   useEffect(() => {
     if (!isEdit) return;
     const token = localStorage.getItem("authToken");
-    fetch(`http://localhost:5000/api/agency/trips/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/agency/trips/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((r) => r.json())
@@ -132,8 +132,8 @@ export default function CreateTrip() {
 
     try {
       const url = isEdit
-        ? `http://localhost:5000/api/agency/trips/${id}`
-        : "http://localhost:5000/api/agency/trips";
+        ? `${import.meta.env.VITE_API_URL}/api/agency/trips/${id}`
+        : `${import.meta.env.VITE_API_URL}/api/agency/trips`;
 
       const res = await fetch(url, {
         method: isEdit ? "PUT" : "POST",

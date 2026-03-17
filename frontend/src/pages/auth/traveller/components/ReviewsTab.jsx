@@ -246,7 +246,7 @@ const ReviewsTab = ({
                               className="relative group"
                             >
                               <img
-                                src={`http://localhost:5000/uploads/reviews/${filename}`}
+                                src={`${import.meta.env.VITE_API_URL}/uploads/reviews/${filename}`}
                                 alt="Review"
                                 className="w-24 h-24 object-cover rounded-xl shadow-md group-hover:shadow-lg transition-all"
                                 onError={(e) => {
@@ -388,7 +388,7 @@ const ReviewsTab = ({
                                       className="relative group"
                                     >
                                       <img
-                                        src={`http://localhost:5000/uploads/reviews/${img.image}`}
+                                        src={`${import.meta.env.VITE_API_URL}/uploads/reviews/${img.image}`}
                                         className="w-24 h-24 object-cover rounded-xl shadow-lg"
                                         alt="Review"
                                       />

@@ -32,7 +32,7 @@ export default function Quiz() {
   const TOTAL_QUESTIONS = 5;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/places")
+    fetch(`${import.meta.env.VITE_API_URL}/api/places`)
       .then(res => res.json())
       .then(data => {
         setMonuments(data);

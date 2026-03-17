@@ -18,7 +18,7 @@ const PlaceOverview = ({ place }) => {
       if (!place?.id) return;
     
       try {
-        const res = await fetch(`http://localhost:5000/api/places/${place.id}/likes`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/places/${place.id}/likes`, {
           headers: authToken ? { Authorization: `Bearer ${authToken}` } : {},
         });
     
@@ -46,7 +46,7 @@ const PlaceOverview = ({ place }) => {
   
     try {
       const res = await fetch(
-        `http://localhost:5000/api/places/${place.id}/like`,
+        `${import.meta.env.VITE_API_URL}/api/places/${place.id}/like`,
         {
           method: "POST",
           headers: {

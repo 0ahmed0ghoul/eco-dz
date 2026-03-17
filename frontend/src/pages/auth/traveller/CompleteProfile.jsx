@@ -94,7 +94,7 @@ const CompleteProfile = () => {
       console.log("Sending request with token:", token.substring(0, 20) + "..."); // Debug log
 
       const profileRes = await fetch(
-        "http://localhost:5000/api/auth/user/complete-profile",
+        `${import.meta.env.VITE_API_URL}/api/auth/user/complete-profile`,
         {
           method: "POST",
           headers: {

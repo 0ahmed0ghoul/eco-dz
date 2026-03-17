@@ -26,7 +26,7 @@ const PlaceHighlights = ({ place }) => {
               {/* Image */}
               <div className="h-56 w-full overflow-hidden">
                 <img
-                  src={highlight.image ? `http://localhost:5000/uploads/highlights/${highlight.image}` : ""}
+                  src={highlight.image ? `${import.meta.env.VITE_API_URL}/uploads/highlights/${highlight.image}` : ""}
                   alt={highlight.title}
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   onError={(e) =>

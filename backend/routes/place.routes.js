@@ -3,19 +3,19 @@ import {
   getCategories,
   getPlacesByCategory,
   getPlaceBySlug,
-  getAllPlacess,
   getPlaceLikes,
   toggleLike,
   ratePlace,
   getPlaceReviews,
   addPlaceReview,
+  getAllPlaces,
 } from "../controllers/place.controller.js";
 import { auth, authOptional } from "../middleware/auth.middleware.js";
 import { uploadReview } from "../middleware/upload/reviews.js";
 
 const router = express.Router();
 
-router.get("/", getAllPlacess);
+router.get("/", getAllPlaces);
 router.get("/:id/likes", authOptional, getPlaceLikes);
 router.post("/:id/like", auth, toggleLike);
 router.post("/:id/rate", auth, ratePlace);

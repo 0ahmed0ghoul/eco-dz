@@ -58,6 +58,7 @@ app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
+  `${process.env.FRONTEND_URL}`,
 ];
 
 app.use(
@@ -77,12 +78,13 @@ app.use(
           "'self'",
           "data:",
           "blob:",
-          "http://localhost:5000",
+          "https://eco-dz-2.onrender.com/",
         ],
         connectSrc: [
           "'self'",
           ...allowedOrigins,
-          "http://localhost:5000",
+          "https://eco-dz-2.onrender.com",
+          "wss://eco-dz-2.onrender.com",
         ],
       },
     },

@@ -43,7 +43,7 @@ export default function HighlightsCard({ highlights, onDelete }) {
                   {highlight.image && (
                     <div className="sm:w-1/3 relative overflow-hidden">
                       <img
-                        src={`http://localhost:5000/uploads/highlights/${highlight.image}`}
+                        src={`${import.meta.env.VITE_API_URL}/uploads/highlights/${highlight.image}`}
                         alt={highlight.title}
                         className="w-full h-48 sm:h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />

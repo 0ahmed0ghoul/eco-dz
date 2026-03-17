@@ -25,7 +25,7 @@ console.log(trips);
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/trips");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/trips`);
         if (!res.ok) throw new Error("Failed to fetch trips");
         const data = await res.json();
         setTrips(Array.isArray(data) ? data : []);
@@ -291,7 +291,7 @@ function TripCard({ trip, navigate }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              src={`http://localhost:5000/uploads/avatars/${trip.organizer_logo}`}
+              src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${trip.organizer_logo}`}
               className="w-8 h-8 rounded-full object-cover ring-2 ring-emerald-50"
               onError={(e) => e.currentTarget.src = "https://ui-avatars.com/api/?name=" + trip.organizer_name}
             />

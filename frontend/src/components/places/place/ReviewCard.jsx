@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 import { format } from "date-fns";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 // Animation variants
 const fadeInUp = {
@@ -220,7 +220,7 @@ export default function ReviewCard({ review }) {
           >
             <div className="w-14 h-14 rounded-full ">
               <img
-                src={`http://localhost:5000/uploads/avatars/${reviewer_logo}`}
+                src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${reviewer_logo}`}
                 alt={reviewer}
                 className="w-full h-full object-cover rounded-full border-2 border-white shadow-md"
                 onError={(e) => {
@@ -284,7 +284,7 @@ export default function ReviewCard({ review }) {
                   onClick={() => openImageModal(img)}
                 >
                   <img
-                    src={`http://localhost:5000/uploads/reviews/${img}`}
+                    src={`${import.meta.env.VITE_API_URL}/uploads/reviews/${img}`}
                     alt={`Review ${idx + 1}`}
                     className="w-28 h-28 object-cover rounded-xl shadow-lg group-hover:shadow-2xl transition-all duration-300"
                     onError={(e) => {
@@ -452,7 +452,7 @@ export default function ReviewCard({ review }) {
                     >
                       <div className="w-10 h-10 rounded-full bg-linear-to-r from-green-400 to-blue-500 p-0.5">
                         <img
-                          src={`http://localhost:5000/uploads/avatars/${r.avatar}`}
+                          src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${r.avatar}`}
                           alt={r.user}
                           className="w-full h-full rounded-full object-cover border-2 border-white"
                           onError={(e) => {
@@ -502,7 +502,7 @@ export default function ReviewCard({ review }) {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={`http://localhost:5000/uploads/reviews/${selectedImage}`}
+                src={`${import.meta.env.VITE_API_URL}/uploads/reviews/${selectedImage}`}
                 alt="Review"
                 className="w-full h-full object-contain rounded-2xl shadow-2xl"
               />

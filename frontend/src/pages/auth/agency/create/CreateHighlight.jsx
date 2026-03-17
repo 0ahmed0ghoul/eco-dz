@@ -19,7 +19,7 @@ export default function CreateHighlight() {
 
   // Fetch places
   useEffect(() => {
-    fetch("http://localhost:5000/api/places")
+    fetch(`${import.meta.env.VITE_API_URL}/api/places`)
       .then((r) => r.json())
       .then(setPlaces);
   }, []);
@@ -28,7 +28,7 @@ export default function CreateHighlight() {
   useEffect(() => {
     if (!isEdit) return;
     const token = localStorage.getItem("authToken");
-    fetch(`http://localhost:5000/api/agency/highlights/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/api/agency/highlights/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((r) => r.json())
@@ -58,8 +58,8 @@ export default function CreateHighlight() {
     });
         console.log(fd);
     const url = isEdit
-      ? `http://localhost:5000/api/agency/highlights/${id}`
-      : "http://localhost:5000/api/agency/highlights";
+      ? `${import.meta.env.VITE_API_URL}/api/agency/highlights/${id}`
+      : `${import.meta.env.VITE_API_URL}/api/agency/highlights`;
     const method = isEdit ? "PUT" : "POST";
 
     try {

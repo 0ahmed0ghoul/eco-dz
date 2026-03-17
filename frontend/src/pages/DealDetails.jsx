@@ -37,7 +37,7 @@ export default function DealDetails() {
   useEffect(() => {
     const fetchDeal = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/deals/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/deals/${id}`);
         if (!res.ok) throw new Error("Deal not found");
         const data = await res.json();
         setDeal(data);
@@ -45,7 +45,7 @@ export default function DealDetails() {
         // Fetch organizer details
         if (data.organizer_id) {
           const orgRes = await fetch(
-            `http://localhost:5000/api/users/${data.organizer_id}`
+            `${import.meta.env.VITE_API_URL}/api/users/${data.organizer_id}`
           );
           if (orgRes.ok) {
             const orgData = await orgRes.json();
@@ -71,7 +71,7 @@ export default function DealDetails() {
     }
 
     try {
-      const userRes = await fetch("http://localhost:5000/api/auth/me", {
+      const userRes = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -79,7 +79,7 @@ export default function DealDetails() {
       const { user } = await userRes.json();
 
       const convRes = await fetch(
-        "http://localhost:5000/api/messaging/conversations",
+        `${import.meta.env.VITE_API_URL}/api/messaging/conversations`,
         {
           method: "POST",
           headers: {
@@ -126,7 +126,7 @@ export default function DealDetails() {
     setBookingLoading(true);
 
     try {
-      const userRes = await fetch("http://localhost:5000/api/auth/me", {
+      const userRes = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -136,7 +136,7 @@ export default function DealDetails() {
       console.log(user);
 
       const res = await fetch(
-        "http://localhost:5000/api/bookings/deals/create",
+        `${import.meta.env.VITE_API_URL}/api/bookings/deals/create`,
         {
           method: "POST",
           headers: {
@@ -268,7 +268,7 @@ export default function DealDetails() {
             {deal.image && (
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
                 <img
-                  src={`http://localhost:5000/${deal.deal_image}`}
+                  src={`${import.meta.env.VITE_API_URL}/${deal.deal_image}`}
                   alt={deal.title}
                   className="w-full h-96 object-cover"
                 />
@@ -401,7 +401,7 @@ export default function DealDetails() {
                 <div className="flex items-start gap-4">
                   <div className="relative z-10">
                     <img
-                      src={`http://localhost:5000/uploads/avatars/${deal.organizer_logo}`}
+                      src={`${import.meta.env.VITE_API_URL}/uploads/avatars/${deal.organizer_logo}`}
                       alt={deal.organizer_name}
                       className="w-16 h-16 rounded-full object-cover"
                     />

@@ -68,7 +68,7 @@ const [userPoints, setUserPoints] = useState(0);
       setLoadingUser(true);
 
       // Fetch user data
-      const userRes = await fetch("http://localhost:5000/api/auth/me", {
+      const userRes = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const userData = await userRes.json();
@@ -78,13 +78,13 @@ const [userPoints, setUserPoints] = useState(0);
 
       // Fetch favorites, reviews, ratings in parallel
       const [favRes, comRes, rateRes] = await Promise.all([
-        fetch("http://localhost:5000/api/user/favorites", {
+        fetch(`${import.meta.env.VITE_API_URL}/api/user/favorites`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("http://localhost:5000/api/user/reviews", {
+        fetch(`${import.meta.env.VITE_API_URL}/api/user/reviews`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch("http://localhost:5000/api/user/ratings", {
+        fetch(`${import.meta.env.VITE_API_URL}/api/user/ratings`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -123,7 +123,7 @@ const [userPoints, setUserPoints] = useState(0);
 
       if (uniquePlaceIds.length > 0) {
         const placesRes = await fetch(
-          "http://localhost:5000/api/user/places/details",
+          `${import.meta.env.VITE_API_URL}/api/user/places/details`,
           {
             method: "POST",
             headers: {
@@ -140,7 +140,7 @@ const [userPoints, setUserPoints] = useState(0);
         }
 
         const bookingsRes = await fetch(
-          "http://localhost:5000/api/bookings/getUserBookings",
+          `${import.meta.env.VITE_API_URL}/api/bookings/getUserBookings`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -175,7 +175,7 @@ const [userPoints, setUserPoints] = useState(0);
       const token = localStorage.getItem("authToken");
 
       const res = await fetch(
-        `http://localhost:5000/api/user/review/${reviewId}`,
+        `${import.meta.env.VITE_API_URL}/api/user/review/${reviewId}`,
         {
           method: "PUT",
           headers: {
@@ -230,7 +230,7 @@ const [userPoints, setUserPoints] = useState(0);
   const handleClaimReward = async (achievementId, points) => {
     try {
       const token = getToken();
-      const res = await fetch("http://localhost:5000/api/user/achievements/claim", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/achievements/claim`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -291,7 +291,7 @@ const [userPoints, setUserPoints] = useState(0);
     if (!window.confirm("Remove this place from favorites?")) return;
     try {
       const token = getToken();
-      const res = await fetch("http://localhost:5000/api/user/favorites", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/favorites`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -312,7 +312,7 @@ const [userPoints, setUserPoints] = useState(0);
     try {
       const token = getToken();
       const res = await fetch(
-        `http://localhost:5000/api/user/reviews/${commentId}`,
+        `${import.meta.env.VITE_API_URL}/api/user/reviews/${commentId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
@@ -330,7 +330,7 @@ const [userPoints, setUserPoints] = useState(0);
     try {
       const token = getToken();
       const res = await fetch(
-        `http://localhost:5000/api/user/ratings/${ratingId}`,
+        `${import.meta.env.VITE_API_URL}/api/user/ratings/${ratingId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
@@ -372,7 +372,7 @@ const [userPoints, setUserPoints] = useState(0);
       setUploading(true);
       const token = getToken();
       const res = await fetch(
-        "http://localhost:5000/api/user/upload-profile-picture",
+        `${import.meta.env.VITE_API_URL}/api/user/upload-profile-picture`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },

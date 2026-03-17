@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MapPinIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://eco-dz-2.onrender.com/";
 
 export default function SearchBar() {
   const [location, setLocation] = useState("");
@@ -41,7 +41,7 @@ export default function SearchBar() {
   
     const token = localStorage.getItem("authToken");
   
-    await fetch("http://localhost:5000/api/searches", {
+    await fetch("https://eco-dz-2.onrender.com/api/searches", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

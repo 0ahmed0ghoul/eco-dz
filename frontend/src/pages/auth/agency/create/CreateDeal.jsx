@@ -18,7 +18,7 @@ export default function CreateDeal({ onSuccess }) {
   useEffect(() => {
     const fetchTrips = async () => {
       const token = localStorage.getItem("authToken");
-      const res = await fetch("http://localhost:5000/api/agency/trips", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/agency/trips`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -70,7 +70,7 @@ export default function CreateDeal({ onSuccess }) {
     
 
     try {
-      const res = await fetch("http://localhost:5000/api/agency/deals", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/agency/deals`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,

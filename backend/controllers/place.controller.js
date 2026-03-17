@@ -122,16 +122,7 @@ export const getPlaceBySlug = async (req, res) => {
   }
 };
 
-// 4️⃣ Get all places
-export const getAllPlaces = async (req, res) => {
-  try {
-    const [rows] = await pool.query("SELECT * FROM places");
-    res.json(rows || []);
-  } catch (error) {
-    console.error("getAllPlaces error:", error);
-    res.status(500).json({ message: error.message });
-  }
-};
+
 
 // 5️⃣ Get likes for a place
 export const getPlaceLikes = async (req, res) => {
@@ -351,13 +342,15 @@ export const addPlaceReview = async (req, res) => {
   }
 };
 
-// Get all places
-export const getAllPlacess = async (req, res) => {
+
+
+// 4️⃣ Get all places
+export const getAllPlaces = async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM places");
     res.json(rows || []);
   } catch (error) {
-    console.error("getAllPlacess error:", error);
-    res.status(500).json({ message: "Failed to fetch places" });
+    console.error("getAllPlaces error:", error);
+    res.status(500).json({ message: error.message });
   }
 };

@@ -122,7 +122,7 @@ export default function TravelAgency() {
     if (!token) throw new Error('Please login first');
 
     const res = await fetch(
-      'http://localhost:5000/api/user/email/follow-confirmation',
+      `${import.meta.env.VITE_API_URL}/api/user/email/follow-confirmation`,
       {
         method: 'POST',
         headers: {
