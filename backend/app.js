@@ -24,8 +24,6 @@ import tripRoutes from "./routes/trip.routes.js";
 import dealRoutes from "./routes/deal.route.js";
 import searchesRoutes from "./routes/searches.route.js";
 
-
-
 /* =======================
    ENV CONFIG
 ======================= */
@@ -43,7 +41,6 @@ const httpServer = http.createServer(app);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
 app.use("/avatars", express.static("uploads/avatars"));
 app.use("/logos", express.static("uploads/logos"));
 
@@ -54,86 +51,91 @@ app.use("/logos", express.static("uploads/logos"));
 // Body parser (must be BEFORE routes)
 app.use(express.json());
 
-// CORS Configuration - Allow all Vercel preview deployments
+// CORS Configuration - FIX
+// IMPORTANT: CORS must come BEFORE any routes
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:3000",
   "https://eco-dz.vercel.app",
-  "https://www.eco-dz.vercel.app",
   process.env.FRONTEND_URL,
 ];
 
+// Allow all Vercel preview URLs dynamically
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  // Allow all Vercel preview deployments
+  if (
+    origin &&
+    (origin.includes(".vercel.app") || origin.includes("localhost"))
+  ) {
+    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+
+    // Handle preflight requests
+    if (req.method === "OPTIONS") {
+      return res.sendStatus(200);
+    }
+  }
+  next();
+});
+
+// Also use cors middleware as backup
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) {
+      // Allow requests with no origin
+      if (!origin) return callback(null, true);
+
+      // Allow all Vercel preview deployments
+      if (origin.includes(".vercel.app") || origin.includes("localhost")) {
+        console.log("✅ CORS allowed for:", origin);
         return callback(null, true);
       }
-      
-      // Check if origin is in allowed list
-      if (allowedOrigins.indexOf(origin) !== -1) {
+
+      // Check against allowed list
+      if (allowedOrigins.includes(origin)) {
+        console.log("✅ CORS allowed for:", origin);
         return callback(null, true);
       }
-      
-      // Allow all Vercel preview deployments (contains .vercel.app)
-      if (origin.includes('.vercel.app')) {
-        console.log('✅ Allowed Vercel preview:', origin);
-        return callback(null, true);
-      }
-      
-      // For local development
-      if (origin.includes('localhost')) {
-        return callback(null, true);
-      }
-      
-      // If none of the above match, block
-      console.log('❌ Blocked origin:', origin);
-      callback(new Error('Not allowed by CORS'));
+
+      console.log("❌ CORS blocked for:", origin);
+      callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-    exposedHeaders: ['Content-Range', 'X-Content-Range'],
-    optionsSuccessStatus: 200,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "Authorization",
+    ],
   })
 );
 
-// Add pre-flight OPTIONS handling for all routes
-app.options('*', cors());
-
-// Security headers - Update helmet to work with CORS
+// Security headers
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        imgSrc: [
-          "'self'",
-          "data:",
-          "blob:",
-          "https://eco-dz-2.onrender.com/",
-        ],
-        connectSrc: [
-          "'self'",
-          "https://eco-dz-2.onrender.com",
-          "wss://eco-dz-2.onrender.com",
-          "https://*.vercel.app", // Allow all Vercel domains
-        ],
-      },
-    },
+    crossOriginOpenerPolicy: false,
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: false, // Temporarily disable CSP for testing
   })
 );
 
 // Static files
-app.use(
-  "/assets",
-  express.static(path.join(process.cwd(), "public/assets"))
-);
+app.use("/assets", express.static(path.join(process.cwd(), "public/assets")));
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
-
 
 /* =======================
    SOCKET.IO
