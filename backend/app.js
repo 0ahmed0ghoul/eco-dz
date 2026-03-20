@@ -54,40 +54,59 @@ app.use("/logos", express.static("uploads/logos"));
 // Body parser (must be BEFORE routes)
 app.use(express.json());
 
-// CORS
-// CORS - Update this section
+// CORS Configuration - Allow all Vercel preview deployments
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "https://eco-dz-ukty-m20hu0s6w-0ahmedghoul0-gmailcoms-projects.vercel.app", // Your current Vercel URL
-  "https://eco-dz.vercel.app", // Your main domain (if you have one)
-  process.env.FRONTEND_URL, // Keep this for environment variable
-].filter(Boolean); // Remove any undefined values
+  "http://localhost:3000",
+  "https://eco-dz.vercel.app",
+  "https://www.eco-dz.vercel.app",
+  process.env.FRONTEND_URL,
+];
 
 app.use(
   cors({
     origin: function (origin, callback) {
       // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        console.log('Blocked origin:', origin);
-        callback(null, false);
-        // Or if you want to allow but log:
-        // callback(null, true);
+      if (!origin) {
+        return callback(null, true);
       }
+      
+      // Check if origin is in allowed list
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        return callback(null, true);
+      }
+      
+      // Allow all Vercel preview deployments (contains .vercel.app)
+      if (origin.includes('.vercel.app')) {
+        console.log('✅ Allowed Vercel preview:', origin);
+        return callback(null, true);
+      }
+      
+      // For local development
+      if (origin.includes('localhost')) {
+        return callback(null, true);
+      }
+      
+      // If none of the above match, block
+      console.log('❌ Blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Content-Range', 'X-Content-Range'],
+    optionsSuccessStatus: 200,
   })
 );
 
-// Security headers
+// Add pre-flight OPTIONS handling for all routes
+app.options('*', cors());
+
+// Security headers - Update helmet to work with CORS
 app.use(
   helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
@@ -99,13 +118,12 @@ app.use(
         ],
         connectSrc: [
           "'self'",
-          ...allowedOrigins,
           "https://eco-dz-2.onrender.com",
           "wss://eco-dz-2.onrender.com",
+          "https://*.vercel.app", // Allow all Vercel domains
         ],
       },
     },
-    crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
 
