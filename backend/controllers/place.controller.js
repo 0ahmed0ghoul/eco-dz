@@ -19,14 +19,24 @@ export const getCategories = async (req, res) => {
           images: [],
         };
       }
+
       categoriesMap[row.category].total += 1;
-      categoriesMap[row.category].images.push(row.image);
+
+      // Parse the JSON string to get the actual URL(s)
+      let parsedImages = [];
+      try {
+        parsedImages = JSON.parse(row.image);
+      } catch (e) {
+        console.warn("Failed to parse image JSON:", row.image);
+      }
+
+      categoriesMap[row.category].images.push(...parsedImages);
     });
 
     const categories = Object.values(categoriesMap).map((cat) => ({
       category: cat.category,
       total: cat.total,
-      images: cat.images.slice(0, 4),
+      images: cat.images.slice(0, 4), // limit to 4 images
     }));
 
     res.json(categories);
