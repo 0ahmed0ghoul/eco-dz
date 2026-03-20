@@ -55,16 +55,33 @@ app.use("/logos", express.static("uploads/logos"));
 app.use(express.json());
 
 // CORS
+// CORS - Update this section
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  `${process.env.FRONTEND_URL}`,
-];
+  "https://eco-dz-ukty-m20hu0s6w-0ahmedghoul0-gmailcoms-projects.vercel.app", // Your current Vercel URL
+  "https://eco-dz.vercel.app", // Your main domain (if you have one)
+  process.env.FRONTEND_URL, // Keep this for environment variable
+].filter(Boolean); // Remove any undefined values
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        console.log('Blocked origin:', origin);
+        callback(null, false);
+        // Or if you want to allow but log:
+        // callback(null, true);
+      }
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
 
