@@ -81,9 +81,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// ✅ IMPORTANT: reuse SAME config
-app.options("*", cors(corsOptions));
-
 // Security headers
 app.use(
   helmet({
