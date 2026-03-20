@@ -60,68 +60,29 @@ const allowedOrigins = [
   "https://eco-dz.vercel.app",
   process.env.FRONTEND_URL,
 ];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
 
-// Allow all Vercel preview URLs dynamically
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-
-  // Allow all Vercel preview deployments
-  if (
-    origin &&
-    (origin.includes(".vercel.app") || origin.includes("localhost"))
-  ) {
-    res.header("Access-Control-Allow-Origin", origin);
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-    );
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-
-    // Handle preflight requests
-    if (req.method === "OPTIONS") {
-      return res.sendStatus(200);
+    if (
+      origin.includes(".vercel.app") ||
+      origin.includes("localhost") ||
+      origin === process.env.FRONTEND_URL
+    ) {
+      console.log("✅ CORS allowed:", origin);
+      return callback(null, true);
     }
-  }
-  next();
-});
 
-// Also use cors middleware as backup
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin
-      if (!origin) return callback(null, true);
+    console.log("❌ CORS blocked:", origin);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+};
 
-      // Allow all Vercel preview deployments
-      if (origin.includes(".vercel.app") || origin.includes("localhost")) {
-        console.log("✅ CORS allowed for:", origin);
-        return callback(null, true);
-      }
+app.use(cors(corsOptions));
 
-      // Check against allowed list
-      if (allowedOrigins.includes(origin)) {
-        console.log("✅ CORS allowed for:", origin);
-        return callback(null, true);
-      }
-
-      console.log("❌ CORS blocked for:", origin);
-      callback(new Error("Not allowed by CORS"));
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: [
-      "Origin",
-      "X-Requested-With",
-      "Content-Type",
-      "Accept",
-      "Authorization",
-    ],
-  })
-);
+// ✅ IMPORTANT: reuse SAME config
+app.options("*", cors(corsOptions));
 
 // Security headers
 app.use(
