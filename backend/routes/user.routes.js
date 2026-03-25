@@ -58,12 +58,12 @@ router.post(
     try {
       await pool.query(
         "UPDATE users SET avatar = ? WHERE id = ?",
-        [req.file.filename, req.user.id]
+        [req.file.path, req.user.id]
       );
 
       res.json({
         message: "Avatar uploaded successfully",
-        avatar: req.file.filename,
+        avatar: req.file.path,
       });
     } catch (err) {
       console.error(err);

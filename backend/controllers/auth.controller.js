@@ -112,7 +112,7 @@ export const agencyCompleteProfile = async (req, res) => {
     const { username, phone, website, address, description } = req.body;
     const userId = req.user.id;
 
-    const avatar = req.file ? req.file.filename : null;
+    const avatar = req.file ? req.file.path : null;
 
     await pool.query(
       `UPDATE users
