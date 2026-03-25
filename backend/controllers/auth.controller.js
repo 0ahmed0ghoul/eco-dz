@@ -23,11 +23,18 @@ export const registerUser = async (req, res) => {
          VALUES (?, ?, ?, 'traveller')`,
         [username, email, hashedPassword]
       );
-
+    
+      const token = jwt.sign(
+        { id: result.insertId, role: "traveller" },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
+    
       return res.status(201).json({
         message: "Traveller registered successfully",
         userId: result.insertId,
         role: "traveller",
+        token, 
       });
     }
 
@@ -46,12 +53,19 @@ export const registerUser = async (req, res) => {
           description || null,
         ]
       );
-
+    
+      const token = jwt.sign(
+        { id: result.insertId, role: "agency" },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
+    
       return res.status(201).json({
         message: "Agency registered successfully. Pending admin approval.",
         userId: result.insertId,
         role: "agency",
         status: "pending",
+        token, // ✅ ADD THIS
       });
     }
 

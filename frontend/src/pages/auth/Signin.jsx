@@ -245,11 +245,13 @@ const Signup = () => {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.error || "Registration failed");
-
-      // Redirect based on role
+      
+      // ✅ SAVE TOKEN
+      localStorage.setItem("authToken", data.token);
+      
+      // THEN navigate
       navigate(
-        role === "traveller" ? "/user/complete-profile" : "/agency/complete-profile",
-        { state: { userId: data.userId } }
+        role === "traveller" ? "/user/complete-profile" : "/agency/complete-profile"
       );
 
     } catch (err) {

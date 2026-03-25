@@ -13,7 +13,9 @@ export default function CategoryPlaces() {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/places/${category}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/places/${category}`
+        );
         const data = await res.json();
         setPlaces(data);
       } catch (error) {
@@ -32,7 +34,14 @@ export default function CategoryPlaces() {
       </div>
     );
   }
-
+  const getImageUrl = (image) => {
+    try {
+      const parsed = JSON.parse(image);
+      return Array.isArray(parsed) ? parsed[0] : parsed;
+    } catch {
+      return image;
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 py-16">
       {/* Breadcrumb */}
@@ -73,7 +82,7 @@ export default function CategoryPlaces() {
             >
               {/* IMAGE */}
               <img
-                src={place.image}
+                src={getImageUrl(place.image)}
                 alt={place.name}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />

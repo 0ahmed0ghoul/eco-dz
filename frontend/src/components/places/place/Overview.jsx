@@ -69,6 +69,15 @@ const PlaceOverview = ({ place }) => {
 
   if (!place) return null;
 
+  let imageUrl = "";
+
+try {
+  const parsed = JSON.parse(place.image);
+  imageUrl = Array.isArray(parsed) ? parsed[0] : parsed;
+} catch {
+  imageUrl = place.image; // fallback if already string
+}
+  console.log("PlaceOverview image:", place.image);
   return (
     <section id="overview" className="bg-white text-gray-800">
       {/* Breadcrumb */}
@@ -95,7 +104,7 @@ const PlaceOverview = ({ place }) => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="relative w-full h-[420px] overflow-hidden rounded-xl">
           <img
-            src={place.image}
+            src={imageUrl}
             alt={place.name}
             className="w-full h-full object-cover"
           />
