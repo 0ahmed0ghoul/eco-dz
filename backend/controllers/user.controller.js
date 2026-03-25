@@ -1,6 +1,7 @@
 import pool from "../db.js";
 import path from "path";
 import fs from "fs";
+import cloudinary from "../config/cloudinary.js";
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -428,9 +429,11 @@ export const updateUserProfilePicture = async (req, res) => {
     }
 
     const userId = req.user.id;
-    const filename = req.file.filename;
 
-    // 1️⃣ Get current user avatar
+    // ✅ Cloudinary URL
+    const newAvatarUrl = req.file.path;
+
+    // 1️⃣ Get current avatar
     const [users] = await pool.query(
       "SELECT avatar FROM users WHERE id = ?",
       [userId]
@@ -440,26 +443,34 @@ export const updateUserProfilePicture = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const oldAvatar = users[0].avatar;
+    const oldAvatarUrl = users[0].avatar;
 
-    // 2️⃣ Delete old avatar if exists
-    if (oldAvatar) {
-      const oldPath = path.join("uploads", "avatars", oldAvatar);
-      if (fs.existsSync(oldPath)) {
-        fs.unlinkSync(oldPath);
+    // 2️⃣ Delete old avatar from Cloudinary
+    if (oldAvatarUrl) {
+      try {
+        // Extract public_id from URL
+        const parts = oldAvatarUrl.split("/");
+        const fileName = parts[parts.length - 1]; // abc123.jpg
+        const folder = "avatars";
+        const publicId = `${folder}/${fileName.split(".")[0]}`;
+
+        await cloudinary.uploader.destroy(publicId);
+      } catch (err) {
+        console.warn("Failed to delete old avatar:", err.message);
       }
     }
 
-    // 3️⃣ Update avatar in database
+    // 3️⃣ Update DB with new URL
     await pool.query(
       "UPDATE users SET avatar = ? WHERE id = ?",
-      [filename, userId]
+      [newAvatarUrl, userId]
     );
 
     res.json({
       message: "Profile picture updated",
-      avatar: filename,
+      avatar: newAvatarUrl,
     });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });

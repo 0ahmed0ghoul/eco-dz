@@ -92,7 +92,7 @@ export const completeProfile = async (req, res) => {
     // Handle avatar
     if (req.file) {
       query += `, avatar = ?`;
-      params.push(req.file.filename);
+      params.push(req.file.path); // ✅ Cloudinary URL
     }
 
     query += ` WHERE id = ?`;
