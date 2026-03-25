@@ -18,7 +18,7 @@ import {
 } from "../controllers/user.controller.js";
 
 import { auth, authorize } from "../middleware/auth.middleware.js";
-import { uploadAvatar } from "../middleware/upload/avatar.js";
+import  uploadAvatar  from "../middleware/upload/avatar.js";
 import { uploadReview } from "../middleware/upload/reviews.js";
 
 const router = express.Router();

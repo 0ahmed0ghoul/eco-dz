@@ -7,7 +7,7 @@ import { authLimiter } from "../middleware/rateLimit.middleware.js";
 import { auth, authorize } from "../middleware/auth.middleware.js";
 import {registerValidator } from "../validators/register.validator.js";
 import { getAgencyDashboard } from "../controllers/agency.controller.js";
-import { uploadAvatar } from "../middleware/upload/avatar.js";
+import uploadAvatar from "../middleware/upload/avatar.js";
 import { uploadLogo } from "../middleware/upload/logo.js";
 const router = express.Router();
 
